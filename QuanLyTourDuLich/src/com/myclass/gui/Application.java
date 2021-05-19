@@ -401,52 +401,11 @@ public class Application extends JFrame {
 		cardQuanLyTaiKhoan.add(btnTaiKhoan_Add);
 		
 		btnTaiKhoan_Update = new JButton("Cập nhật tài khoản");
-		btnTaiKhoan_Update.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int selectedRow = tblTaiKhoan.getSelectedRow();
-				if(selectedRow>=0) {
-					cardLayout.show(cardsPane, "cardUpdateTaiKhoan");
-					
-					
-					String quyen = (String) tblTaiKhoan.getValueAt(selectedRow, 2);
-					txtUpdateTenTaiKhoan.setText((String) tblTaiKhoan.getValueAt(selectedRow, 0));
-					txtUpdateMatKhau.setText((String) tblTaiKhoan.getValueAt(selectedRow, 1));
-					if(quyen.equals("Quản trị viên")) {
-						rBtnUpdateQuanTriVien.setSelected(true);
-					}	
-					else if(quyen.equals("Nhân viên")) {
-						rBtnUpdateNhanVien.setSelected(true);
-					}
-				}
-				else if(selectedRow<0) {
-					JOptionPane.showMessageDialog(cardQuanLyTaiKhoan, "Bạn chưa chọn trường dữ liệu!");
-				}
-			
-			}
-		});
+		addActionListenerBtnTaiKhoan_Update();
 		
 		btnTaiKhoan_Update.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnTaiKhoan_Update.setBounds(475, 600, 200, 30);
 		cardQuanLyTaiKhoan.add(btnTaiKhoan_Update);
-		
-//		JButton btnTaiKhoanExit = new JButton("");
-//		btnTaiKhoanExit.setIcon(new ImageIcon(Application.class.getResource("/com/myclass/gui/IMG/exit-1852366-1573369 (1).png")));
-//		btnTaiKhoanExit.setBounds(703, 5, 25, 29);
-//		btnTaiKhoanExit.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				int reponse=JOptionPane.showConfirmDialog(rootPane, "Do you want to exit ?","Exit",JOptionPane.YES_NO_OPTION);
-//	        	if(reponse==0)
-//	        	{
-//	        		System.exit(0);
-//	        	}else
-//	        	{
-//	        		return;
-//	        	}	
-//	        	
-//			}
-//			
-//		});
-//		cardQuanLyTaiKhoan.add(btnTaiKhoanExit);
 		// ===== ADMIN LAYOUT END HERE =====
 		
 		// ===== ADMIN ADD LAYOUT START HERE =====
@@ -2442,16 +2401,6 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		txtAddDoan_MaHDV.setBounds(250, 250, 300, 30);
 		cardAddDoan.add(txtAddDoan_MaHDV);
 		
-		JLabel lblAddDoan_MaPhuongTien = new JLabel("Nhập mã PT:");
-		lblAddDoan_MaPhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAddDoan_MaPhuongTien.setBounds(50, 300, 200, 30);
-		cardAddDoan.add(lblAddDoan_MaPhuongTien);
-		
-		JTextField txtAddDoan_MaPhuongTien = new JTextField();
-		txtAddDoan_MaPhuongTien.setColumns(10);
-		txtAddDoan_MaPhuongTien.setBounds(250, 300, 300, 30);
-		cardAddDoan.add(txtAddDoan_MaPhuongTien);
-		
 		JButton btnAddDoan_ThemMoi = new JButton("Thêm mới");
 		btnAddDoan_ThemMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2461,7 +2410,6 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 				dto.setSoNguoi(Integer.valueOf(txtAddSoNguoi.getText()));
 				dto.setMaTour(txtAddDoan_MaTour.getText());
 				dto.setMaHDV(txtAddDoan_MaHDV.getText());
-				dto.setMaPhuongTien(txtAddDoan_MaPhuongTien.getText());
 				
 				doanBUS.add(dto);
 				DoanBUS.listDoanDTO.add(dto);
@@ -2472,11 +2420,10 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 				txtAddSoNguoi.setText("");
 				txtAddDoan_MaTour.setText("");
 				txtAddDoan_MaHDV.setText("");
-				txtAddDoan_MaPhuongTien.setText("");
 			}
 		});
 		btnAddDoan_ThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAddDoan_ThemMoi.setBounds(150, 350, 120, 30);
+		btnAddDoan_ThemMoi.setBounds(150, 300, 120, 30);
 		cardAddDoan.add(btnAddDoan_ThemMoi);
 		
 		JButton btnAddDoan_QuayLai = new JButton("Quay lại");
@@ -2486,7 +2433,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 			}
 		});
 		btnAddDoan_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnAddDoan_QuayLai.setBounds(300, 350, 120, 30);
+		btnAddDoan_QuayLai.setBounds(300, 300, 120, 30);
 		cardAddDoan.add(btnAddDoan_QuayLai);
 		// ===== ADD DOAN LAYOUT END HERE ======
 		
@@ -2540,16 +2487,6 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		txtUpdateDoan_MaHDV.setColumns(10);
 		txtUpdateDoan_MaHDV.setBounds(200, 250, 300, 30);
 		cardUpdateDoan.add(txtUpdateDoan_MaHDV);
-		
-		JLabel lblUpdateDoan_MaPhuongTien = new JLabel("Nhập mã PT:");
-		lblUpdateDoan_MaPhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUpdateDoan_MaPhuongTien.setBounds(50, 300, 150, 30);
-		cardUpdateDoan.add(lblUpdateDoan_MaPhuongTien);
-
-		txtUpdateDoan_MaPhuongTien = new JTextField();
-		txtUpdateDoan_MaPhuongTien.setColumns(10);
-		txtUpdateDoan_MaPhuongTien.setBounds(200, 300, 300, 30);
-		cardUpdateDoan.add(txtUpdateDoan_MaPhuongTien);
 		
 		JButton btnUpdateDoan_CapNhat = new JButton("Cập nhật");
 		btnUpdateDoan_CapNhat.addActionListener(new ActionListener() {
@@ -2682,6 +2619,17 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		keHoachTour_ctKeHoachTheoNgayScrollPane.setViewportView(tblKeHoachTour_CTKeHoachTheoNgay);
 		tblKeHoachTour_CTKeHoachTheoNgay.setFillsViewportHeight(true);
 		addActionListenerBtnTour_Update();
+		
+		JButton btnKeHoachTour_CTKeHoachTheoNgayLayout = new JButton("Xem danh sách");
+		btnKeHoachTour_CTKeHoachTheoNgayLayout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyCTKeHoachTheoNgay");
+			}
+		});
+		addActionListenerBtnTour_Update();
+		btnKeHoachTour_CTKeHoachTheoNgayLayout.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKeHoachTour_CTKeHoachTheoNgayLayout.setBounds(950, 500, 150, 30);
+		cardQuanLyKeHoachTour.add(btnKeHoachTour_CTKeHoachTheoNgayLayout);
 		
 		JButton btnKeHoachTour_CTKeHoachTheoNgay_Xoa = new JButton("Xóa");
 		btnKeHoachTour_CTKeHoachTheoNgay_Xoa.addActionListener(new ActionListener() {
@@ -3270,52 +3218,52 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		
 		JLabel lblUpdateDiaDiemThamQuan = new JLabel("Địa điểm tham quan:");
 		lblUpdateDiaDiemThamQuan.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUpdateDiaDiemThamQuan.setBounds(50, 200, 150, 30);
+		lblUpdateDiaDiemThamQuan.setBounds(50, 250, 150, 30);
 		cardUpdateCTKeHoachTheoNgay.add(lblUpdateDiaDiemThamQuan);
 		
 		txtUpdateDiaDiemThamQuan = new JTextField();
 		txtUpdateDiaDiemThamQuan.setColumns(10);
-		txtUpdateDiaDiemThamQuan.setBounds(200, 200, 300, 30);
+		txtUpdateDiaDiemThamQuan.setBounds(200, 250, 300, 30);
 		cardUpdateCTKeHoachTheoNgay.add(txtUpdateDiaDiemThamQuan);
 		
 		JLabel lblUpdatePhuongTien = new JLabel("Phương tiện:");
 		lblUpdatePhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUpdatePhuongTien.setBounds(50, 250, 150, 30);
+		lblUpdatePhuongTien.setBounds(50, 300, 150, 30);
 		cardUpdateCTKeHoachTheoNgay.add(lblUpdatePhuongTien);
 
 		txtUpdatePhuongTien = new JTextField();
 		txtUpdatePhuongTien.setColumns(10);
-		txtUpdatePhuongTien.setBounds(200, 250, 300, 30);
+		txtUpdatePhuongTien.setBounds(200, 300, 300, 30);
 		cardUpdateCTKeHoachTheoNgay.add(txtUpdatePhuongTien);
 		
 		JLabel lblUpdateNhaHang = new JLabel("Nhà hàng:");
 		lblUpdateNhaHang.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUpdateNhaHang.setBounds(50, 300, 150, 30);
+		lblUpdateNhaHang.setBounds(50, 350, 150, 30);
 		cardUpdateCTKeHoachTheoNgay.add(lblUpdateNhaHang);
 
 		txtUpdateNhaHang = new JTextField();
 		txtUpdateNhaHang.setColumns(10);
-		txtUpdateNhaHang.setBounds(200, 300, 300, 30);
+		txtUpdateNhaHang.setBounds(200, 350, 300, 30);
 		cardUpdateCTKeHoachTheoNgay.add(txtUpdateNhaHang);
 		
 		JLabel lblUpdateKhachSan = new JLabel("Khách sạn:");
 		lblUpdateKhachSan.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUpdateKhachSan.setBounds(50, 350, 150, 30);
+		lblUpdateKhachSan.setBounds(50, 400, 150, 30);
 		cardUpdateCTKeHoachTheoNgay.add(lblUpdateKhachSan);
 
 		txtUpdateKhachSan = new JTextField();
 		txtUpdateKhachSan.setColumns(10);
-		txtUpdateKhachSan.setBounds(200, 350, 300, 30);
+		txtUpdateKhachSan.setBounds(200, 400, 300, 30);
 		cardUpdateCTKeHoachTheoNgay.add(txtUpdateKhachSan);
 		
 		JLabel lblUpdateCTKeHoachTheoNgay_MaKHTour = new JLabel("Nhập mã KH Tour:");
 		lblUpdateCTKeHoachTheoNgay_MaKHTour.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblUpdateCTKeHoachTheoNgay_MaKHTour.setBounds(50, 350, 150, 30);
+		lblUpdateCTKeHoachTheoNgay_MaKHTour.setBounds(50, 200, 150, 30);
 		cardUpdateCTKeHoachTheoNgay.add(lblUpdateCTKeHoachTheoNgay_MaKHTour);
 
 		txtUpdateCTKeHoachTheoNgay_MaKHTour = new JTextField();
 		txtUpdateCTKeHoachTheoNgay_MaKHTour.setColumns(10);
-		txtUpdateCTKeHoachTheoNgay_MaKHTour.setBounds(200, 350, 300, 30);
+		txtUpdateCTKeHoachTheoNgay_MaKHTour.setBounds(200, 200, 300, 30);
 		cardUpdateCTKeHoachTheoNgay.add(txtUpdateCTKeHoachTheoNgay_MaKHTour);
 		
 		JButton btnUpdateCTKeHoachTheoNgay_CapNhat = new JButton("Cập nhật");
@@ -3347,7 +3295,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 			}
 		});
 		btnUpdateCTKeHoachTheoNgay_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnUpdateCTKeHoachTheoNgay_CapNhat.setBounds(150, 400, 120, 30);
+		btnUpdateCTKeHoachTheoNgay_CapNhat.setBounds(150, 450, 120, 30);
 		cardUpdateCTKeHoachTheoNgay.add(btnUpdateCTKeHoachTheoNgay_CapNhat);
 		
 		JButton btnUpdateCTKeHoachTheoNgay_QuayLai = new JButton("Quay lại");
@@ -3357,7 +3305,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 			}
 		});
 		btnUpdateCTKeHoachTheoNgay_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnUpdateCTKeHoachTheoNgay_QuayLai.setBounds(300, 400, 100, 30);
+		btnUpdateCTKeHoachTheoNgay_QuayLai.setBounds(300, 450, 100, 30);
 		cardUpdateCTKeHoachTheoNgay.add(btnUpdateCTKeHoachTheoNgay_QuayLai);
 		// ===== UPDATE CT KE HOACH LAYOUT END HERE =====
 		
@@ -3828,6 +3776,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		rowData.add(dto.getMaDoan());
 		rowData.add(String.valueOf(dto.getSoNguoi()));
 		rowData.add(dto.getMaTour());
+		rowData.add(dto.getMaHDV());
 		
 		doanTblModel.addRow(rowData);
 	}
@@ -3871,6 +3820,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		rowData.add(dto.getMaDoan());
 		rowData.add(String.valueOf(dto.getSoNguoi()));
 		rowData.add(dto.getMaTour());
+		rowData.add(dto.getMaHDV());
 		
 		tour_doanTblModel.addRow(rowData);
 	}
