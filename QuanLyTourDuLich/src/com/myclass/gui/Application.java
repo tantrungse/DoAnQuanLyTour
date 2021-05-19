@@ -3656,7 +3656,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 	public void loadTblCTKeHoachTheoNgay() {
 		for(CTKeHoachTheoNgayDTO ctkh : CTKeHoachTheoNgayBUS.listCTKeHoachTheoNgayDTO) {
 			ctKeHoachTheoNgayTblModel.addRow(new Object[] {
-					ctkh.getMaCTKHTheoNgay(), ctkh.getNgay(), ctkh.getMaDiaDiemThamQuan(), ctkh.getMaPhuongTien(), ctkh.getMaNhaHang(), ctkh.getMaKhachSan()
+					ctkh.getMaCTKHTheoNgay(), ctkh.getNgay(), ctkh.getMaKHTour(), ctkh.getMaDiaDiemThamQuan(), ctkh.getMaPhuongTien(), ctkh.getMaNhaHang(), ctkh.getMaKhachSan()
 			});
 		}
 	}
