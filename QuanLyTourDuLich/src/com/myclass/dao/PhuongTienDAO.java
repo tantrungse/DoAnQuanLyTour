@@ -1,268 +1,172 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.myclass.dao;
 
-import com.myclass.dto.PhuongTienDTO;
-import com.mysql.cj.xdevapi.Result;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Vector;
 
-/**
- *
- * @author Thin
- */
+import com.myclass.connector.JDBCConnection;
+import com.myclass.dto.PhuongTienDTO;
+
 public class PhuongTienDAO {
+	private final static String tableName = "PhuongTien";
+	Connection conn;
+	PreparedStatement pstmt;
+	ResultSet rs;
+	
+	public ArrayList<PhuongTienDTO> getAll() {
+		ArrayList<PhuongTienDTO> dtos;
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "SELECT * FROM " + tableName;
+			dtos = new ArrayList<PhuongTienDTO>();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				PhuongTienDTO dto = new PhuongTienDTO();
+				
+				dto.setMaPhuongTien(rs.getString("MaPhuongTien"));
+				dto.setTenPhuongTien(rs.getString("TenPhuongTien"));
+				dto.setChiPhi(rs.getDouble("ChiPhi"));
+				dto.setSoChoNgoi(rs.getInt("SoChoNgoi"));
+				
+				dtos.add(dto);
+			}
+			
+			return dtos;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+    public PhuongTienDTO getByMaPhuongTien(String maPhuongTien) {
+    	String query = "SELECT * FROM " + tableName + " WHERE MaPhuongTien = ?"; 
+    	try {
+    		PhuongTienDTO dto = null;
+    		conn = JDBCConnection.getJDBCConnection(tableName);
+    		pstmt = conn.prepareStatement(query);
+    		pstmt.setString(1, maPhuongTien);
+    		rs = pstmt.executeQuery();
+    		
+    		if(rs.next()) {
+    			dto = new PhuongTienDTO();
 
-    public static List<PhuongTienDTO> XemDSPT() {
-        List<PhuongTienDTO> phuongtienList = new ArrayList<>();
-
-        Connection connection = null;
-        Statement statement = null;
-
-        try {
-            //Lấy danh sách phương tiện
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "select* from phuongtien";
-            statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                PhuongTienDTO ptDTO = new PhuongTienDTO(resultSet.getString("maPT"), resultSet.getString("tenPT"), resultSet.getString("diachi"), resultSet.getInt("sochongoi"), resultSet.getString("soDT"), resultSet.getInt("chiphi"));
-                phuongtienList.add(ptDTO);
-
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        //ket thuc
-        return phuongtienList;
-    }
-
-    public static void luuDSPT(PhuongTienDTO ptDTO) {
-
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            //lấy Danh sách phương tiện
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "insert into phuongtien(maPT, tenPT, diachi, sochongoi, soDT, chiphi) values(?, ?, ?, ?, ?, ?)";
-
-            statement = connection.prepareCall(sql);
-
-            statement.setString(1, ptDTO.getMaPT());
-            statement.setString(2, ptDTO.getTenPT());
-            statement.setString(3, ptDTO.getDiachi());
-            statement.setInt(4, ptDTO.getSochongoi());
-            statement.setString(5, ptDTO.getSoDT());
-            statement.setInt(6, ptDTO.getChiphi());
-
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-    }
-
-    public static void XoaDSPT(String maPT) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            //Lấy danh sách phương tiện
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-
-            //Query
-            String sql = "delete from phuongtien where maPT = ?";
-
-            statement = connection.prepareCall(sql);
-            statement.setString(1, maPT);
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-
-    }
-
-    public static List<PhuongTienDTO> findByMaPT(String maPT) {
-        List<PhuongTienDTO> phuongtienList = new ArrayList<>();
-
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            //Lấy danh sách phương tiện
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            String sql = "select* from phuongtien where maPT = ?";
-            statement = connection.prepareCall(sql);
-
-            statement.setString(1, maPT);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                PhuongTienDTO ptDTO = new PhuongTienDTO(resultSet.getString("maPT"), resultSet.getString("tenPT"), resultSet.getString("diachi"), resultSet.getInt("sochongoi"), resultSet.getString("soDT"), resultSet.getInt("chiphi"));
-                phuongtienList.add(ptDTO);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-
-        return phuongtienList;
-    }
-
-    public static List<PhuongTienDTO> findByTenPT(String tenPT) {
-        List<PhuongTienDTO> phuongtienList = new ArrayList<>();
-
-        Connection connection = null;
-        PreparedStatement statement = null;
-        
-        try {
-            //Lấy danh sách phương tiện
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            String sql = "select* from phuongtien where tenPT like ?";
-            
-            statement = connection.prepareCall(sql);
-            statement.setString(1, "%" + tenPT + "%");
-            ResultSet resultSet = statement.executeQuery();
-            
-            while(resultSet.next()){
-                PhuongTienDTO ptDTO = new PhuongTienDTO(resultSet.getString("maPT"), resultSet.getString("tenPT"), resultSet.getString("diachi"), resultSet.getInt("sochongoi"), resultSet.getString("soDT"), resultSet.getInt("chiphi"));
-                phuongtienList.add(ptDTO);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        finally{
-            if(connection != null){
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if(statement != null){
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(PhuongTienDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        
-        return phuongtienList;
+				dto.setMaPhuongTien(rs.getString("MaPhuongTien"));
+				dto.setTenPhuongTien(rs.getString("TenPhuongTien"));
+				dto.setChiPhi(rs.getDouble("ChiPhi"));
+				dto.setSoChoNgoi(rs.getInt("SoChoNgoi"));
+    		}
+    		
+    		return dto;
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return null;
     }
     
-    public static void CapNhatTTPT(PhuongTienDTO ptDTO) {
-        Connection connection = null;
-        PreparedStatement statement = null;
+	public Vector<String> getAllMaPhuongTien() {
+		Vector<String> listMaPhuongTien;
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "SELECT MaDoan FROM " + tableName;
+			listMaPhuongTien = new Vector<String>();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				listMaPhuongTien.add(rs.getString("MaPhuongTien"));
+			}
+			
+			return listMaPhuongTien;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
-        try {
-            //lấy danh sách nhà hàng
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306:quanlydulich", "root", "");
+	public void deleteById(String maPhuongTien) {
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "DELETE FROM " + tableName + " WHERE MaPhuongTien = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, maPhuongTien);
+			int rowEffects = pstmt.executeUpdate();
+			System.out.println("Row effects: " + rowEffects);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-            //Query
-            String sql = "update phuongtien set tenPT = ?, diachi = ?, sochongoi = ?, soDT = ?, chiphi = ? where maPT = ?";
-            statement = connection.prepareCall(sql);
+	public void add(PhuongTienDTO dto) {
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "INSERT INTO " + tableName + "(`MaPhuongTien`, `TenPhuongTien`, `ChiPhi`, `SoChoNgoi`)"
+					+ "VALUES (?, ?, ?, ?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getMaPhuongTien());
+			pstmt.setString(2, dto.getTenPhuongTien());
+			pstmt.setDouble(3, dto.getChiPhi());
+			pstmt.setInt(4, dto.getSoChoNgoi());
+			
+			int rowEffects = pstmt.executeUpdate();
+			System.out.println("Row effects: " + rowEffects);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-            statement.setString(1, ptDTO.getTenPT());
-            statement.setString(2, ptDTO.getDiachi());
-            statement.setInt(3, ptDTO.getSochongoi());
-            statement.setString(4, ptDTO.getSoDT());
-            statement.setInt(5, ptDTO.getChiphi());
-            statement.setString(6, ptDTO.getMaPT());
-
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(NhaHangDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(NhaHangDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(NhaHangDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-
-    }
+	public void update(PhuongTienDTO dto) {
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "UPDATE " + tableName + " SET "
+					+ "TenPhuongTien = ?, ChiPhi = ?, SoChoNgoi = ?"
+					+ "WHERE MaPhuongTien = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, dto.getTenPhuongTien());
+			pstmt.setDouble(2, dto.getChiPhi());
+			pstmt.setInt(3, dto.getSoChoNgoi());
+			pstmt.setString(4, dto.getMaPhuongTien());
+			
+			int rowEffects = pstmt.executeUpdate();
+			System.out.println("Row effects: " + rowEffects);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

@@ -35,10 +35,10 @@ public class TaiKhoanBUS {
 	   listTaiKhoanDTO=TaiKhoanDAO.logindao();
 	   for(TaiKhoanDTO arr :listTaiKhoanDTO)
 	   {
-		   if(arr.getTenTK().equalsIgnoreCase(user) && arr.getMatKhau().equalsIgnoreCase(pass) && arr.getQuyen()==0)
+		   if(arr.getTenTK().equals(user) && arr.getMatKhau().equals(pass) && arr.getQuyen()==0)
 		   {
 			   ck=1;
-		   }else if(arr.getTenTK().equalsIgnoreCase(user) && arr.getMatKhau().equalsIgnoreCase(pass) && arr.getQuyen()==1)
+		   }else if(arr.getTenTK().equals(user) && arr.getMatKhau().equals(pass) && arr.getQuyen()==1)
 		   {
 			   ck=2;
 		   }
@@ -85,8 +85,12 @@ public static void clickOnKey(  final AbstractButton button, String actionName, 
        } );
  	}
 
-	public ArrayList<TaiKhoanDTO> getByTenTK(String tenTK) {
+	public TaiKhoanDTO getByTenTK(String tenTK) {
 		return taiKhoanDAO.getByTenTK(tenTK);
+	}
+	
+	public ArrayList<TaiKhoanDTO> searchByTenTK(String tenTK) {
+		return taiKhoanDAO.searchByTenTK(tenTK);
 	}
 
 	public void update(TaiKhoanDTO dto) {

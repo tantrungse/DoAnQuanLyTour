@@ -12,7 +12,7 @@ import com.myclass.connector.JDBCConnection;
 import com.myclass.dto.HuongDanVienDTO;
 
 public class HuongDanVienDAO {
-	private final static String tableName = "huongdanvien";
+	private final static String tableName = "HuongDanVien";
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
@@ -146,7 +146,7 @@ public class HuongDanVienDAO {
 		try {
 			conn = JDBCConnection.getJDBCConnection(tableName);
 			String sql = "INSERT INTO " + tableName
-					+ "(`MaHDV`, `Ho`, `Ten`, `NgaySinh`, `GioiTinh`, `DiaChi`, `SDT`)"
+					+ "(`MaHDV`, `Ho`, `Ten`, `NgaySinh`, `GioiTinh`, `DiaChi`, `SDT`) "
 					+ "VALUES (?, ?, ?, ?, ?, ?, ?)";
 			
 			pstmt = conn.prepareStatement(sql);
@@ -184,6 +184,7 @@ public class HuongDanVienDAO {
 			pstmt.setString(4, dto.getGioiTinh());
 			pstmt.setString(5, dto.getDiaChi());
 			pstmt.setString(6, dto.getSdt());
+			pstmt.setString(7, dto.getMaHDV());
 			
 			int rowEffects = pstmt.executeUpdate();
 			System.out.println("Row effects: " + rowEffects);

@@ -12,7 +12,7 @@ import com.myclass.dto.DoanDTO;
 import com.myclass.dto.TourDTO;
 
 public class DoanDAO {
-	private final static String tableName = "doan";
+	private final static String tableName = "Doan";
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
@@ -65,7 +65,7 @@ public class DoanDAO {
     			dto.setMaDoan(rs.getString("MaDoan"));
     			dto.setSoNguoi(rs.getInt("SoNguoi"));
     			dto.setMaTour(rs.getString("MaTour"));
-			dto.setMaHDV(rs.getString("MaHDV"));
+    			dto.setMaHDV(rs.getString("MaHDV"));
     		}
     		
     		return dto;
@@ -83,32 +83,6 @@ public class DoanDAO {
     		conn = JDBCConnection.getJDBCConnection(tableName);
     		pstmt = conn.prepareStatement(query);
     		pstmt.setString(1, maTour);
-    		rs = pstmt.executeQuery();
-    		
-    		if(rs.next()) {
-    			dto = new DoanDTO();
-
-    			dto.setMaDoan(rs.getString("MaDoan"));
-    			dto.setSoNguoi(rs.getInt("SoNguoi"));
-    			dto.setMaTour(rs.getString("MaTour"));
-			dto.setMaHDV(rs.getString("MaHDV"));
-    		}
-    		
-    		return dto;
-    	} catch(SQLException e) {
-    		e.printStackTrace();
-    	}
-		
-		return null;
-	}
-
-	public DoanDTO getByMaHDV(String maHDV) {
-    	String query = "SELECT * FROM " + tableName + " WHERE MaHDV = ?"; 
-    	try {
-    		DoanDTO dto = null;
-    		conn = JDBCConnection.getJDBCConnection(tableName);
-    		pstmt = conn.prepareStatement(query);
-    		pstmt.setString(1, maHDV);
     		rs = pstmt.executeQuery();
     		
     		if(rs.next()) {
@@ -207,7 +181,7 @@ public class DoanDAO {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, dto.getSoNguoi());
 			pstmt.setString(2, dto.getMaTour());
-			pstmt.setString(3, dto.getMaDoan());
+			pstmt.setString(3, dto.getMaHDV());
 			pstmt.setString(4, dto.getMaHDV());
 			
 			int rowEffects = pstmt.executeUpdate();
@@ -221,6 +195,32 @@ public class DoanDAO {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public DoanDTO getByMaHDV(String maHDV) {
+    	String query = "SELECT * FROM " + tableName + " WHERE MaHDV = ?"; 
+    	try {
+    		DoanDTO dto = null;
+    		conn = JDBCConnection.getJDBCConnection(tableName);
+    		pstmt = conn.prepareStatement(query);
+    		pstmt.setString(1, maHDV);
+    		rs = pstmt.executeQuery();
+    		
+    		if(rs.next()) {
+    			dto = new DoanDTO();
+
+    			dto.setMaDoan(rs.getString("MaDoan"));
+    			dto.setSoNguoi(rs.getInt("SoNguoi"));
+    			dto.setMaTour(rs.getString("MaTour"));
+    			dto.setMaHDV(rs.getString("MaHDV"));
+    		}
+    		
+    		return dto;
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
+		
+		return null;
 	}
 
 }

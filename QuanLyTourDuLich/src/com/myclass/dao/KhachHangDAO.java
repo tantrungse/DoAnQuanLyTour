@@ -13,7 +13,7 @@ import com.myclass.dto.KhachHangDTO;
 import com.myclass.dto.TaiKhoanDTO;
 
 public class KhachHangDAO {
-	private final static String tableName = "khachhang";
+	private final static String tableName = "KhachHang";
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;
@@ -190,7 +190,7 @@ public class KhachHangDAO {
     	
 		return null;
 	}
-
+	
 	public ArrayList<KhachHangDTO> getByTenKH(String TenKH) {
     	ArrayList<KhachHangDTO> dtos = new ArrayList<KhachHangDTO>();
     	String query = "SELECT * FROM KhachHang WHERE TenKH LIKE ?"; 

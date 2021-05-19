@@ -13,7 +13,7 @@ public class JDBCConnection {
 		 try {
 			 Class.forName("com.mysql.cj.jdbc.Driver");
 			 Connection conn = DriverManager.getConnection(URL, username, password);
-			 System.out.print("Đang kết nối đến table " + tableName);
+			 System.out.print("Đang kết nối đến table " + tableName + "..... ");
 			 if(conn != null) {
 				 System.out.println("ĐÃ KẾT NỐI!");
 			 }

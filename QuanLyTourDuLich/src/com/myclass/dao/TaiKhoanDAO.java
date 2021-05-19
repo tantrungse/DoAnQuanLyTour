@@ -121,7 +121,7 @@ public class TaiKhoanDAO {
         return dtos;
     }
     
-    public ArrayList<TaiKhoanDTO> getByTenTK(String tenTK) {
+    public ArrayList<TaiKhoanDTO> searchByTenTK(String tenTK) {
     	ArrayList<TaiKhoanDTO> dtos = new ArrayList<TaiKhoanDTO>();
     	String query = "SELECT * FROM taikhoan WHERE TenTK LIKE ?"; 
     	try {
@@ -141,6 +141,31 @@ public class TaiKhoanDAO {
     		}
     		
     		return dtos;
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return null;
+    }
+    
+    public TaiKhoanDTO getByTenTK(String tenTK) {
+    	String query = "SELECT * FROM taikhoan WHERE TenTK = ?"; 
+    	TaiKhoanDTO dto = null;
+    	try {
+    		conn = JDBCConnection.getJDBCConnection(tableName);
+    		pstmt = conn.prepareStatement(query);
+    		pstmt.setString(1, tenTK);
+    		rs = pstmt.executeQuery();
+    		
+    		if(rs.next()) {
+    			dto = new TaiKhoanDTO();
+    			
+    			dto.setTenTK(rs.getString(1));
+    			dto.setMatKhau(rs.getString(2));
+    			dto.setQuyen(rs.getInt(3));
+    		}
+    		
+    		return dto;
     	} catch(SQLException e) {
     		e.printStackTrace();
     	}

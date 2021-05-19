@@ -10,7 +10,7 @@ import com.myclass.connector.JDBCConnection;
 import com.myclass.dto.TourDTO;
 
 public class TourDAO {
-	private final static String tableName = "tour";
+	private final static String tableName = "Tour";
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;

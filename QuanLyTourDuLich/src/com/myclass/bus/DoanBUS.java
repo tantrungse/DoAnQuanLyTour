@@ -28,10 +28,6 @@ public class DoanBUS {
 		return doanDAO.getByMaTour(maTour);
 	}
 
-	public DoanDTO getByMaHDV(String maHDV) {
-		return doanDAO.getByMaHDV(maHDV);
-	}
-
 	public void deleteById(String maDoan) {
 		doanDAO.deleteById(maDoan);
 	}
@@ -43,5 +39,10 @@ public class DoanBUS {
 	public void update(DoanDTO dto) {
 		doanDAO.update(dto);
 	}
+	
+	public DoanDTO getByMaHDV(String maHDV) {
+		return doanDAO.getByMaHDV(maHDV);
+	}
+
 	
 }

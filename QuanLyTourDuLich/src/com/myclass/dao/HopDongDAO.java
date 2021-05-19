@@ -13,7 +13,7 @@ import com.myclass.dto.TaiKhoanDTO;
 import com.myclass.dto.TourDTO;
 
 public class HopDongDAO {
-	private final static String tableName = "hopdong";
+	private final static String tableName = "HopDong";
 	Connection conn;
 	PreparedStatement pstmt;
 	ResultSet rs;

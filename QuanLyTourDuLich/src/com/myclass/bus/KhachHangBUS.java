@@ -29,7 +29,6 @@ public class KhachHangBUS {
 		return khachHangDAO.getAll();
 	}
 	
-	
 	public void add(KhachHangDTO dto) {
 		khachHangDAO.add(dto);
 	}

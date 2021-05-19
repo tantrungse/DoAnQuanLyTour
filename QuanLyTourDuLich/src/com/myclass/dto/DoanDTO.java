@@ -5,15 +5,17 @@ public class DoanDTO {
 	private int soNguoi;
 	private String maTour;
 	private String maHDV;
+	private String maPhuongTien;
 	
 	public DoanDTO() {}
 
-	public DoanDTO(String maDoan, int soNguoi, String maTour, String maHDV) {
+	public DoanDTO(String maDoan, int soNguoi, String maTour, String maHDV, String maPhuongTien) {
 		super();
 		this.maDoan = maDoan;
 		this.soNguoi = soNguoi;
 		this.maTour = maTour;
 		this.maHDV = maHDV;
+		this.maPhuongTien = maPhuongTien;
 	}
 
 	public String getMaDoan() {
@@ -39,13 +41,21 @@ public class DoanDTO {
 	public void setMaTour(String maTour) {
 		this.maTour = maTour;
 	}
-	
+
 	public String getMaHDV() {
 		return maHDV;
 	}
 
 	public void setMaHDV(String maHDV) {
 		this.maHDV = maHDV;
+	}
+
+	public String getMaPhuongTien() {
+		return maPhuongTien;
+	}
+
+	public void setMaPhuongTien(String maPhuongTien) {
+		this.maPhuongTien = maPhuongTien;
 	}
 
 }

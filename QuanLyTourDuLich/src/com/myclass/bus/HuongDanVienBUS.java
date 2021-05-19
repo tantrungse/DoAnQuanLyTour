@@ -13,6 +13,11 @@ public class HuongDanVienBUS {
 	
 	public HuongDanVienBUS() {}
 	
+	public ArrayList<HuongDanVienDTO> getAll() {
+		listHuongDanVienDTO = huongDanVienDAO.getAll();
+		return listHuongDanVienDTO;
+	}
+	
 	public ArrayList<HuongDanVienDTO> getByMaHDV(String MaHDV) {
 		listHuongDanVienDTO = huongDanVienDAO.getByMaHDV(MaHDV);
 		return listHuongDanVienDTO;
@@ -28,7 +33,6 @@ public class HuongDanVienBUS {
 		return listHuongDanVienDTO;
 	}
 	
-	
 	public void add(HuongDanVienDTO dto) {
 		huongDanVienDAO.add(dto);
 	}
@@ -39,10 +43,5 @@ public class HuongDanVienBUS {
 	
 	public void deleteById(String maHDV) {
 		huongDanVienDAO.deleteById(maHDV);
-	}
-	
-	public ArrayList<HuongDanVienDTO> getAll() {
-		listHuongDanVienDTO = huongDanVienDAO.getAll();
-		return listHuongDanVienDTO;
 	}
 }

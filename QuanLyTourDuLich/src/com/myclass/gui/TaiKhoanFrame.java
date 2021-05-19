@@ -46,7 +46,6 @@ import java.awt.SystemColor;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 
-
 public class TaiKhoanFrame extends JFrame {
 
 	/**
@@ -58,11 +57,13 @@ public class TaiKhoanFrame extends JFrame {
 	private JPasswordField txtPass;
 	private JTextField txtMail;
 	private JTextField txtMaxn;
+	private TaiKhoanBUS taiKhoanBUS;
 	ArrayList<TaiKhoanDTO> arr=new ArrayList<>();
 	String arr1[]= {"abc123","123abc","xyz456","456xyz","798mno","mno789"};
+	String arrmail[]= {"lytheminh3q@gmail.com","lytheminh2506@gmail.com","maivanthinh01052001@gmail.com","votantrung2k1@gmail.com","vohuyentran028@gmail.com"};
 	Random r =new Random();
 	String ma=arr1[r.nextInt(6)];
-	public static TaiKhoanFrame mInstance;
+
 
 	/**
 	 * Launch the application.
@@ -71,11 +72,11 @@ public class TaiKhoanFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//Formlogin frame = new Formlogin();
-					TaiKhoanFrame.getTaiKhoanFrameInstance().setUndecorated(true);
-					TaiKhoanFrame.getTaiKhoanFrameInstance().setBackground(new Color(0,0,0,0));
-					TaiKhoanFrame.getTaiKhoanFrameInstance().setVisible(true);
-					TaiKhoanFrame.getTaiKhoanFrameInstance().setLocationRelativeTo(null);
+//					Formlogin frame = new Formlogin();
+//					TaiKhoanBUS.getInstance().setUndecorated(true);
+//					TaiKhoanBUS.getInstance().setBackground(new Color(0,0,0,0));
+//					TaiKhoanBUS.getInstance().setVisible(true);
+//					TaiKhoanBUS.getInstance().setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -87,11 +88,12 @@ public class TaiKhoanFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public TaiKhoanFrame() {
+		taiKhoanBUS = new TaiKhoanBUS();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1008, 678);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0,0,0,0));
-		
 	
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -112,29 +114,16 @@ public class TaiKhoanFrame extends JFrame {
 			
 		});
 		
-		JButton btnSendmail = new JButton("G\u1EEDi mail");
+		JButton btnSendmail = new JButton("Gửi mail");
 	btnSendmail.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Charset t;
-				String ma1="   MÃƒ XÃ�C NHáº¬N Cá»¦A Báº N LÃ€ : ";
+				String ma1=" Mã xác nhận của bạn là: ";
 				
-				String maxn=String.valueOf("Your Confirm Code " + ma );
+				String maxn=String.valueOf("Your Confirm Code " +ma );
 				try {
-					SendEmail.sendMail(txtMail.getText(), "DO U LOVE ME ? ",ma);
-				/*	SendEmail.prepareMessage(null,"lytheminh2506@gmail.com", "lytheminh3q@gmail.com","Gá»­i mÃ£ xÃ¡c nháº­n","<html>\r\n"
-							+ "<head>\r\n"
-							+ "<meta charset=\"utf-8\">\r\n"
-							+ "<title>Untitled Document</title>\r\n"
-							+ "</head>\r\n"
-							+ "<form style=\"border: solid #C4F900\">\r\n"
-							+ "	<hr>\r\n"
-							+ "	<h1 style=\"text-align: center; color: rgba(255,89,92,1.00)\">MÃƒ XÃ�C NHáº¬N LOGIN</h1>\r\n"
-							+ "	<br>\r\n"
-							+ "</form>\r\n"
-							+ "<body>\r\n"
-							+ "</body>\r\n"
-							+ "</html>");
-					*/
+					SendEmail.sendMail(txtMail.getText(), "Your Vertify Code ",maxn);
+				
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -169,7 +158,7 @@ public class TaiKhoanFrame extends JFrame {
 		txtMaxn.setBounds(664, 392, 124, 35);
 		contentPane.add(txtMaxn);
 		
-		JLabel lbNhapmail = new JLabel("Vui l\u00F2ng nh\u1EADp mail");
+		JLabel lbNhapmail = new JLabel("Vui lòng nhập mail");
 		lbNhapmail.setHorizontalAlignment(SwingConstants.CENTER);
 		lbNhapmail.setForeground(new Color(255, 0, 0));
 		lbNhapmail.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 15));
@@ -226,7 +215,7 @@ public class TaiKhoanFrame extends JFrame {
 		comboBox.setFont(new Font("Tahoma", Font.BOLD, 16));
 		comboBox.setBackground(new Color(0,0,0,0));
 		comboBox.setBorder(BorderFactory.createMatteBorder(4,0,0,0,new Color(128,64,0)));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"   Account?", " Nh\u00E2n Vi\u00EAn ", " Qu\u1EA3n L\u00FD"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"   Account?", " Nhân Viên ", " Quản Lý"}));
 		comboBox.setBounds(631, 470, 118, 37);
 		contentPane.add(comboBox);
 		comboBox.addActionListener(new ActionListener() {
@@ -255,7 +244,8 @@ public class TaiKhoanFrame extends JFrame {
                 // TODO Auto-generated method stub
 				public void actionPerformed(ActionEvent e) {
 					String taikhoan=txtUser.getText();
-					String matkhau=txtPass.getText();
+					String matkhau=String.valueOf( txtPass.getPassword());
+					TaiKhoanDTO tk = null;
 					
 					if(taikhoan!=null && matkhau!=null) {
 					if(comboBox.getSelectedIndex()==2)
@@ -263,71 +253,76 @@ public class TaiKhoanFrame extends JFrame {
 						
 					int ck;
 					ck=TaiKhoanBUS.loginbus(taikhoan, matkhau);
+					tk = taiKhoanBUS.getByTenTK(taikhoan);
 					if(ck==1)
 					{
-						JOptionPane.showMessageDialog(null, "ChÃ o má»«ng admin!");
-						Application.getAppInstance().setVisible(true);
-						dispose();
+						JOptionPane.showMessageDialog(null, "Chào mừng admin!");
+						Application frame = new Application(tk);
+						frame.setLocationRelativeTo(null);
+						frame.setVisible(true);
 					}
 					else
 					{
-						JOptionPane.showMessageDialog(null,"TÃ i khoáº£n khÃ´ng há»£p lá»‡!!!");
+						JOptionPane.showMessageDialog(null,"Tài khoản không hợp lệ!!!");
 					}
 					
 						
 					}else if(comboBox.getSelectedIndex()==1)
 					{
-					if(txtMail.getText()=="")
+					if(txtMail.getText()==null)
 					{
-						JOptionPane.showMessageDialog(null, "Vui lÃ²ng nháº­p vÃ o mail Ä‘á»ƒ gá»­i mÃ£ xÃ¡c nháº­n!!!");
-					}
-					if(txtMaxn.getText()=="")
-					{
-						JOptionPane.showMessageDialog(null, "Vui lÃ²ng nháº­p vÃ o mÃ£ xÃ¡c nháº­n!!!");
-					}
-					int ck;
-					ck=TaiKhoanBUS.loginbusnhanvien(taikhoan, matkhau);
-					if(ck==1)
-					{
-						JOptionPane.showMessageDialog(null, "ChÃ o má»«ng account nhÃ¢n viÃªn!!!");
-					}else{
-						JOptionPane.showMessageDialog(null, "Account khÃ´ng há»£p lá»‡!!!");
+						JOptionPane.showMessageDialog(null, "Vui lòng nhập vào mail để lấy mã xác nhận!!!");
+					}else {
+						int check=0;
+						for(int i=0;i<arrmail.length;i++)
+						{
+							if(txtMail.getText().equalsIgnoreCase( arrmail[i]))
+							{
+								check=1;
+								break;
+							}							
+						}
+						if(txtMaxn.getText()=="")
+						{
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập vào mã xác nhận!!!");
+							return;
+						}
+						if(check==0)
+						{
+							JOptionPane.showMessageDialog(null, "Mail không thuộc công ty cung cấp!!!");
+							return;						}
 					}
 					
-						//loginBUS.loginnhanvien(txtUser.getText(),txtPass.getText(),1);
-					/*
-					int ck=1,ck1;
-						for(int i=0;i<arr1.length;i++)
+					int ck;
+					ck=TaiKhoanBUS.loginbusnhanvien(taikhoan, matkhau);
+					tk = taiKhoanBUS.getByTenTK(taikhoan);
+					if(ck==1)
+					{
+						if( txtMaxn.getText()!="" && txtMaxn.getText().equalsIgnoreCase(ma))
 						{
-							if(arr1[i].equalsIgnoreCase(txtMaxn.getText()))
-							{
-								
-								ck1=loginDAO.loginnhanvien(taikhoan,matkhau);
-								if(ck1==1) {
-								ck=0;
-								JOptionPane.showMessageDialog(null,"Báº¡n lÃ  nhÃ¢n viÃªn");
-								
-								break;
-								   }else
-								   {
-									   JOptionPane.showMessageDialog(null,"Báº¡n khÃ´ng lÃ  nhÃ¢n viÃªn");
-								   }
-								}
+							JOptionPane.showMessageDialog(null, "Chào mừng account nhân viên!!!");
+							Application frame = new Application(tk);
+							frame.setLocationRelativeTo(null);
+							frame.setVisible(true);
+							dispose();
+						}else
+						{
+							JOptionPane.showMessageDialog(null, "Vui lòng nhập chính xác mã xác nhận");
+							txtMaxn.setText("");
+							return;
+						}
 						
-						}
-						if(ck==1)
-						{
-							{
-								JOptionPane.showMessageDialog(null, "MÃ£ Ä‘Äƒng nháº­p khÃ´ng Ä‘Ãºng");
-							}
-						}
-						*/
+					}else{
+						JOptionPane.showMessageDialog(null, "Account không hợp lệ!!!");
+					}
+					
+				
 					}else {
-						JOptionPane.showMessageDialog(btnLogin, "Vui lÃ²ng chá»�n quyá»�n Ä‘á»ƒ Ä‘Äƒng nháº­p!!");
+						JOptionPane.showMessageDialog(btnLogin, "Vui lòng chọn quyền để đăng nhập!!");
 			       txtUser.requestFocus();
 				}
 					}else {
-						JOptionPane.showMessageDialog(btnLogin,"Vui lÃ²ng nháº­p Ä‘áº§y Ä‘á»§ tÃ i khoáº£n vÃ  máº­t kháº©u!!");
+						JOptionPane.showMessageDialog(btnLogin,"Vui lòng nhập đầy đủ tài khoản và  mật khẩu!!");
 					}
 			}
 		
@@ -376,7 +371,7 @@ public class TaiKhoanFrame extends JFrame {
 		contentPane.add(panel_1_1);
 		panel_1_1.setLayout(null);
 		JLabel lblNewLabel_2_1 = new JLabel("");
-		lblNewLabel_2_1.setIcon(new ImageIcon("C:\\Git\\quanlytour\\QuanLyTourDuLich\\IMG\\icons8_Lock_32px.png"));
+		lblNewLabel_2_1.setIcon(new ImageIcon("C:\\Git\\quanlytour\\QuanLyTourDuLich\\IMG\\icons8_lock_32px.png"));
 		lblNewLabel_2_1.setBounds(0, 0, 35, 41);
 		lblNewLabel_2_1.setForeground(Color.WHITE);
 		panel_1_1.add(lblNewLabel_2_1);
@@ -403,7 +398,7 @@ public class TaiKhoanFrame extends JFrame {
 		lblNewLabel_2.setBounds(0, 0, 35, 41);
 		panel_1.add(lblNewLabel_2);
 		lblNewLabel_2.setForeground(Color.WHITE);
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Git\\quanlytour\\QuanLyTourDuLich\\IMG\\icons8_User_35px_1.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\\\Git\\\\quanlytour\\\\QuanLyTourDuLich\\\\IMG\\\\icons8_contacts_32px.png"));
 	
 	//	txtUser.setBackground(new Color(0,0,0,0));
 		contentPane.add(txtUser);
@@ -444,11 +439,4 @@ txtPass.setBorder(BorderFactory.createMatteBorder(0,0,3,0,new Color(128,64,0)));
 			contentPane.add(lblNewLabel);
 		
 	}
-	
-    public static TaiKhoanFrame getTaiKhoanFrameInstance() {
-        if(mInstance == null) 
-            mInstance = new TaiKhoanFrame();
-        return mInstance;
-    }
-   
 }
