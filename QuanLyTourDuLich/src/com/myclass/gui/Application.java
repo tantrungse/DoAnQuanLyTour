@@ -2441,17 +2441,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		txtAddDoan_MaHDV.setColumns(10);
 		txtAddDoan_MaHDV.setBounds(250, 250, 300, 30);
 		cardAddDoan.add(txtAddDoan_MaHDV);
-		
-		JLabel lblAddDoan_MaPhuongTien = new JLabel("Nhập mã PT:");
-		lblAddDoan_MaPhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblAddDoan_MaPhuongTien.setBounds(50, 300, 200, 30);
-		cardAddDoan.add(lblAddDoan_MaPhuongTien);
-		
-		JTextField txtAddDoan_MaPhuongTien = new JTextField();
-		txtAddDoan_MaPhuongTien.setColumns(10);
-		txtAddDoan_MaPhuongTien.setBounds(250, 300, 300, 30);
-		cardAddDoan.add(txtAddDoan_MaPhuongTien);
-		
+	
 		JButton btnAddDoan_ThemMoi = new JButton("Thêm mới");
 		btnAddDoan_ThemMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -2461,7 +2451,6 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 				dto.setSoNguoi(Integer.valueOf(txtAddSoNguoi.getText()));
 				dto.setMaTour(txtAddDoan_MaTour.getText());
 				dto.setMaHDV(txtAddDoan_MaHDV.getText());
-				dto.setMaPhuongTien(txtAddDoan_MaPhuongTien.getText());
 				
 				doanBUS.add(dto);
 				DoanBUS.listDoanDTO.add(dto);
@@ -2472,7 +2461,6 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 				txtAddSoNguoi.setText("");
 				txtAddDoan_MaTour.setText("");
 				txtAddDoan_MaHDV.setText("");
-				txtAddDoan_MaPhuongTien.setText("");
 			}
 		});
 		btnAddDoan_ThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -3828,6 +3816,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		rowData.add(dto.getMaDoan());
 		rowData.add(String.valueOf(dto.getSoNguoi()));
 		rowData.add(dto.getMaTour());
+		rowData.add(dto.getMaHDV());
 		
 		doanTblModel.addRow(rowData);
 	}
@@ -3862,6 +3851,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		rowData.add(dto.getNoiDung());
 		rowData.add(dto.getMaTour());
 		
+		
 		tour_hopDongTblModel.addRow(rowData);
 	}
 	
@@ -3871,6 +3861,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		rowData.add(dto.getMaDoan());
 		rowData.add(String.valueOf(dto.getSoNguoi()));
 		rowData.add(dto.getMaTour());
+		rowData.add(dto.getMaHDV());
 		
 		tour_doanTblModel.addRow(rowData);
 	}
@@ -3949,6 +3940,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		doanTblModel.setValueAt(dto.getMaDoan(), selectedRow, 0);
 		doanTblModel.setValueAt(dto.getSoNguoi(), selectedRow, 1);
 		doanTblModel.setValueAt(dto.getMaTour(), selectedRow, 2);
+		doanTblModel.setValueAt(dto.getMaHDV(), selectedRow, 3);
 	}
 	
 	private void setRow(KeHoachTourDTO dto, int selectedRow) {
@@ -4063,7 +4055,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 					txtUpdateSoNguoi.setText((String) tblDoan.getValueAt(selectedRow, 1));
 					txtUpdateDoan_MaTour.setText((String) tblDoan.getValueAt(selectedRow, 2));
 					txtUpdateDoan_MaHDV.setText((String) tblDoan.getValueAt(selectedRow, 3));
-					txtUpdateDoan_MaPhuongTien.setText((String) tblDoan.getValueAt(selectedRow, 4));
+					
 					}
 				else if(selectedRow<0) {
 					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
