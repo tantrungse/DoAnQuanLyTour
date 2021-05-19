@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/com/myclass/bus/ChuongTrinhKMBUS.java=UTF-8
+encoding//src/com/myclass/bus/SendEmail.java=UTF-8
+encoding//src/com/myclass/connector/JDBCConnection.java=UTF-8
+encoding//src/com/myclass/dao/ChuongTrinhKMDAO.java=UTF-8
+encoding//src/com/myclass/dao/TaiKhoanDAO.java=UTF-8
+encoding//src/com/myclass/dao/TourDAO.java=UTF-8
+encoding//src/com/myclass/gui/Application.java=UTF-8
+encoding//src/com/myclass/gui/ChuongTrinhKMFrame.java=UTF-8
+encoding//src/com/myclass/gui/DiaDiemThamQuanGUI.java=UTF-8
+encoding//src/com/myclass/gui/KhachSanGUI.java=UTF-8
+encoding//src/com/myclass/gui/NhaHangGUI.java=UTF-8
+encoding//src/com/myclass/gui/PhuongTienGUI.java=UTF-8
+encoding//src/com/myclass/gui/TaiKhoanFrame.java=UTF-8
