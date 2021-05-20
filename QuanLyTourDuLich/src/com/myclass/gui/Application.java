@@ -3418,7 +3418,13 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnPhuongTien_TimKiem = new JButton("Tìm");
 		btnPhuongTien_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				PhuongTienDTO dto =phuongTienBUS.getByMaPhuongTien(txtPhuongTien_TimKiem.getText());
+					
+				phuongTienTblModel.setRowCount(0); // xoa tat ca row
+				
+					phuongTienTblModel.addRow(new Object[] {
+							dto.getMaPhuongTien(), dto.getTenPhuongTien(), dto.getChiPhi(), dto.getSoChoNgoi()});
+				
 			}
 		});
 		btnPhuongTien_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -5108,12 +5114,16 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
     private void addActionListenerBtnDiaDiemThamQuan_Update() {
     	btnDiaDiemThamQuan_CapNhat.addActionListener(new ActionListener() {
     		public  void actionPerformed(ActionEvent e) {
+    			int selectedRow = tblDiaDiemThamQuan.getSelectedRow();
+    			if(selectedRow>=0) {
     			cardLayout.show(cardsPane, "cardUpdateDiaDiemThamQuan");
-    			selectedRow = tblDiaDiemThamQuan.getSelectedRow();
-    			
     			txtUpdateMaDiaDiem.setText((String) tblDiaDiemThamQuan.getValueAt(selectedRow, 0));
     			txtUpdateTenDiaDiem.setText((String) tblDiaDiemThamQuan.getValueAt(selectedRow, 1));
     			txtUpdateDiaDiemThamQuan_DiaChi.setText((String) tblDiaDiemThamQuan.getValueAt(selectedRow, 2));
+    			}
+    			else if(selectedRow<0) {
+					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
+				}
     		}
     	});
     }
