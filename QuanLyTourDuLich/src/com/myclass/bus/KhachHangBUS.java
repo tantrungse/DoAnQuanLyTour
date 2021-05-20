@@ -52,4 +52,11 @@ public class KhachHangBUS {
 		
 		return soNguoi;
 	}
+	
+	public static void list()
+	{
+	    listKhachHangDTO=new ArrayList<KhachHangDTO>();	
+	listKhachHangDTO=khachHangDAO.getAll();
+		
+	}
 }

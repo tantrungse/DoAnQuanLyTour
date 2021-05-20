@@ -4,6 +4,8 @@ package com.myclass.gui;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -14,6 +16,9 @@ import com.myclass.bus.ChuongTrinhKMBUS;
 import com.myclass.dao.ChuongTrinhKMDAO;
 import com.myclass.dto.ChuongTrinhKMDTO;
 
+import Excel.DocExcel;
+import Excel.XuatExcel;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -22,6 +27,7 @@ import java.awt.Font;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -41,16 +47,20 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class ChuongTrinhKMFrame extends JFrame {
 
 	ArrayList<ChuongTrinhKMDTO> listKMGUI =new ArrayList<ChuongTrinhKMDTO>();
+	DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 	private JPanel contentPane;
 	private JTextField txtMakm ;
 	private JTextField txtNoidung ;
-	private JTextField txtMatour ;
 	private JTextField txtDateend ;
 	private JTextField txtDatestart ;
+	   private static DatePicker dp1,dp2;
 	private JScrollPane scrollPane ;
 private DefaultTableModel model =new DefaultTableModel();
 JTable tblDSSV =new JTable();
@@ -80,7 +90,9 @@ private JTextField txtTentour;
 	public ChuongTrinhKMFrame() {
 		
 		
-	
+	  
+		
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 660);
@@ -89,6 +101,41 @@ private JTextField txtTentour;
 		setContentPane(contentPane);
 		contentPane.setBackground(new Color(255,204,204));
 		contentPane.setLayout(null);
+		
+		//nút nhập,xuất file excel 
+		   JButton NhapExcel=new JButton("Nhập Excel");
+		   NhapExcel.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xls-30.png")));
+		   NhapExcel.setFont(new Font("Segoe UI", 0, 14));
+		   NhapExcel.setBorder(BorderFactory.createLineBorder(Color.decode("#90CAF9"), 1));
+		   NhapExcel.setBackground(Color.decode("#90CAF9"));
+		   NhapExcel.setBounds(631, 90, 140, 38);
+		   NhapExcel.addMouseListener(new MouseAdapter(){
+		       @Override
+		       public void mousePressed(MouseEvent evt){
+			           NhapExcel_click(evt);
+			           model.setRowCount(0);
+			           outModel();
+		       }
+		   });
+		   
+		   JButton XuatExcel=new JButton("Xuất Excel");
+		   XuatExcel.addActionListener(new ActionListener() {
+		   	public void actionPerformed(ActionEvent e) {
+		   	}
+		   });
+		   XuatExcel.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/xls-30.png")));
+		   XuatExcel.setFont(new Font("Segoe UI", 0, 14));
+		   XuatExcel.setBorder(BorderFactory.createLineBorder(Color.decode("#90CAF9"), 1));
+		   XuatExcel.setBackground(Color.decode("#90CAF9"));
+		   XuatExcel.setBounds(780, 90, 147, 38);
+		   XuatExcel.addMouseListener(new MouseAdapter(){
+		       @Override
+		       public void mousePressed(MouseEvent evt){
+		      XuatExcel_click(evt);
+		       }
+		   });
+		   contentPane.add(XuatExcel);
+		   contentPane.add(NhapExcel);
 		
 		
 		
@@ -119,8 +166,9 @@ private JTextField txtTentour;
 		JButton btnNhaplai = new JButton("Nh\u1EADp l\u1EA1i");
 		btnNhaplai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtMakm.setEditable(true);
 				txtMakm.setText("");
-				txtMatour.setText("");
+				
 				txtTentour.setText("");
 				txtNoidung.setText("");
 				txtDatestart.setText("");
@@ -129,6 +177,7 @@ private JTextField txtTentour;
 				
 			}
 		});
+		
 		btnNhaplai.setIcon(new ImageIcon("C:\\Users\\Minh\\OneDrive\\Hình ảnh\\refresh_32px.png"));
 		btnNhaplai.setBackground(new Color(255, 255, 0));
 		btnNhaplai.setForeground(new Color(255, 0, 0));
@@ -166,39 +215,65 @@ private JTextField txtTentour;
 		txtTentour.setBounds(462, 144, 159, 33);
 		contentPane.add(txtTentour);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("M\u00E3 Tour");
-		lblNewLabel_1_2.setBounds(641, 95, 107, 33);
-		lblNewLabel_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1_2.setForeground(Color.BLACK);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		contentPane.add(lblNewLabel_1_2);
-		
-		txtMatour = new JTextField();
-		txtMatour.setBounds(771, 95, 159, 33);
-		txtMatour.setColumns(10);
-		contentPane.add(txtMatour);
-		
 		JLabel lblNewLabel_1_2_1 = new JLabel("<html>\r\n<body>\r\n<p>Ng\u00E0y h\u1EBFt hi\u1EC7u<br/> l\u1EF1c khuy\u1EBFn m\u00E3i</p>\r\n</body>\r\n</html>");
-		lblNewLabel_1_2_1.setBounds(641, 187, 107, 50);
+		lblNewLabel_1_2_1.setBounds(641, 221, 107, 50);
 		lblNewLabel_1_2_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_2_1.setForeground(Color.BLACK);
 		lblNewLabel_1_2_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblNewLabel_1_2_1);
 		
 		txtDateend = new JTextField();
-		txtDateend.setBounds(771, 200, 159, 26);
+		txtDateend.setBounds(758, 238, 122, 26);
 		txtDateend.setColumns(10);
 		contentPane.add(txtDateend);
 		
+		
+	     DatePickerSettings pickerSetting = new DatePickerSettings();
+	        pickerSetting.setVisibleDateTextField(false);
+
+	 dp1 = new DatePicker(pickerSetting);        
+	 dp1.setBounds(890, 185, 35, 30);
+	        dp1.setDateToToday();    
+
+	  JButton calendar3=dp1.getComponentToggleCalendarButton();
+	        calendar3.setText("");
+	        calendar3.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/calendar-30.png")));
+	        calendar3.setBorder(BorderFactory.createLineBorder(Color.decode("#90CAF9"), 1));
+	        contentPane.add(dp1);
+	        dp1.addDateChangeListener((dce) -> {
+	        	String k =  dp1.getDateStringOrEmptyString();
+	            txtDatestart.setText(k);
+	        });
+	        
+	    //calendar 2    
+		     DatePickerSettings pickerSetting1 = new DatePickerSettings();
+		        pickerSetting1.setVisibleDateTextField(false);
+
+		 dp2 = new DatePicker(pickerSetting1);        
+		 dp2.setBounds(890, 235, 35, 30);
+		        dp2.setDateToToday();    
+
+
+
+		  JButton calendar=dp2.getComponentToggleCalendarButton();
+		        calendar.setText("");
+		        calendar.setIcon(new ImageIcon(this.getClass().getResource("/Images/Icon/calendar-30.png")));
+		        calendar.setBorder(BorderFactory.createLineBorder(Color.decode("#90CAF9"), 1));
+		        contentPane.add(dp2);
+		        dp2.addDateChangeListener((dce) -> {
+		        	String k =  dp2.getDateStringOrEmptyString();
+		          txtDateend.setText(k);
+		        });
+		
 		JLabel lblNewLabel_1_2_1_1 = new JLabel("<html>\r\n<body>\r\n<p>Ng\u00E0y b\u1EAFt \u0111\u1EA7u<br/> khuy\u1EBFn m\u00E3i</p>\r\n</body>\r\n</html>");
-		lblNewLabel_1_2_1_1.setBounds(641, 139, 107, 50);
+		lblNewLabel_1_2_1_1.setBounds(631, 163, 107, 50);
 		lblNewLabel_1_2_1_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_2_1_1.setForeground(Color.BLACK);
 		lblNewLabel_1_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblNewLabel_1_2_1_1);
 		
 		txtDatestart = new JTextField();
-		txtDatestart.setBounds(771, 147, 159, 26);
+		txtDatestart.setBounds(757, 187, 122, 26);
 		txtDatestart.setColumns(10);
 		contentPane.add(txtDatestart);
 		
@@ -209,21 +284,22 @@ private JTextField txtTentour;
 			public void actionPerformed(ActionEvent e) {
 		
 				SimpleDateFormat ft=new SimpleDateFormat("dd/MM/yyyy");
-				
+				ChuongTrinhKMBUS ct =new ChuongTrinhKMBUS();
 				  String makm = txtMakm.getText();
-                  String matour = txtMatour.getText();
+                
                   String tentour = txtTentour.getText();
                   String noidung= txtNoidung.getText();
-                  String dayend=  (txtDateend.getText());
-                String daystart= (txtDatestart.getText());
+              
 				
-				
-	if(makm== "" || matour == "" || tentour == "" || noidung == "" || daystart  == "" || dayend== "")
+	if(txtMakm.getText().isEmpty()  || txtTentour.getText().isEmpty() || txtNoidung.getText().isEmpty() || (txtDatestart.getText()).isEmpty() || (txtDateend.getText()).isEmpty())
 	{
 		JOptionPane.showMessageDialog(null, "Vui lòng nhập đầy đủ thông tin");
 		return;
 	}else {
-		if(kiemTraNgayThangNam(daystart)==2)
+	    LocalDate dayend=  LocalDate.parse(txtDateend.getText(),formatter2);
+        LocalDate daystart= LocalDate.parse(txtDatestart.getText(),formatter2);
+		
+		if(kiemTraNgayThangNam(String.valueOf(daystart))==2)
 		{
 			JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui lòng nhập theo định dạng yyyy/MM/dd !!!");
 			
@@ -231,7 +307,7 @@ private JTextField txtTentour;
 			txtDatestart.requestFocus();
 			return;
 		}
-		if( kiemTraNgayThangNam(dayend)==2)
+		if( kiemTraNgayThangNam(String.valueOf(dayend))==2)
 		{
 JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui lòng nhập theo định dạng yyyy/MM/dd !!!");
 			
@@ -239,6 +315,10 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 			txtDateend.requestFocus();
 			return;
 		}
+	     if(!ct.checkngay(daystart, dayend)) {
+         	JOptionPane.showMessageDialog(null, "Ngày tháng năm không hợp lệ!!!");
+         	return;
+         }
 		 if(ChuongTrinhKMBUS.check(makm))
          {
              JOptionPane.showMessageDialog(null, "Mã khuyến mãi đă tồn tại !!!");
@@ -247,14 +327,14 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
          {
         	
         	 //thêm
-        	 ChuongTrinhKMDTO ctkm =new ChuongTrinhKMDTO(makm,matour,tentour,noidung,(daystart),(dayend));
+        	 ChuongTrinhKMDTO ctkm =new ChuongTrinhKMDTO(makm,tentour,noidung, daystart,dayend);
         	 ChuongTrinhKMBUS.add(ctkm);
         	
 			
 		     Vector header = new Vector();
 		        header.add("Mã KM");
-		        header.add("Mã Tour");
-		        header.add("Tên Tour");
+		 
+		        header.add("Tên chương trình KM");
 		        header.add("Nội dung");
 		        header.add("Ngày bắt đầu");
 		        header.add("Ngày kết thúc");
@@ -266,11 +346,11 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 		        }
 		        Vector row=new Vector();
 		        row.add(ctkm.getMaKM());
-		        row.add(ctkm.getMaTourKM());
+		       
 		        row.add(ctkm.getTenTourKM());
-		        row.add(ctkm.getNoidungKM());
-		        row.add(ctkm.getTimeStartKM());
-		        row.add(ctkm.getTimeEndKM());
+		        row.add("Giảm " + ctkm.getNoidungKM() + "%");
+		        row.add(formatter1.format(ctkm.getTimeStartKM()));
+		        row.add(formatter1.format( ctkm.getTimeEndKM()));
 		        
 		        model.addRow(row);
 		       
@@ -292,14 +372,25 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 			public void actionPerformed(ActionEvent e) {
 				int j= tblDSSV.getSelectedRow();
 			      String makm = txtMakm.getText();
-		            String matour=txtMatour.getText();
+		     
 		            String tentour=txtTentour.getText();
 		            String noidung=txtNoidung.getText();
-		            String day1=txtDatestart.getText();
-		            String day2=txtDateend.getText();
+		           
+		            if(kiemTraNgayThangNam(String.valueOf(txtDatestart))==2 || kiemTraNgayThangNam(String.valueOf(txtDateend))==2)
+		            {
+		            	JOptionPane.showMessageDialog(null, "Ngày tháng năm không hợp lệ (yyyy/MM/dd)!!!");
+		            	return;
+		            }
+		            LocalDate day1=LocalDate.parse(txtDatestart.getText());
+		            LocalDate day2=LocalDate.parse(txtDateend.getText());
+		            ChuongTrinhKMBUS ct =new ChuongTrinhKMBUS();
+		            if(!ct.checkngay(day1, day2)) {
+		            	JOptionPane.showMessageDialog(null, "Ngày tháng năm không hợp lệ!!!");
+		            	return;
+		            }
 		            ChuongTrinhKMDTO s= new ChuongTrinhKMDTO();
 		            s.setMaKM(makm);
-		            s.setMaTourKM(matour);
+		           
 		            s.setTenTourKM(tentour);
 		            s.setNoidungKM(noidung);
 		            s.setTimeStartKM(day1);
@@ -311,11 +402,11 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 	        	{
 	        		ChuongTrinhKMBUS.sua(s);
 	        		 model.setValueAt(s.getMaKM(), j, 0);
-	        	        model.setValueAt(s.getMaTourKM(), j, 1);
-	        	        model.setValueAt(s.getTenTourKM(), j, 2);
-	        	        model.setValueAt(s.getNoidungKM(), j, 3);
-	        	        model.setValueAt(s.getTimeStartKM(), j, 4);
-	        	        model.setValueAt(s.getTimeEndKM(), j, 5);
+	        	       
+	        	        model.setValueAt(s.getTenTourKM(), j, 1);
+	        	        model.setValueAt(s.getNoidungKM(), j, 2);
+	        	        model.setValueAt(formatter1.format(s.getTimeStartKM()), j, 3);
+	        	        model.setValueAt(formatter1.format(s.getTimeEndKM()), j, 4);
 	        	        tblDSSV.setModel(model);
 	        	        JOptionPane.showMessageDialog(null, "Sửa thành công!!!");
 	        	}	else {
@@ -374,9 +465,9 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 				Object[] options = {
 						"Search theo mã", "Seach theo tên","Cancel"
 				};
-				int c=JOptionPane.showOptionDialog(contentPane, "Tìm kiếm theo mã khuyến mãi hay tên tour","Tìm kiếm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[2]);
+				int c=JOptionPane.showOptionDialog(contentPane, "Tìm kiếm theo mã khuyến mãi hay tên chương trình KM","Tìm kiếm", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,options,options[2]);
 				if(c==1) {
-				 String seach=JOptionPane.showInputDialog("Mời nhập tên tour khuyến mãi cần tìm");
+				 String seach=JOptionPane.showInputDialog("Mời nhập tên chương trình khuyến mãi cần tìm");
 				  if( seach== null) {
 				
 					  return;
@@ -404,8 +495,8 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 						   model.setRowCount(0);
 				    	   Vector header = new Vector();
 					        header.add("Mã KM");
-					        header.add("Mã Tour");
-					        header.add("Tên Tour");
+					      
+					        header.add("Tên chương trình KM");
 					        header.add("Nội dung");
 					        header.add("Ngày bắt đầu");
 					        header.add("Ngày kết thúc");
@@ -420,11 +511,11 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 					       
 					          Vector	data = new Vector();
 					        data.add(ct.getMaKM());
-					        data.add(ct.getMaTourKM());
+					       
 					        data.add(ct.getTenTourKM());
 					        data.add(ct.getNoidungKM());
-					        data.add(ct.getTimeStartKM());
-					        data.add((ct.getTimeEndKM()));
+					        data.add(formatter1.format(ct.getTimeStartKM()));
+					        data.add(formatter1.format( ct.getTimeEndKM()));
 					        model.addRow(data);
 					        tblDSSV.setModel(model);
 					  }else
@@ -466,9 +557,9 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 		lblNewLabel_1.setForeground(new Color(0, 0, 0));
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("N\u1ED9i dung khuy\u1EBFn m\u00E3i");
-		lblNewLabel_1_1.setBounds(287, 207, 159, 47);
+		JLabel lblNewLabel_1_1 = new JLabel("Gi\u00E1 tr\u1ECB % khuy\u1EBFn m\u00E3i");
 		lblNewLabel_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_1_1.setBounds(287, 207, 159, 47);
 		lblNewLabel_1_1.setForeground(Color.BLACK);
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 13));
 		contentPane.add(lblNewLabel_1_1);
@@ -481,56 +572,35 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 		   	  int i = tblDSSV.getSelectedRow();
 		   	 txtMakm.setEditable(false);
               txtMakm.setText(tblDSSV.getModel().getValueAt(i, 0).toString());
-              txtMatour.setText(tblDSSV.getModel().getValueAt(i, 1).toString());
-            txtTentour.setText(tblDSSV.getModel().getValueAt(i, 2).toString()); 
-           txtNoidung.setText(tblDSSV.getModel().getValueAt(i, 3).toString());
-             txtDatestart.setText( tblDSSV.getModel().getValueAt(i, 4).toString());    
-             txtDateend.setText( tblDSSV.getModel().getValueAt(i, 5).toString());  
+             
+            txtTentour.setText(tblDSSV.getModel().getValueAt(i, 1).toString()); 
+           txtNoidung.setText(tblDSSV.getModel().getValueAt(i, 2).toString());
+             txtDatestart.setText( tblDSSV.getModel().getValueAt(i, 3).toString());    
+             txtDateend.setText( tblDSSV.getModel().getValueAt(i, 4).toString());  
 		   	}
 		   });
 		
 		//táº¡o báº£ng
 		   tblDSSV.setModel(new DefaultTableModel(
 		        	new Object[][] {
-		        		{null, null, null, null,null,null},
-		        		{null, null, null, null,null,null},
-		        		{null, null, null, null,null,null}
+		        		{null, null, null,null,null},
+		        		{null, null, null,null,null},
+		        		{null, null, null,null,null}
 		        	},
 		        	new String[] {
-		        		"Mã khuyến mãi", "Mã Tour", "Tên Tour","Nội dung khuyến mãi","Ngày bắt đầu","Ngày kết thúc"
+		        		"Mã khuyến mãi", "Tên chương trình KM","Nội dung khuyến mãi","Ngày bắt đầu","Ngày kết thúc"
 		        	}
 		        ));
 		scrollPane.setViewportView(tblDSSV);
 		
-	
+	ChuongTrinhKMBUS.list();
+	outModel();
 		
-		JButton btnXem = new JButton("Xem chi ti\u1EBFt");
-		btnXem.setHorizontalAlignment(SwingConstants.LEFT);
-		btnXem.setIcon(new ImageIcon("C:\\Users\\Minh\\OneDrive\\Hình ảnh\\preview_pane_32px.png"));
-		//btnXem.setIcon(new ImageIcon(ChuongTrinhKMFrame.class.getResource("/IMG/icons8_upload_to_cloud_32px.png")));
-		  
-    
-		btnXem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				ChuongTrinhKMBUS.list();
-				model.setRowCount(0);
-				list();
-			
-		
-			}
-		});
-		btnXem.setBackground(new Color(255, 255, 0));
-		btnXem.setFont(new Font("Tahoma", Font.BOLD, 14));
-		btnXem.setForeground(new Color(255, 0, 0));
-		btnXem.setBounds(771, 237, 156, 38);
-		contentPane.add(btnXem);
-		
-		JLabel lblNewLabel_1_3 = new JLabel("Tên Tour");
+		JLabel lblNewLabel_1_3 = new JLabel("Tên chương trình KM");
 		lblNewLabel_1_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_1_3.setForeground(Color.BLACK);
 		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_3.setBounds(315, 150, 131, 33);
+		lblNewLabel_1_3.setBounds(287, 150, 159, 33);
 		contentPane.add(lblNewLabel_1_3);
 	
 		
@@ -548,8 +618,8 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 	    {
 		  Vector header = new Vector();
 	        header.add("Mã KM");
-	        header.add("Mã Tour");
-	        header.add("Tên Tour");
+	     
+	        header.add("Tên chương trình KM");
 	        header.add("Nội dung");
 	        header.add("Ngày bắt đầu");
 	        header.add("Ngày kết thúc");
@@ -565,11 +635,11 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 	        { 
 	          Vector	data = new Vector();
 	        data.add(n.getMaKM());
-	        data.add(n.getMaTourKM());
+	       
 	        data.add(n.getTenTourKM());
-	        data.add(n.getNoidungKM());
-	        data.add(n.getTimeStartKM());
-	        data.add((n.getTimeEndKM()));
+	        data.add("Giảm "+n.getNoidungKM()+"%");
+	        data.add(formatter1.format(n.getTimeStartKM()));
+	        data.add(formatter1.format( n.getTimeEndKM()));
 	        model.addRow(data);
 	        }
 	    
@@ -578,8 +648,9 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 	    }
 	    public void list() // Chép ArrayList lên table
 	    {
-	        if(ChuongTrinhKMBUS.getList()== null) ChuongTrinhKMBUS.list();
-	        ArrayList<ChuongTrinhKMDTO> nv = ChuongTrinhKMBUS.getList();
+	    	ChuongTrinhKMBUS ct =new ChuongTrinhKMBUS();
+	        if(ct.getList()== null) ChuongTrinhKMBUS.list();
+	        ArrayList<ChuongTrinhKMDTO> nv = ct.getList();
    model.setRowCount(0);
 	        outModel();
 	    }
@@ -587,8 +658,8 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 	    {
 		  Vector header = new Vector();
 	        header.add("Mã KM");
-	        header.add("Mã Tour");
-	        header.add("Tên Tour");
+	  
+	        header.add("Tên chương trình KM");
 	        header.add("Nội dung");
 	        header.add("Ngày bắt đầu");
 	        header.add("Ngày kết thúc");
@@ -610,11 +681,11 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 	        { 
 	          Vector	data = new Vector();
 	        data.add(n.getMaKM());
-	        data.add(n.getMaTourKM());
+	       
 	        data.add(n.getTenTourKM());
-	        data.add(n.getNoidungKM());
-	        data.add(n.getTimeStartKM());
-	        data.add((n.getTimeEndKM()));
+	        data.add("Giảm "+n.getNoidungKM()+"%");
+	        data.add(formatter1.format(n.getTimeStartKM()));
+	        data.add(formatter1.format(n.getTimeEndKM()));
 	        model.addRow(data);
 	        }
 	    
@@ -630,8 +701,7 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 	    }
 		public int kiemTraNgayThangNam(String day) {  // Check ngày tháng năm theo form yyyy/MM/dd
 		 int c=1;
-			String regex = "^\\d{4}\\/(0[1-9]|1[012])\\/(0[1-9]|[12][0-9]|3[01])$";
-		
+		 String regex = "^\\d{4}\\-(0[1-9]|1[012])\\-(0[1-9]|[12][0-9]|3[01])$";
 				try {
 					
 					if (day.matches(regex) == true) {
@@ -648,7 +718,7 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 			
 			return c;
 		}
-		public static void clickOnKey(  final AbstractButton button, String actionName, int key ) //tạo nút exit bằng phím ESC
+		public static void clickOnKey(  final AbstractButton button, String actionName, int key ) //tạo t exit bằng phím ESC
 		{
 		       button.getInputMap( JButton.WHEN_IN_FOCUSED_WINDOW )
 		           .put( KeyStroke.getKeyStroke( key, 0 ), actionName );
@@ -681,6 +751,12 @@ JOptionPane.showMessageDialog(null,"Ngày tháng năm không hợp lệ , vui l�
 			}
 		    return c;
 		}
-	
+
+	    protected void XuatExcel_click(MouseEvent evt){
+	        new XuatExcel().xuatFileExcelKhuyenMai();
+	    }
+	    protected void NhapExcel_click(MouseEvent evt){
+	        new DocExcel().docFileExcelKhuyenMai();
+	    }
 		
 }

@@ -1,26 +1,22 @@
 package com.myclass.dto;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 public class ChuongTrinhKMDTO {
   private String maKM;
-  private String maTourKM;
+
   private String tenTourKM;
   private String noidungKM;
-  private String timeStartKM;
-  private String timeEndKM;
+  private LocalDate timeStartKM;
+  private LocalDate timeEndKM;
 public String getMaKM() {
 	return maKM;
 }
 public void setMaKM(String maKM) {
 	this.maKM = maKM;
 }
-public String getMaTourKM() {
-	return maTourKM;
-}
-public void setMaTourKM(String maTourKM) {
-	this.maTourKM = maTourKM;
-}
+
 public String getTenTourKM() {
 	return tenTourKM;
 }
@@ -33,27 +29,27 @@ public String getNoidungKM() {
 public void setNoidungKM(String noidungKM) {
 	this.noidungKM = noidungKM;
 }
-public String getTimeStartKM() {
+public LocalDate getTimeStartKM() {
 	return timeStartKM;
 }
-public void setTimeStartKM(String timeStartKM) {
+public void setTimeStartKM(LocalDate timeStartKM) {
 	this.timeStartKM = timeStartKM;
 }
-public String getTimeEndKM() {
+public LocalDate getTimeEndKM() {
 	return timeEndKM;
 }
-public void setTimeEndKM(String timeEndKM) {
+public void setTimeEndKM(LocalDate timeEndKM) {
 	this.timeEndKM = timeEndKM;
 }
-public ChuongTrinhKMDTO(String maKM, String maTourKM, String tenTourKM, String noidungKM, String timeStartKM,
-		String timeEndKM) {
+public ChuongTrinhKMDTO(String maKM, String tenTourKM, String noidungKM, LocalDate daystart,
+		LocalDate dayend) {
 	
 	this.maKM = maKM;
-	this.maTourKM = maTourKM;
+	
 	this.tenTourKM = tenTourKM;
 	this.noidungKM = noidungKM;
-	this.timeStartKM = timeStartKM;
-	this.timeEndKM = timeEndKM;
+	this.timeStartKM = daystart;
+	this.timeEndKM = dayend;
 }
 public ChuongTrinhKMDTO() {
 	super();

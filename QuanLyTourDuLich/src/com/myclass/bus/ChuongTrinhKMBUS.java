@@ -1,11 +1,18 @@
 package com.myclass.bus;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.myclass.dao.ChuongTrinhKMDAO;
 import com.myclass.dto.ChuongTrinhKMDTO;
+
+
+import com.myclass.dto.*;
 
 
 public class ChuongTrinhKMBUS {
@@ -75,7 +82,7 @@ public static void showData()
 	for(int i=0;i<ctKMlist.size();i++)
 	{
 		model.addRow(new Object[] {
-				ctKMlist.get(i).getMaKM(), ctKMlist.get(i).getMaTourKM(), ctKMlist.get(i).getTenTourKM(), ctKMlist.get(i).getNoidungKM(),
+				ctKMlist.get(i).getMaKM(), ctKMlist.get(i).getTenTourKM(), ctKMlist.get(i).getNoidungKM(),
 				ctKMlist.get(i).getTimeStartKM(), ctKMlist.get(i).getTimeEndKM()
 		});
 	}
@@ -84,6 +91,23 @@ public static void showData()
 	
 	
 }
+
+public void sua(ChuongTrinhKMDTO km,int i)
+{
+    try
+    {
+
+      
+       ChuongTrinhKMDAO.sua(km);
+       if(ctKMlist!=null)
+        ctKMlist.set(i, km);
+    }
+    catch (Exception ex) {
+       Logger.getLogger(ChuongTrinhKMBUS.class.getName()).log(Level.SEVERE, null, ex);
+    } 
+    
+}
+
 public ChuongTrinhKMDTO get(String MaKH)
 {
     for(ChuongTrinhKMDTO kh : ctKMlist )
@@ -107,7 +131,7 @@ public static boolean check(String ma)
     return false;
 }
 
-public static ArrayList<ChuongTrinhKMDTO> getList() {
+public  ArrayList<ChuongTrinhKMDTO> getList() {
     return ctKMlist;
 }
 //public static ArrayList<ChuongTrinhKMDTO> getListtk() {
@@ -144,4 +168,23 @@ public static ChuongTrinhKMDTO timMa(String ma)
 	
 	return null;
 }
+public static int timVitri(String ma)
+{
+	 for (int i = 0; i < ctKMlist.size(); i++) {
+         if (ctKMlist.get(i).getMaKM().equals(ma)) {
+             return i;
+         }
+     }
+     return -1;
+}
+public boolean checkngay(LocalDate d1 , LocalDate d2)
+{
+	if(d1.isAfter(d2))
+	{
+		return false;
+	}
+	return true;
+	
+}
+
 }
