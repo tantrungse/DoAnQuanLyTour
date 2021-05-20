@@ -281,16 +281,16 @@ public class Application extends JFrame {
 		lblQuanLyKhachHang.setFont(new Font("Consolas", Font.BOLD, 16));
 		menuSidePane.add(lblQuanLyKhachHang);
 		
-		JLabel lblQuanLyPhuongTien = new JLabel("Quản lý phương tiện");
-		lblQuanLyPhuongTien.addMouseListener(new MouseAdapter() {
+		JLabel lblQuanLyCTKeHoachTheoNgay = new JLabel("Quản lý CT kế hoạch");
+		lblQuanLyCTKeHoachTheoNgay.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cardLayout.show(cardsPane, "cardQuanLyPhuongTien");
+				cardLayout.show(cardsPane, "cardQuanLyCTKeHoachTheoNgay");
 			}
 		});
-		lblQuanLyPhuongTien.setForeground(Color.WHITE);
-		lblQuanLyPhuongTien.setFont(new Font("Consolas", Font.BOLD, 16));
-		menuSidePane.add(lblQuanLyPhuongTien);
+		lblQuanLyCTKeHoachTheoNgay.setForeground(Color.WHITE);
+		lblQuanLyCTKeHoachTheoNgay.setFont(new Font("Consolas", Font.BOLD, 16));
+		menuSidePane.add(lblQuanLyCTKeHoachTheoNgay);
 		// ===== SIDE END HERE ===== 
 		
 		cardsPane = new JPanel(new CardLayout());
