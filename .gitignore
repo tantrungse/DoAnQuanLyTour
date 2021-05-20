@@ -1,2 +1,5 @@
 .metadata/*
 /.metadata/
+QuanLyTourDuLich/.classpath
+QuanLyTourDuLich/.classpath
+QuanLyTourDuLich/src/com/myclass/connector/JDBCConnection.java
