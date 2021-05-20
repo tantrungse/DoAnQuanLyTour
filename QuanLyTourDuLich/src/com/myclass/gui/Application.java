@@ -2038,7 +2038,7 @@ StringBuilder sb=new StringBuilder();
 		txtHopDong_TimKiem.setColumns(10);
 		cardQuanLyHopDong.add(txtHopDong_TimKiem);
 		
-JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
+JButton btnHopDong_TimKiem = new JButton("Tìm");
 		
 		btnHopDong_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
