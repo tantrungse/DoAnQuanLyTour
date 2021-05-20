@@ -81,7 +81,6 @@ public class Application extends JFrame {
 	private NhaHangBUS nhaHangBUS;
 	private KhachSanBUS khachSanBUS;
 	
-	
 	private DefaultTableModel taiKhoanTblModel;
 	private DefaultTableModel tourTblModel;
 	private DefaultTableModel hdvTblModel;
@@ -93,12 +92,15 @@ public class Application extends JFrame {
 	private DefaultTableModel doanTblModel;
 	private DefaultTableModel keHoachTourTblModel;
 	private DefaultTableModel keHoachTour_ctKeHoachTheoNgayTblModel;
-	private DefaultTableModel phuongTienTblModel;
 	private DefaultTableModel ctKeHoachTheoNgayTblModel;
 	private DefaultTableModel ctKeHoachTheoNgay_diaDiemThamQuanTblModel;
 	private DefaultTableModel ctKeHoachTheoNgay_phuongTienTblModel;
 	private DefaultTableModel ctKeHoachTheoNgay_nhaHangTblModel;
 	private DefaultTableModel ctKeHoachTheoNgay_khachSanTblModel;
+	private DefaultTableModel diaDiemThamQuanTblModel;
+	private DefaultTableModel phuongTienTblModel;
+	private DefaultTableModel nhaHangTblModel;
+	private DefaultTableModel khachSanTblModel;
 	
 	private JTable tblTaiKhoan;
 	private JTable tblTour;
@@ -111,12 +113,15 @@ public class Application extends JFrame {
 	private JTable tblDoan;
 	private JTable tblKeHoachTour;
 	private JTable tblKeHoachTour_CTKeHoachTheoNgay;
-	private JTable tblPhuongTien;
 	private JTable tblCTKeHoachTheoNgay;
 	private JTable tblCTKeHoachTheoNgay_DiaDiemThamQuan;
 	private JTable tblCTKeHoachTheoNgay_PhuongTien;
 	private JTable tblCTKeHoachTheoNgay_NhaHang;
 	private JTable tblCTKeHoachTheoNgay_KhachSan;
+	private JTable tblDiaDiemThamQuan;
+	private JTable tblPhuongTien;
+	private JTable tblNhaHang;
+	private JTable tblKhachSan;
 	
 	private int selectedRow;
 	
@@ -125,7 +130,10 @@ public class Application extends JFrame {
 	private JButton btnDoan_CapNhat;
 	private JButton btnKeHoachTour_CapNhat;
 	private JButton btnKeHoachTour_CTKeHoachTheoNgay_CapNhat;
+	private JButton btnDiaDiemThamQuan_CapNhat;
 	private JButton btnPhuongTien_CapNhat;
+	private JButton btnNhaHang_CapNhat;
+	private JButton btnKhachSan_CapNhat;
 	
 	private JTextField txtUpdateTenTaiKhoan;
 	private JTextField txtUpdateMatKhau;
@@ -173,10 +181,10 @@ public class Application extends JFrame {
 	private JTextField txtUpdateKhachSan;
 	private JTextField txtUpdateCTKeHoachTheoNgay_MaKHTour;
 	
-	private JTextField txtUpdateMaPhuongTien;
-	private JTextField txtUpdateTenPhuongTien;
-	private JTextField txtUpdateChiPhi;
-	private JTextField txtUpdateSoChoNgoi;
+	private JTextField txtUpdateMaDiaDiem, txtUpdateTenDiaDiem, txtUpdateDiaDiemThamQuan_DiaChi;
+	private JTextField txtUpdateMaPhuongTien, txtUpdateTenPhuongTien, txtUpdateChiPhi, txtUpdateSoChoNgoi;
+	private JTextField txtUpdateMaNhaHang, txtUpdateTenNhaHang, txtUpdateNhaHang_DiaChi, txtUpdateNhaHang_ChiPhiTrenNguoi;
+	private JTextField txtUpdateMaKhachSan, txtUpdateTenKhachSan, txtUpdateKhachSan_DiaChi, txtUpdateKhachSan_ChiPhiTrenNguoi;
 	
 	private JButton btnTour_Update;
 	private JButton btnHopDong_CapNhat;
@@ -3024,7 +3032,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		JButton btnCTKeHoachTheoNgay_NhaHangLayout = new JButton("Xem danh sách");
 		btnCTKeHoachTheoNgay_NhaHangLayout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(cardsPane, "cardQuanLyPhuongTien");
+				cardLayout.show(cardsPane, "cardQuanLyNhaHang");
 			}
 		});
 		addActionListenerBtnTour_Update();
@@ -3444,7 +3452,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		cardQuanLyPhuongTien.add(btnPhuongTien_ThemMoi);
 		
 		btnPhuongTien_CapNhat = new JButton("Cập nhật phương tiện");
-		addActionListenerBtnKhachHang_Update();
+		addActionListenerBtnPhuongTien_Update();
 		btnPhuongTien_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnPhuongTien_CapNhat.setBounds(820, 300, 200, 30);
 		cardQuanLyPhuongTien.add(btnPhuongTien_CapNhat);
@@ -3612,7 +3620,8 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 				PhuongTienBUS.listPhuongTienDTO.set(selectedRow, dto);
 				setRow(dto, selectedRow);
 				cardLayout.show(cardsPane, "cardQuanLyPhuongTien");
-//				reloadTblPhuongTien(dto);
+				phuongTienTblModel.setRowCount(0);
+				loadTblPhuongTien();
 				// clear all text after update
 				txtUpdateMaPhuongTien.setText("");
 				txtUpdateTenPhuongTien.setText("");
@@ -3634,6 +3643,266 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		btnUpdatePhuongTien_QuayLai.setBounds(300, 300, 100, 30);
 		cardUpdatePhuongTien.add(btnUpdatePhuongTien_QuayLai);
 		// ===== UPDATE PHUONG TIEN LAYOUT END HERE =====
+		
+		// ===== DIA DIEM THAM QUAN LAYOUT START HERE =====
+		JPanel cardQuanLyDiaDiemThamQuan = new JPanel();
+		cardsPane.add(cardQuanLyDiaDiemThamQuan, "name_4568411886400");
+		cardQuanLyDiaDiemThamQuan.setLayout(null);
+		cardLayout.addLayoutComponent(cardQuanLyDiaDiemThamQuan, "cardQuanLyDiaDiemThamQuan");
+		
+		JLabel lblDiaDiemThamQuan_TieuDe = new JLabel("Trang quản lý địa điểm tham quan");
+		lblDiaDiemThamQuan_TieuDe.setBounds(0, 0, 600, 100);
+		lblDiaDiemThamQuan_TieuDe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		cardQuanLyDiaDiemThamQuan.add(lblDiaDiemThamQuan_TieuDe);
+		
+		JLabel lblDiaDiemThamQuan_TimKiem = new JLabel("Tìm kiếm:");
+		lblDiaDiemThamQuan_TimKiem.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		lblDiaDiemThamQuan_TimKiem.setBounds(20, 100, 80, 30);
+		cardQuanLyDiaDiemThamQuan.add(lblDiaDiemThamQuan_TimKiem);
+		
+		JTextField txtDiaDiemThamQuan_TimKiem = new JTextField();
+		txtDiaDiemThamQuan_TimKiem.setBounds(100, 100, 200, 30);
+		txtDiaDiemThamQuan_TimKiem.setColumns(10);
+		cardQuanLyDiaDiemThamQuan.add(txtDiaDiemThamQuan_TimKiem);
+		
+		JButton btnDiaDiemThamQuan_TimKiem = new JButton("Tìm");
+		btnDiaDiemThamQuan_TimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnDiaDiemThamQuan_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDiaDiemThamQuan_TimKiem.setBounds(310, 100, 80, 30);
+		cardQuanLyDiaDiemThamQuan.add(btnDiaDiemThamQuan_TimKiem);
+		
+		JScrollPane diaDiemThamQuanScrollPane = new JScrollPane();
+		diaDiemThamQuanScrollPane.setBounds(50, 150, 450, 273);
+		cardQuanLyDiaDiemThamQuan.add(diaDiemThamQuanScrollPane);
+		
+		tblDiaDiemThamQuan = new JTable();
+		tblDiaDiemThamQuan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tblDiaDiemThamQuan.getSelectedRow();
+				
+			}
+		});
+		tblDiaDiemThamQuan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tblDiaDiemThamQuan.setRowHeight(50);
+		String[] colNamesTblDiaDiemThamQuan = {"Mã địa điểm", "Tên địa điểm", "Địa chỉ"};
+		diaDiemThamQuanTblModel = new DefaultTableModel();
+		tblDiaDiemThamQuan.setModel(diaDiemThamQuanTblModel);
+		for(String colName : colNamesTblDiaDiemThamQuan) {
+			diaDiemThamQuanTblModel.addColumn(colName);
+		}
+		loadTblDiaDiemThamQuan();
+		
+		diaDiemThamQuanScrollPane.setViewportView(tblDiaDiemThamQuan);
+		tblDiaDiemThamQuan.setFillsViewportHeight(true);
+		
+		JButton btnDiaDiemThamQuan_TaiLai = new JButton("Tải lại bảng");
+		btnDiaDiemThamQuan_TaiLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				diaDiemThamQuanTblModel.setRowCount(0);
+				loadTblDiaDiemThamQuan();
+			}
+		});
+		btnDiaDiemThamQuan_TaiLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDiaDiemThamQuan_TaiLai.setBounds(520, 150, 200, 30);
+		cardQuanLyDiaDiemThamQuan.add(btnDiaDiemThamQuan_TaiLai);
+		
+		JButton btnDiaDiemThamQuan_Xoa = new JButton("Xóa địa điểm tham quan");
+		btnDiaDiemThamQuan_Xoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tblDiaDiemThamQuan.getSelectedRow();
+				String maDiaDiem = (String) tblDiaDiemThamQuan.getValueAt(selectedRow, 0);
+				
+				diaDiemThamQuanBUS.deleteById(maDiaDiem);
+				diaDiemThamQuanTblModel.removeRow(selectedRow);
+			}
+		});
+		btnDiaDiemThamQuan_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDiaDiemThamQuan_Xoa.setBounds(520, 200, 200, 30);;
+		cardQuanLyDiaDiemThamQuan.add(btnDiaDiemThamQuan_Xoa);
+		
+		JButton btnDiaDiemThamQuan_ThemMoi = new JButton("Thêm địa diểm");
+		btnDiaDiemThamQuan_ThemMoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardAddDiaDiemThamQuan");
+			}
+		});
+		btnDiaDiemThamQuan_ThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDiaDiemThamQuan_ThemMoi.setBounds(520, 250, 200, 30);
+		cardQuanLyDiaDiemThamQuan.add(btnDiaDiemThamQuan_ThemMoi);
+		
+		btnDiaDiemThamQuan_CapNhat = new JButton("Cập nhật địa điểm");
+		addActionListenerBtnDiaDiemThamQuan_Update();
+		btnDiaDiemThamQuan_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDiaDiemThamQuan_CapNhat.setBounds(520, 300, 200, 30);
+		cardQuanLyDiaDiemThamQuan.add(btnDiaDiemThamQuan_CapNhat);
+		
+		JButton btnDiaDiemThamQuan_QuayLai = new JButton("Quay lại");
+		btnDiaDiemThamQuan_QuayLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyCTKeHoachTheoNgay");
+			}
+		});
+		btnDiaDiemThamQuan_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDiaDiemThamQuan_QuayLai.setBounds(50, 450, 100, 30);
+		cardQuanLyDiaDiemThamQuan.add(btnDiaDiemThamQuan_QuayLai);
+		// ===== DIA DIEM THAM QUAN LAYOUT END HERE =====
+		
+		// ===== ADD DIA DIEM THAM QUAN LAYOUT START HERE =====
+		JPanel cardAddDiaDiemThamQuan = new JPanel();
+		cardsPane.add(cardAddDiaDiemThamQuan);
+		cardAddDiaDiemThamQuan.setLayout(null);
+		cardLayout.addLayoutComponent(cardAddDiaDiemThamQuan, "cardAddDiaDiemThamQuan");
+		
+		JLabel lblAddDiaDiemThamQuan_TieuDe = new JLabel("Trang thêm địa điểm tham quan");
+		lblAddDiaDiemThamQuan_TieuDe.setBounds(0, 0, 500, 100);
+		lblAddDiaDiemThamQuan_TieuDe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		cardAddDiaDiemThamQuan.add(lblAddDiaDiemThamQuan_TieuDe);
+		
+		JLabel lblAddMaDiaDiem = new JLabel("Nhập mã địa điểm:");
+		lblAddMaDiaDiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddMaDiaDiem.setBounds(50, 100, 200, 30);
+		cardAddDiaDiemThamQuan.add(lblAddMaDiaDiem);
+		
+		JTextField txtAddMaDiaDiem = new JTextField();
+		txtAddMaDiaDiem.setColumns(10);
+		txtAddMaDiaDiem.setBounds(250, 100, 300, 30);
+		cardAddDiaDiemThamQuan.add(txtAddMaDiaDiem);
+		
+		JLabel lblAddTenDiaDiem = new JLabel("Nhập tên địa điểm:");
+		lblAddTenDiaDiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddTenDiaDiem.setBounds(50, 150, 200, 30);
+		cardAddDiaDiemThamQuan.add(lblAddTenDiaDiem);
+		
+		JTextField txtAddTenDiaDiem = new JTextField();
+		txtAddTenDiaDiem.setColumns(10);
+		txtAddTenDiaDiem.setBounds(250, 150, 300, 30);
+		cardAddDiaDiemThamQuan.add(txtAddTenDiaDiem);
+		
+		JLabel lblAddDiaDiemThamQuan_DiaChi = new JLabel("Nhập địa chỉ:");
+		lblAddDiaDiemThamQuan_DiaChi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddDiaDiemThamQuan_DiaChi.setBounds(50, 200, 200, 30);
+		cardAddDiaDiemThamQuan.add(lblAddDiaDiemThamQuan_DiaChi);
+		
+		JTextField txtAddDiaDiemThamQuan_DiaChi = new JTextField();
+		txtAddDiaDiemThamQuan_DiaChi.setColumns(10);
+		txtAddDiaDiemThamQuan_DiaChi.setBounds(250, 200, 300, 30);
+		cardAddDiaDiemThamQuan.add(txtAddDiaDiemThamQuan_DiaChi);
+		
+		JButton btnAddDiaDiemThamQuan_ThemMoi = new JButton("Thêm mới");
+		btnAddDiaDiemThamQuan_ThemMoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DiaDiemThamQuanDTO dto = new DiaDiemThamQuanDTO();
+				
+				dto.setMaDiaDiem(txtAddMaDiaDiem.getText());
+				dto.setTenDiaDiem(txtAddTenDiaDiem.getText());
+				dto.setDiaChi(txtAddDiaDiemThamQuan_DiaChi.getText());
+				
+				diaDiemThamQuanBUS.add(dto);
+				DiaDiemThamQuanBUS.listDiaDiemThamQuanDTO.add(dto);
+				addRowTblDiaDiemThamQuan(dto);
+				cardLayout.show(cardsPane, "cardQuanLyDiaDiemThamQuan");
+				// clear all text after add
+				txtAddMaDiaDiem.setText("");
+				txtAddTenDiaDiem.setText("");
+				txtAddDiaDiemThamQuan_DiaChi.setText("");
+			}
+		});
+		btnAddDiaDiemThamQuan_ThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAddDiaDiemThamQuan_ThemMoi.setBounds(150, 250, 120, 30);
+		cardAddDiaDiemThamQuan.add(btnAddDiaDiemThamQuan_ThemMoi);
+		
+		JButton btnAddDiaDiemThamQuan_QuayLai = new JButton("Quay lại");
+		btnAddDiaDiemThamQuan_QuayLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyDiaDiemThamQuan");
+			}
+		});
+		btnAddDiaDiemThamQuan_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAddDiaDiemThamQuan_QuayLai.setBounds(300, 250, 120, 30);
+		cardAddDiaDiemThamQuan.add(btnAddDiaDiemThamQuan_QuayLai);
+		// ===== ADD DIA DIEM THAM QUAN LAYOUT END HERE =====
+		
+		// ===== UPDATE DIA DIEM THAM QUAN LAYOUT START HERE =====
+		JPanel cardUpdateDiaDiemThamQuan = new JPanel();
+		cardsPane.add(cardUpdateDiaDiemThamQuan);
+		cardUpdateDiaDiemThamQuan.setLayout(null);
+		cardLayout.addLayoutComponent(cardUpdateDiaDiemThamQuan, "cardUpdateDiaDiemThamQuan");
+		
+		JLabel lblUpdateDiaDiemThamQuan_TieuDe = new JLabel("Trang cập nhật địa điểm tham quan");
+		lblUpdateDiaDiemThamQuan_TieuDe.setBounds(0, 0, 600, 100);
+		lblUpdateDiaDiemThamQuan_TieuDe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		cardUpdateDiaDiemThamQuan.add(lblUpdateDiaDiemThamQuan_TieuDe);
+		
+		JLabel lblUpdateMaDiaDiem = new JLabel("Nhập mã địa điểm:");
+		lblUpdateMaDiaDiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUpdateMaDiaDiem.setBounds(50, 100, 150, 30);
+		cardUpdateDiaDiemThamQuan.add(lblUpdateMaDiaDiem);
+		
+		txtUpdateMaDiaDiem = new JTextField();
+		txtUpdateMaDiaDiem.setColumns(10);
+		txtUpdateMaDiaDiem.setBounds(200, 100, 300, 30);
+		cardUpdateDiaDiemThamQuan.add(txtUpdateMaDiaDiem);
+		
+		JLabel lblUpdateTenDiaDiem = new JLabel("Nhập tên địa điểm:");
+		lblUpdateTenDiaDiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUpdateTenDiaDiem.setBounds(50, 150, 150, 30);
+		cardUpdateDiaDiemThamQuan.add(lblUpdateTenDiaDiem);
+		
+		txtUpdateTenDiaDiem = new JTextField();
+		txtUpdateTenDiaDiem.setColumns(10);
+		txtUpdateTenDiaDiem.setBounds(200, 150, 300, 30);
+		cardUpdateDiaDiemThamQuan.add(txtUpdateTenDiaDiem);
+		
+		JLabel lblUpdateDiaDiemThamQuan_DiaChi = new JLabel("Nhập địa chỉ:");
+		lblUpdateDiaDiemThamQuan_DiaChi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUpdateDiaDiemThamQuan_DiaChi.setBounds(50, 200, 150, 30);
+		cardUpdateDiaDiemThamQuan.add(lblUpdateDiaDiemThamQuan_DiaChi);
+		
+		txtUpdateDiaDiemThamQuan_DiaChi = new JTextField();
+		txtUpdateDiaDiemThamQuan_DiaChi.setColumns(10);
+		txtUpdateDiaDiemThamQuan_DiaChi.setBounds(200, 200, 300, 30);
+		cardUpdateDiaDiemThamQuan.add(txtUpdateDiaDiemThamQuan_DiaChi);
+		
+		JButton btnUpdateDiaDiemThamQuan_CapNhat = new JButton("Cập nhật");
+		btnUpdateDiaDiemThamQuan_CapNhat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DiaDiemThamQuanDTO dto = new DiaDiemThamQuanDTO();
+				
+				dto.setMaDiaDiem(txtUpdateMaDiaDiem.getText());
+				dto.setTenDiaDiem(txtUpdateTenDiaDiem.getText());
+				dto.setDiaChi(txtUpdateDiaDiemThamQuan_DiaChi.getText());
+				
+				diaDiemThamQuanBUS.update(dto);
+				DiaDiemThamQuanBUS.listDiaDiemThamQuanDTO.set(selectedRow, dto);
+				setRow(dto, selectedRow);
+				cardLayout.show(cardsPane, "cardQuanLyDiaDiemThamQuan");
+				diaDiemThamQuanTblModel.setRowCount(0);
+				loadTblDiaDiemThamQuan();
+				// clear all text after update
+				txtUpdateMaDiaDiem.setText("");
+				txtUpdateTenDiaDiem.setText("");
+				txtUpdateDiaDiemThamQuan_DiaChi.setText("");
+			}
+		});
+		btnUpdateDiaDiemThamQuan_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnUpdateDiaDiemThamQuan_CapNhat.setBounds(150, 250, 120, 30);
+		cardUpdateDiaDiemThamQuan.add(btnUpdateDiaDiemThamQuan_CapNhat);
+		
+		JButton btnUpdateDiaDiemThamQuan_QuayLai = new JButton("Quay lại");
+		btnUpdateDiaDiemThamQuan_QuayLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyDiaDiemThamQuan");
+			}
+		});
+		btnUpdateDiaDiemThamQuan_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnUpdateDiaDiemThamQuan_QuayLai.setBounds(300, 250, 100, 30);
+		cardUpdateDiaDiemThamQuan.add(btnUpdateDiaDiemThamQuan_QuayLai);
+		// ===== UPDATE DIA DIEM THAM QUAN LAYOUT END HERE =====
 	}
 
 	public void loadTblTaiKhoan() {
@@ -3704,6 +3973,14 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		for(CTKeHoachTheoNgayDTO ctkh : CTKeHoachTheoNgayBUS.listCTKeHoachTheoNgayDTO) {
 			ctKeHoachTheoNgayTblModel.addRow(new Object[] {
 					ctkh.getMaCTKHTheoNgay(), ctkh.getNgay(), ctkh.getMaKHTour(), ctkh.getMaDiaDiemThamQuan(), ctkh.getMaPhuongTien(), ctkh.getMaNhaHang(), ctkh.getMaKhachSan()
+			});
+		}
+	}
+	
+	public void loadTblDiaDiemThamQuan() {
+		for(DiaDiemThamQuanDTO dd : DiaDiemThamQuanBUS.listDiaDiemThamQuanDTO) {
+			diaDiemThamQuanTblModel.addRow(new Object[] {
+					dd.getMaDiaDiem(), dd.getTenDiaDiem(), dd.getDiaChi()
 			});
 		}
 	}
@@ -3837,6 +4114,16 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		rowData.add(dto.getMaTour());
 		
 		keHoachTourTblModel.addRow(rowData);
+	}
+	
+	private void addRowTblDiaDiemThamQuan(DiaDiemThamQuanDTO dto) {
+		Vector<String> rowData = new Vector<String>();
+		
+		rowData.add(dto.getMaDiaDiem());
+		rowData.add(dto.getTenDiaDiem());
+		rowData.add(dto.getDiaChi());
+		
+		diaDiemThamQuanTblModel.addRow(rowData);
 	}
 	
 	private void addRowTblPhuongTien(PhuongTienDTO dto) {
@@ -4010,11 +4297,31 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		keHoachTour_ctKeHoachTheoNgayTblModel.setValueAt(dto.getMaKhachSan(), selectedRow, 6);
 	}
 	
+	private void setRow(DiaDiemThamQuanDTO dto, int selectedRow) {
+		diaDiemThamQuanTblModel.setValueAt(dto.getMaDiaDiem(), selectedRow, 0);
+		diaDiemThamQuanTblModel.setValueAt(dto.getTenDiaDiem(), selectedRow, 1);
+		diaDiemThamQuanTblModel.setValueAt(dto.getDiaChi(), selectedRow, 2);
+	}
+	
 	private void setRow(PhuongTienDTO dto, int selectedRow) {
 		phuongTienTblModel.setValueAt(dto.getMaPhuongTien(), selectedRow, 0);
 		phuongTienTblModel.setValueAt(dto.getTenPhuongTien(), selectedRow, 1);
 		phuongTienTblModel.setValueAt(dto.getChiPhi(), selectedRow, 2);
 		phuongTienTblModel.setValueAt(dto.getSoChoNgoi(), selectedRow, 3);
+	}
+	
+	private void setRow(NhaHangDTO dto, int selectedRow) {
+		nhaHangTblModel.setValueAt(dto.getMaNhaHang(), selectedRow, 0);
+		nhaHangTblModel.setValueAt(dto.getTenNhaHang(), selectedRow, 1);
+		nhaHangTblModel.setValueAt(dto.getDiaChi(), selectedRow, 2);
+		nhaHangTblModel.setValueAt(dto.getChiPhiTrenNguoi(), selectedRow, 3);
+	}
+	
+	private void setRow(KhachSanDTO dto, int selectedRow) {
+		khachSanTblModel.setValueAt(dto.getMaKhachSan(), selectedRow, 0);
+		khachSanTblModel.setValueAt(dto.getTenKhachSan(), selectedRow, 1);
+		khachSanTblModel.setValueAt(dto.getDiaChi(), selectedRow, 2);
+		khachSanTblModel.setValueAt(dto.getChiPhiTrenNguoi(), selectedRow, 3);
 	}
     
     private void addActionListenerBtnTaiKhoan_Update() {
@@ -4141,6 +4448,33 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
     			txtUpdateNhaHang.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 4));
     			txtUpdateKhachSan.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 5));
     			txtUpdateCTKeHoachTheoNgay_MaKHTour.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 6));
+    		}
+    	});
+    }
+    
+    private void addActionListenerBtnDiaDiemThamQuan_Update() {
+    	btnDiaDiemThamQuan_CapNhat.addActionListener(new ActionListener() {
+    		public  void actionPerformed(ActionEvent e) {
+    			cardLayout.show(cardsPane, "cardUpdateDiaDiemThamQuan");
+    			selectedRow = tblDiaDiemThamQuan.getSelectedRow();
+    			
+    			txtUpdateMaDiaDiem.setText((String) tblDiaDiemThamQuan.getValueAt(selectedRow, 0));
+    			txtUpdateTenDiaDiem.setText((String) tblDiaDiemThamQuan.getValueAt(selectedRow, 1));
+    			txtUpdateDiaDiemThamQuan_DiaChi.setText((String) tblDiaDiemThamQuan.getValueAt(selectedRow, 2));
+    		}
+    	});
+    }
+    
+    private void addActionListenerBtnPhuongTien_Update() {
+    	btnPhuongTien_CapNhat.addActionListener(new ActionListener() {
+    		public  void actionPerformed(ActionEvent e) {
+    			cardLayout.show(cardsPane, "cardUpdatePhuongTien");
+    			selectedRow = tblPhuongTien.getSelectedRow();
+    			
+    			txtUpdateMaPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 0));
+    			txtUpdateTenPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 1));
+    			txtUpdateChiPhi.setText((String) tblPhuongTien.getValueAt(selectedRow, 2));
+    			txtUpdateSoChoNgoi.setText((String) tblPhuongTien.getValueAt(selectedRow, 3));
     		}
     	});
     }
