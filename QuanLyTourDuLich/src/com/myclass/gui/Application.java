@@ -4005,7 +4005,10 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnNhaHang_TimKiem = new JButton("Tìm");
 		btnNhaHang_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				NhaHangDTO dto =nhaHangBUS.getByMaNhaHang(txtNhaHang_TimKiem.getText());
+				nhaHangTblModel.setRowCount(0); // xoa tat ca row
+				nhaHangTblModel.addRow(new Object[] {
+							dto.getMaNhaHang(), dto.getTenNhaHang(), dto.getDiaChi(),dto.getChiPhiTrenNguoi()});
 			}
 		});
 		btnNhaHang_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
