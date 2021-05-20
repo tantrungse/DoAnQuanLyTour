@@ -3405,7 +3405,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		});
 		tblPhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tblPhuongTien.setRowHeight(50);
-		String[] colNamesTblPhuongTien = {"Mã khách hàng", "Họ tên khách hàng", "Địa chỉ", "Số điện thoại", "Mã đoàn"};
+		String[] colNamesTblPhuongTien = {"Mã phương tiện", "Tên phương tiện", "Chi phí", "Số chỗ ngồi"};
 		phuongTienTblModel = new DefaultTableModel();
 		tblPhuongTien.setModel(phuongTienTblModel);
 		for(String colName : colNamesTblPhuongTien) {
@@ -3430,11 +3430,11 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		JButton btnPhuongTien_Xoa = new JButton("Xóa phương tiện");
 		btnPhuongTien_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selectedRow = tblKhachHang.getSelectedRow();
-				String maKH = (String) tblKhachHang.getValueAt(selectedRow, 0);
+				int selectedRow = tblPhuongTien.getSelectedRow();
+				String maPhuongTien = (String) tblPhuongTien.getValueAt(selectedRow, 0);
 				
-				khachHangBUS.deleteById(maKH);
-				khachHangTblModel.removeRow(selectedRow);
+				phuongTienBUS.deleteById(maPhuongTien);
+				phuongTienTblModel.removeRow(selectedRow);
 			}
 		});
 		btnPhuongTien_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
