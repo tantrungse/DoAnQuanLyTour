@@ -152,7 +152,7 @@ public class HopDongDAO {
 	public void update(HopDongDTO dto) {
 		try {
 			conn = JDBCConnection.getJDBCConnection(tableName);
-			String sql = "UPDATE + tableName + SET "
+			String sql = "UPDATE" + tableName + "SET "
 					+ "NgayLapHD = ?, NoiDung = ?, MaTour = ?"
 					+ "WHERE MaHD = ?";
 			pstmt = conn.prepareStatement(sql);

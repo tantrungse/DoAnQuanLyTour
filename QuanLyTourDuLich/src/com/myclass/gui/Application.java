@@ -637,13 +637,53 @@ public class Application extends JFrame {
 		JButton btnTourSearch = new JButton("Tìm");
 		btnTourSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<TaiKhoanDTO> listKQ = taiKhoanBUS.searchByTenTK(txtTourSearch.getText());
-				taiKhoanTblModel.setRowCount(0); // xoa tat ca row
-				for(TaiKhoanDTO dto : listKQ) {
-					taiKhoanTblModel.addRow(new Object[] {
-							dto.getTenTK(), dto.getMatKhau(), dto.getQuyen()
-					});
-				}
+				ArrayList<TourDTO> listKQ;
+				Object[] options = {
+			            "Tìm kiếm theo mã Tour", "Tìm kiếm theo tên Tour", "Đóng"
+			        };
+			        int select = JOptionPane.showOptionDialog(btnTourSearch, "Bạn muốn tìm kiếm theo phương thức nào?", "Tùy chọn", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+			        
+			        //System.out.println("select: " + select);
+			        //mÃ£ -> select: 0
+			        //tÃªn -> select: 1
+			        // chi phi -> select: 2
+			        // Ä‘Ã³ng -> select: 3
+			        
+			        if(select == 0){
+			            String input = JOptionPane.showInputDialog(btnTourSearch, "Mời bạn nhập mã Tour !");
+			            
+			            if(input != null && input.length() > 0){
+			                listKQ = tourBUS.getByMaTour(input);
+			                tourTblModel.setRowCount(0);
+			                
+			                for(TourDTO dto : listKQ) {
+								tourTblModel.addRow(new Object[] {
+										dto.getMaTour(), dto.getTenTour(), dto.getGiaVe(), dto.getDiemKhoiHanh(), dto.getDiemDen()
+								});
+			                };
+			            }
+			            else {
+			                JOptionPane.showMessageDialog(null, "Lỗi tìm kiếm !");
+			            }
+			        }
+			        
+			        if(select == 1){
+			            String input = JOptionPane.showInputDialog(btnTourSearch, "Mời bạn nhập tên Tour !");
+			            
+			            if(input != null && input.length() > 0){
+			                listKQ = tourBUS.getByTenTour(input);
+			                tourTblModel.setRowCount(0);
+			                
+			                for(TourDTO dto : listKQ) {
+								tourTblModel.addRow(new Object[] {
+										dto.getMaTour(), dto.getTenTour(), dto.getGiaVe(), dto.getDiemKhoiHanh(), dto.getDiemDen()
+								});
+			                };
+			            }
+			            else {
+			                JOptionPane.showMessageDialog(null, "Lỗi tìm kiếm !");
+			            }
+			        }
 			}
 		});
 		btnTourSearch.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -1998,7 +2038,7 @@ StringBuilder sb=new StringBuilder();
 		txtHopDong_TimKiem.setColumns(10);
 		cardQuanLyHopDong.add(txtHopDong_TimKiem);
 		
-JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
+JButton btnHopDong_TimKiem = new JButton("Tìm");
 		
 		btnHopDong_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -3399,7 +3439,11 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		});
 		tblPhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tblPhuongTien.setRowHeight(50);
+<<<<<<< HEAD
 		String[] colNamesTblPhuongTien = {"Mã phương tiện", "Tên phương tiện", "Chi phi", "Số chỗ ngồi"};
+=======
+		String[] colNamesTblPhuongTien = {"Mã phương tiện", "Tên phương tiện", "Chi phí", "Số chỗ ngồi"};
+>>>>>>> e181866519328be8a3ae8ff7e13440c319a337b0
 		phuongTienTblModel = new DefaultTableModel();
 		tblPhuongTien.setModel(phuongTienTblModel);
 		for(String colName : colNamesTblPhuongTien) {
@@ -3425,10 +3469,29 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		btnPhuongTien_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblPhuongTien.getSelectedRow();
+<<<<<<< HEAD
 				String maPhuongTien = (String) tblPhuongTien.getValueAt(selectedRow, 0);
 				
 				phuongTienBUS.deleteById(maPhuongTien);
 				phuongTienTblModel.removeRow(selectedRow);
+=======
+				if(selectedRow>=0) {
+					int result = JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này ?", "Thông báo",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	                if(result == JOptionPane.YES_OPTION){
+	                	String maPhuongTien = (String) tblPhuongTien.getValueAt(selectedRow, 0);
+	    				
+	    				phuongTienBUS.deleteById(maPhuongTien);
+	    				phuongTienTblModel.removeRow(selectedRow);
+						}
+	                else if(result == JOptionPane.NO_OPTION)
+                    {
+                        JOptionPane.showMessageDialog(null, "Không xóa thông tin");
+                    }
+				}
+				if(selectedRow<0) {
+					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
+				}
+>>>>>>> e181866519328be8a3ae8ff7e13440c319a337b0
 			}
 		});
 		btnPhuongTien_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -4462,6 +4525,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
     private void addActionListenerBtnPhuongTien_Update() {
     	btnPhuongTien_CapNhat.addActionListener(new ActionListener() {
     		public  void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
     			cardLayout.show(cardsPane, "cardUpdatePhuongTien");
     			selectedRow = tblPhuongTien.getSelectedRow();
     			
@@ -4469,6 +4533,20 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
     			txtUpdateTenPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 1));
     			txtUpdateChiPhi.setText(String.valueOf(tblPhuongTien.getValueAt(selectedRow, 2)));
     			txtUpdateSoChoNgoi.setText(String.valueOf(tblPhuongTien.getValueAt(selectedRow, 3)));
+=======
+    			int selectedRow = tblPhuongTien.getSelectedRow();
+    			if(selectedRow>=0) {
+    				cardLayout.show(cardsPane, "cardUpdatePhuongTien");
+        			
+        			txtUpdateMaPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 0));
+        			txtUpdateTenPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 1));
+        			txtUpdateChiPhi.setText((String) tblPhuongTien.getValueAt(selectedRow, 2));
+        			txtUpdateSoChoNgoi.setText((String) tblPhuongTien.getValueAt(selectedRow, 3));
+    			}
+    			else if(selectedRow<0) {
+					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
+				}
+>>>>>>> e181866519328be8a3ae8ff7e13440c319a337b0
     		}
     	});
     }
