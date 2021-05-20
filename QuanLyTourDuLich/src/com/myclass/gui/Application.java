@@ -3768,11 +3768,23 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnDiaDiemThamQuan_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblDiaDiemThamQuan.getSelectedRow();
-				String maDiaDiem = (String) tblDiaDiemThamQuan.getValueAt(selectedRow, 0);
-				
-				diaDiemThamQuanBUS.deleteById(maDiaDiem);
-				diaDiemThamQuanTblModel.removeRow(selectedRow);
-			}
+				if(selectedRow>=0) {
+					int result = JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này ?", "Thông báo",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	                if(result == JOptionPane.YES_OPTION){
+						String maDiaDiem = (String) tblDiaDiemThamQuan.getValueAt(selectedRow, 0);
+						
+						diaDiemThamQuanBUS.deleteById(maDiaDiem);
+						diaDiemThamQuanTblModel.removeRow(selectedRow);
+						}
+	                else if(result == JOptionPane.NO_OPTION)
+                    {
+                        JOptionPane.showMessageDialog(null, "Không xóa thông tin");
+                    }
+				}
+				if(selectedRow<0) {
+					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
+				}
+			}			
 		});
 		btnDiaDiemThamQuan_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnDiaDiemThamQuan_Xoa.setBounds(520, 200, 200, 30);;
