@@ -4520,13 +4520,18 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
     private void addActionListenerBtnPhuongTien_Update() {
     	btnPhuongTien_CapNhat.addActionListener(new ActionListener() {
     		public  void actionPerformed(ActionEvent e) {
-    			cardLayout.show(cardsPane, "cardUpdatePhuongTien");
-    			selectedRow = tblPhuongTien.getSelectedRow();
-    			
-    			txtUpdateMaPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 0));
-    			txtUpdateTenPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 1));
-    			txtUpdateChiPhi.setText((String) tblPhuongTien.getValueAt(selectedRow, 2));
-    			txtUpdateSoChoNgoi.setText((String) tblPhuongTien.getValueAt(selectedRow, 3));
+    			int selectedRow = tblPhuongTien.getSelectedRow();
+    			if(selectedRow>=0) {
+    				cardLayout.show(cardsPane, "cardUpdatePhuongTien");
+        			
+        			txtUpdateMaPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 0));
+        			txtUpdateTenPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 1));
+        			txtUpdateChiPhi.setText((String) tblPhuongTien.getValueAt(selectedRow, 2));
+        			txtUpdateSoChoNgoi.setText((String) tblPhuongTien.getValueAt(selectedRow, 3));
+    			}
+    			else if(selectedRow<0) {
+					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
+				}
     		}
     	});
     }
