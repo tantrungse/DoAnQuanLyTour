@@ -274,7 +274,7 @@ public class Application extends JFrame {
 		lblQuanLyKhachHang.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				cardLayout.show(cardsPane, "cardQuanLyPhuongTien");
+				cardLayout.show(cardsPane, "cardQuanLyKhachHang");
 			}
 		});
 		lblQuanLyKhachHang.setForeground(Color.WHITE);
