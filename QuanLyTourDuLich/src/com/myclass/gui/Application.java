@@ -34,6 +34,7 @@ import com.myclass.bus.NhaHangBUS;
 import com.myclass.bus.PhuongTienBUS;
 import com.myclass.bus.TaiKhoanBUS;
 import com.myclass.bus.TourBUS;
+import com.myclass.dao.CTKeHoachTheoNgayDAO;
 import com.myclass.dao.TaiKhoanDAO;
 import com.myclass.dto.CTKeHoachTheoNgayDTO;
 import com.myclass.dto.DiaDiemThamQuanDTO;
@@ -483,6 +484,18 @@ public class Application extends JFrame {
 		JButton btnAddTaiKhoan_Add = new JButton("Thêm mới");
 		btnAddTaiKhoan_Add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				StringBuilder sb=new StringBuilder();
+				if(txtAddTenTaiKhoan.getText().equals("")) {
+		            sb.append("*Tên tài khoản không được để trống\n");
+		    	}
+				if(txtAddMatKhau.getText().equals("")) {
+		            sb.append("*Mật khẩu không được để trống\n");
+		    	}
+				if(sb.length()>0) {
+		    		JOptionPane.showMessageDialog(cardAddTaiKhoan, sb.toString(),"Thông báo",JOptionPane.ERROR_MESSAGE);
+		    		return;
+		    	}
+		    	
 				String tenQuyen = bgAddQuyen.getSelection().getActionCommand();
 				TaiKhoanDTO dto = new TaiKhoanDTO();
 				
@@ -1390,7 +1403,7 @@ public class Application extends JFrame {
 		JButton btnAddHdv_ThemMoi = new JButton("Thêm mới");
 		btnAddHdv_ThemMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-StringBuilder sb=new StringBuilder();
+				StringBuilder sb=new StringBuilder();
 		        
 		    	if(txtAddMaHdv.getText().equals("")){
 		            sb.append("*Mã hướng dẫn viên không được để trống\n");
@@ -2694,10 +2707,22 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnKeHoachTour_CTKeHoachTheoNgay_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblKeHoachTour_CTKeHoachTheoNgay.getSelectedRow();
+				if(selectedRow>=0) {
+					int result = JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này ?", "Thông báo",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	                if(result == JOptionPane.YES_OPTION){
 				String maCTKeHoachTheoNgay = (String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 0);
 				
 				ctKeHoachTheoNgayBUS.deleteById(maCTKeHoachTheoNgay);
 				keHoachTour_ctKeHoachTheoNgayTblModel.removeRow(selectedRow);
+	                }
+	                else if(result == JOptionPane.NO_OPTION)
+                    {
+                        JOptionPane.showMessageDialog(null, "Không xóa thông tin");
+                    }
+				}
+				if(selectedRow<0) {
+					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
+				}
 			}
 		});
 		btnKeHoachTour_CTKeHoachTheoNgay_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -2735,11 +2760,22 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnKeHoachTour_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblKeHoachTour.getSelectedRow();
-				String maKeHoach = (String) tblDoan.getValueAt(selectedRow, 0);
-				
-				keHoachTourBUS.deleteById(maKeHoach);
-				keHoachTourTblModel.removeRow(selectedRow);
-				KeHoachTourBUS.listKeHoachTourDTO.remove(selectedRow);
+				if(selectedRow>=0) {
+					int result=JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này?","thông báo",JOptionPane.YES_NO_OPTION); 
+					if(result==JOptionPane.YES_OPTION) {
+					String maKeHoach = (String) tblDoan.getValueAt(selectedRow, 0);
+					
+					keHoachTourBUS.deleteById(maKeHoach);
+					keHoachTourTblModel.removeRow(selectedRow);
+					KeHoachTourBUS.listKeHoachTourDTO.remove(selectedRow);
+					}
+					else if(result==JOptionPane.NO_OPTION) {
+						JOptionPane.showMessageDialog(null,"Thông tin này chưa được xóa!");
+					}
+				}
+				if(selectedRow<0 ) {
+					JOptionPane.showMessageDialog(cardQuanLyTaiKhoan, "Bạn chưa chọn trường dữ liệu nào cả");
+				}
 			}
 		});
 		btnKeHoachTour_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -2960,6 +2996,14 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		cardQuanLyCTKeHoachTheoNgay.add(txtCTKeHoachTheoNgay_TimKiem);
 		
 		JButton btnCTKeHoachTheoNgay_TimKiem = new JButton("Tìm");
+		btnCTKeHoachTheoNgay_TimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CTKeHoachTheoNgayDTO dto =ctKeHoachTheoNgayBUS.getByMaCTKHTheoNgay(txtCTKeHoachTheoNgay_TimKiem.getText());
+				ctKeHoachTheoNgayTblModel.setRowCount(0); // xoa tat ca row
+				ctKeHoachTheoNgayTblModel.addRow(new Object[] {
+							dto.getMaCTKHTheoNgay(), dto.getNgay(), dto.getMaKHTour(), dto.getMaDiaDiemThamQuan(),dto.getMaPhuongTien(),dto.getMaNhaHang(),dto.getClass()});
+			}
+		});
 		btnCTKeHoachTheoNgay_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCTKeHoachTheoNgay_TimKiem.setBounds(320, 100, 80, 30);
 		cardQuanLyCTKeHoachTheoNgay.add(btnCTKeHoachTheoNgay_TimKiem);
@@ -3721,7 +3765,10 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnDiaDiemThamQuan_TimKiem = new JButton("Tìm");
 		btnDiaDiemThamQuan_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				DiaDiemThamQuanDTO dto =diaDiemThamQuanBUS.getByMaDiaDiem(txtDiaDiemThamQuan_TimKiem.getText());
+				diaDiemThamQuanTblModel.setRowCount(0); // xoa tat ca row
+				diaDiemThamQuanTblModel.addRow(new Object[] {
+							dto.getMaDiaDiem(), dto.getTenDiaDiem(), dto.getDiaChi()});
 			}
 		});
 		btnDiaDiemThamQuan_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -3768,11 +3815,23 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnDiaDiemThamQuan_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblDiaDiemThamQuan.getSelectedRow();
-				String maDiaDiem = (String) tblDiaDiemThamQuan.getValueAt(selectedRow, 0);
-				
-				diaDiemThamQuanBUS.deleteById(maDiaDiem);
-				diaDiemThamQuanTblModel.removeRow(selectedRow);
-			}
+				if(selectedRow>=0) {
+					int result = JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này ?", "Thông báo",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	                if(result == JOptionPane.YES_OPTION){
+						String maDiaDiem = (String) tblDiaDiemThamQuan.getValueAt(selectedRow, 0);
+						
+						diaDiemThamQuanBUS.deleteById(maDiaDiem);
+						diaDiemThamQuanTblModel.removeRow(selectedRow);
+						}
+	                else if(result == JOptionPane.NO_OPTION)
+                    {
+                        JOptionPane.showMessageDialog(null, "Không xóa thông tin");
+                    }
+				}
+				if(selectedRow<0) {
+					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
+				}
+			}			
 		});
 		btnDiaDiemThamQuan_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnDiaDiemThamQuan_Xoa.setBounds(520, 200, 200, 30);;
@@ -3981,7 +4040,10 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnNhaHang_TimKiem = new JButton("Tìm");
 		btnNhaHang_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				NhaHangDTO dto =nhaHangBUS.getByMaNhaHang(txtNhaHang_TimKiem.getText());
+				nhaHangTblModel.setRowCount(0); // xoa tat ca row
+				nhaHangTblModel.addRow(new Object[] {
+							dto.getMaNhaHang(), dto.getTenNhaHang(), dto.getDiaChi(),dto.getChiPhiTrenNguoi()});
 			}
 		});
 		btnNhaHang_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -4028,10 +4090,21 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnNhaHang_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblNhaHang.getSelectedRow();
-				String maDiaDiem = (String) tblNhaHang.getValueAt(selectedRow, 0);
-				
-				nhaHangBUS.deleteById(maDiaDiem);
-				nhaHangTblModel.removeRow(selectedRow);
+				if(selectedRow>=0) {
+					int result=JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này?","thông báo",JOptionPane.YES_NO_OPTION); 
+					if(result==JOptionPane.YES_OPTION) {
+					String maDiaDiem = (String) tblNhaHang.getValueAt(selectedRow, 0);
+					
+					nhaHangBUS.deleteById(maDiaDiem);
+					nhaHangTblModel.removeRow(selectedRow);
+					}
+					else if(result==JOptionPane.NO_OPTION) {
+						JOptionPane.showMessageDialog(null,"Thông tin này chưa được xóa!");
+					}
+				}
+				if(selectedRow<0 ) {
+					JOptionPane.showMessageDialog(cardQuanLyTaiKhoan, "Bạn chưa chọn trường dữ liệu nào cả");
+				}
 			}
 		});
 		btnNhaHang_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -4122,7 +4195,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				NhaHangDTO dto = new NhaHangDTO();
 				
 				dto.setMaNhaHang(txtAddMaNhaHang.getText());
-				dto.setTenNhaHang(txtAddTenDiaDiem.getText());
+				dto.setTenNhaHang(txtAddTenNhaHang.getText());
 				dto.setDiaChi(txtAddNhaHang_DiaChi.getText());
 				dto.setChiPhiTrenNguoi(Double.valueOf(txtAddNhaHang_ChiPhiTrenNguoi.getText()));
 				
@@ -4265,6 +4338,12 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnKhachSan_TimKiem = new JButton("Tìm");
 		btnKhachSan_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				KhachSanDTO dto =khachSanBUS.getByMaKhachSan(txtKhachSan_TimKiem.getText());
+				
+				khachSanTblModel.setRowCount(0); // xoa tat ca row
+				
+					khachSanTblModel.addRow(new Object[] {
+							dto.getMaKhachSan(), dto.getTenKhachSan(), dto.getDiaChi(), dto.getChiPhiTrenNguoi()});
 				
 			}
 		});
@@ -4312,10 +4391,22 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnKhachSan_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblKhachSan.getSelectedRow();
-				String maDiaDiem = (String) tblKhachSan.getValueAt(selectedRow, 0);
-				
-				khachSanBUS.deleteById(maDiaDiem);
-				khachSanTblModel.removeRow(selectedRow);
+				if(selectedRow>=0) {
+					int result = JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này ?", "Thông báo",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	                if(result == JOptionPane.YES_OPTION){
+					String maDiaDiem = (String) tblKhachSan.getValueAt(selectedRow, 0);
+					
+					khachSanBUS.deleteById(maDiaDiem);
+					khachSanTblModel.removeRow(selectedRow);
+                } 
+                else if(result == JOptionPane.NO_OPTION)
+	                {
+	                    JOptionPane.showMessageDialog(null, "Không xóa thông tin");
+	                }
+				}
+				if(selectedRow<0) {
+					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
+				}
 			}
 		});
 		btnKhachSan_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -4406,7 +4497,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				KhachSanDTO dto = new KhachSanDTO();
 				
 				dto.setMaKhachSan(txtAddMaKhachSan.getText());
-				dto.setTenKhachSan(txtAddTenDiaDiem.getText());
+				dto.setTenKhachSan(txtAddTenKhachSan.getText());
 				dto.setDiaChi(txtAddKhachSan_DiaChi.getText());
 				dto.setChiPhiTrenNguoi(Double.valueOf(txtAddKhachSan_ChiPhiTrenNguoi.getText()));
 				
@@ -4644,7 +4735,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 			tour_doanTblModel.setRowCount(0);
 		}
 		tour_doanTblModel.addRow(new Object[] {
-				doan.getMaDoan(), doan.getSoNguoi(), doan.getMaTour()
+				doan.getMaDoan(), doan.getSoNguoi(), doan.getMaTour(),doan.getMaHDV()
 		});
 	}
 	
@@ -5097,9 +5188,9 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
     private void addActionListenerBtnKeHoachTour_CTKeHoachTheoNgay_Update() {
     	btnKeHoachTour_CTKeHoachTheoNgay_CapNhat.addActionListener(new ActionListener() {
     		public  void actionPerformed(ActionEvent e) {
+    			int selectedRow = tblKeHoachTour_CTKeHoachTheoNgay.getSelectedRow();
+    			if(selectedRow>=0) {
     			cardLayout.show(cardsPane, "cardUpdateCTKeHoachTheoNgay");
-    			selectedRow = tblKeHoachTour_CTKeHoachTheoNgay.getSelectedRow();
-    			
     			txtUpdateMaCTKeHoachTheoNgay.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 0));
     			txtUpdateNgay.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 1));
     			txtUpdateDiaDiemThamQuan.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 2));
@@ -5107,6 +5198,10 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
     			txtUpdateNhaHang.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 4));
     			txtUpdateKhachSan.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 5));
     			txtUpdateCTKeHoachTheoNgay_MaKHTour.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 6));
+    			}
+    			else if(selectedRow<0) {
+					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
+				}
     		}
     	});
     }
