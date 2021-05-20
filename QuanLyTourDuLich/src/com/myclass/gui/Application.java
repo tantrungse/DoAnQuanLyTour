@@ -23,21 +23,27 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import com.myclass.bus.CTKeHoachTheoNgayBUS;
+import com.myclass.bus.DiaDiemThamQuanBUS;
 import com.myclass.bus.DoanBUS;
 import com.myclass.bus.HopDongBUS;
 import com.myclass.bus.HuongDanVienBUS;
 import com.myclass.bus.KeHoachTourBUS;
 import com.myclass.bus.KhachHangBUS;
+import com.myclass.bus.KhachSanBUS;
+import com.myclass.bus.NhaHangBUS;
 import com.myclass.bus.PhuongTienBUS;
 import com.myclass.bus.TaiKhoanBUS;
 import com.myclass.bus.TourBUS;
 import com.myclass.dao.TaiKhoanDAO;
 import com.myclass.dto.CTKeHoachTheoNgayDTO;
+import com.myclass.dto.DiaDiemThamQuanDTO;
 import com.myclass.dto.DoanDTO;
 import com.myclass.dto.HopDongDTO;
 import com.myclass.dto.HuongDanVienDTO;
 import com.myclass.dto.KeHoachTourDTO;
 import com.myclass.dto.KhachHangDTO;
+import com.myclass.dto.KhachSanDTO;
+import com.myclass.dto.NhaHangDTO;
 import com.myclass.dto.PhuongTienDTO;
 import com.myclass.dto.TaiKhoanDTO;
 import com.myclass.dto.TourDTO;
@@ -70,7 +76,11 @@ public class Application extends JFrame {
 	private DoanBUS doanBUS;
 	private KeHoachTourBUS keHoachTourBUS;
 	private CTKeHoachTheoNgayBUS ctKeHoachTheoNgayBUS;
+	private DiaDiemThamQuanBUS diaDiemThamQuanBUS;
 	private PhuongTienBUS phuongTienBUS;
+	private NhaHangBUS nhaHangBUS;
+	private KhachSanBUS khachSanBUS;
+	
 	
 	private DefaultTableModel taiKhoanTblModel;
 	private DefaultTableModel tourTblModel;
@@ -83,7 +93,6 @@ public class Application extends JFrame {
 	private DefaultTableModel doanTblModel;
 	private DefaultTableModel keHoachTourTblModel;
 	private DefaultTableModel keHoachTour_ctKeHoachTheoNgayTblModel;
-	private DefaultTableModel khachHang_veTourTblModel;
 	private DefaultTableModel phuongTienTblModel;
 	private DefaultTableModel ctKeHoachTheoNgayTblModel;
 	private DefaultTableModel ctKeHoachTheoNgay_diaDiemThamQuanTblModel;
@@ -102,7 +111,6 @@ public class Application extends JFrame {
 	private JTable tblDoan;
 	private JTable tblKeHoachTour;
 	private JTable tblKeHoachTour_CTKeHoachTheoNgay;
-	private JTable tblKhachHang_VeTour;
 	private JTable tblPhuongTien;
 	private JTable tblCTKeHoachTheoNgay;
 	private JTable tblCTKeHoachTheoNgay_DiaDiemThamQuan;
@@ -191,7 +199,10 @@ public class Application extends JFrame {
 		doanBUS = new DoanBUS();
 		keHoachTourBUS = new KeHoachTourBUS();
 		ctKeHoachTheoNgayBUS = new CTKeHoachTheoNgayBUS();
+		diaDiemThamQuanBUS = new DiaDiemThamQuanBUS();
 		phuongTienBUS = new PhuongTienBUS();
+		nhaHangBUS = new NhaHangBUS();
+		khachSanBUS = new KhachSanBUS();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1500, 800);
@@ -2914,6 +2925,32 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				int selectedRow = tblCTKeHoachTheoNgay.getSelectedRow();
+				String maDiaDiem = (String) tblCTKeHoachTheoNgay.getValueAt(selectedRow, 3);
+				String maPhuongTien = (String) tblCTKeHoachTheoNgay.getValueAt(selectedRow, 4);
+				String maNhaHang = (String) tblCTKeHoachTheoNgay.getValueAt(selectedRow, 5);
+				String maKhachSan = (String) tblCTKeHoachTheoNgay.getValueAt(selectedRow, 6);
+				
+				DiaDiemThamQuanDTO diaDiemThamQuan = diaDiemThamQuanBUS.getByMaDiaDiem(maDiaDiem);
+				PhuongTienDTO phuongTien = phuongTienBUS.getByMaPhuongTien(maPhuongTien);
+				NhaHangDTO nhaHang = nhaHangBUS.getByMaNhaHang(maNhaHang);
+				KhachSanDTO khachSan = khachSanBUS.getByMaKhachSan(maKhachSan);
+				
+				if(tblCTKeHoachTheoNgay_DiaDiemThamQuan.getRowCount() > 0) {
+					ctKeHoachTheoNgay_diaDiemThamQuanTblModel.setRowCount(0);
+				}
+				addRowTblCTKeHoachTheoNgay_DiaDiemThamQuan(diaDiemThamQuan);
+				if(tblCTKeHoachTheoNgay_PhuongTien.getRowCount() > 0) {
+					ctKeHoachTheoNgay_phuongTienTblModel.setRowCount(0);
+				}
+				addRowTblCTKeHoachTheoNgay_PhuongTien(phuongTien);
+				if(tblCTKeHoachTheoNgay_NhaHang.getRowCount() > 0) {
+					ctKeHoachTheoNgay_nhaHangTblModel.setRowCount(0);
+				}
+				addRowTblCTKeHoachTheoNgay_NhaHang(nhaHang);
+				if(tblCTKeHoachTheoNgay_KhachSan.getRowCount() > 0) {
+					ctKeHoachTheoNgay_khachSanTblModel.setRowCount(0);
+				}
+				addRowTblCTKeHoachTheoNgay_KhachSan(khachSan);
 			}
 		});
 		tblCTKeHoachTheoNgay.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -2935,7 +2972,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		cardQuanLyCTKeHoachTheoNgay.add(lblThongTinDiaDiemThamQuan);
 		
 		JScrollPane ctKeHoachTheoNgay_diaDiemThamQuanScrollPane = new JScrollPane();
-		ctKeHoachTheoNgay_diaDiemThamQuanScrollPane.setBounds(50, 450, 300, 73);
+		ctKeHoachTheoNgay_diaDiemThamQuanScrollPane.setBounds(50, 450, 375, 73);
 		cardQuanLyCTKeHoachTheoNgay.add(ctKeHoachTheoNgay_diaDiemThamQuanScrollPane);
 		
 		tblCTKeHoachTheoNgay_DiaDiemThamQuan = new JTable();
@@ -2964,11 +3001,11 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		
 		JLabel lblThongTinNhaHang = new JLabel("Thông tin nhà hàng:");
 		lblThongTinNhaHang.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblThongTinNhaHang.setBounds(550, 410, 250, 30);
+		lblThongTinNhaHang.setBounds(650, 410, 250, 30);
 		cardQuanLyCTKeHoachTheoNgay.add(lblThongTinNhaHang);
 		
 		JScrollPane ctKeHoachTheoNgay_nhaHangScrollPane = new JScrollPane();
-		ctKeHoachTheoNgay_nhaHangScrollPane.setBounds(550, 450, 400, 73);
+		ctKeHoachTheoNgay_nhaHangScrollPane.setBounds(650, 450, 500, 73);
 		cardQuanLyCTKeHoachTheoNgay.add(ctKeHoachTheoNgay_nhaHangScrollPane);
 		
 		tblCTKeHoachTheoNgay_NhaHang = new JTable();
@@ -2992,7 +3029,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		});
 		addActionListenerBtnTour_Update();
 		btnCTKeHoachTheoNgay_NhaHangLayout.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnCTKeHoachTheoNgay_NhaHangLayout.setBounds(550, 530, 150, 30);
+		btnCTKeHoachTheoNgay_NhaHangLayout.setBounds(650, 530, 150, 30);
 		cardQuanLyCTKeHoachTheoNgay.add(btnCTKeHoachTheoNgay_NhaHangLayout);
 		
 		JLabel lblThongTinPhuongTien = new JLabel("Thông tin phương tiện:");
@@ -3001,7 +3038,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		cardQuanLyCTKeHoachTheoNgay.add(lblThongTinPhuongTien);
 		
 		JScrollPane ctKeHoachTheoNgay_phuongTienScrollPane = new JScrollPane();
-		ctKeHoachTheoNgay_phuongTienScrollPane.setBounds(50, 640, 400, 73);
+		ctKeHoachTheoNgay_phuongTienScrollPane.setBounds(50, 640, 500, 73);
 		cardQuanLyCTKeHoachTheoNgay.add(ctKeHoachTheoNgay_phuongTienScrollPane);
 		
 		tblCTKeHoachTheoNgay_PhuongTien = new JTable();
@@ -3030,11 +3067,11 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		
 		JLabel lblThongTinKhachSan = new JLabel("Thông tin khách sạn:");
 		lblThongTinKhachSan.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblThongTinKhachSan.setBounds(550, 600, 250, 30);
+		lblThongTinKhachSan.setBounds(650, 600, 250, 30);
 		cardQuanLyCTKeHoachTheoNgay.add(lblThongTinKhachSan);
 		
 		JScrollPane ctKeHoachTheoNgay_khachSanScrollPane = new JScrollPane();
-		ctKeHoachTheoNgay_khachSanScrollPane.setBounds(550, 640, 400, 73);
+		ctKeHoachTheoNgay_khachSanScrollPane.setBounds(650, 640, 500, 73);
 		cardQuanLyCTKeHoachTheoNgay.add(ctKeHoachTheoNgay_khachSanScrollPane);
 		
 		tblCTKeHoachTheoNgay_KhachSan = new JTable();
@@ -3058,7 +3095,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		});
 		addActionListenerBtnTour_Update();
 		btnCTKeHoachTheoNgay_KhachSanLayout.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnCTKeHoachTheoNgay_KhachSanLayout.setBounds(550, 720, 150, 30);
+		btnCTKeHoachTheoNgay_KhachSanLayout.setBounds(650, 720, 150, 30);
 		cardQuanLyCTKeHoachTheoNgay.add(btnCTKeHoachTheoNgay_KhachSanLayout);
 		// ===== CT KE HOACH THEO NGAY LAYOUT END HERE =====
 		
@@ -3849,6 +3886,49 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		rowData.add(dto.getMaKhachSan());
 		
 		keHoachTour_ctKeHoachTheoNgayTblModel.addRow(rowData);
+	}
+	
+	private void addRowTblCTKeHoachTheoNgay_DiaDiemThamQuan(DiaDiemThamQuanDTO dto) {
+		Vector<String> rowData = new Vector<String>();
+		
+		rowData.add(dto.getMaDiaDiem());
+		rowData.add(dto.getTenDiaDiem());
+		rowData.add(dto.getDiaChi());
+		
+		ctKeHoachTheoNgay_diaDiemThamQuanTblModel.addRow(rowData);
+	}
+	
+	private void addRowTblCTKeHoachTheoNgay_PhuongTien(PhuongTienDTO dto) {
+		Vector<String> rowData = new Vector<String>();
+		
+		rowData.add(dto.getMaPhuongTien());
+		rowData.add(dto.getTenPhuongTien());
+		rowData.add(String.valueOf(dto.getChiPhi()));
+		rowData.add(String.valueOf(dto.getSoChoNgoi()));
+		
+		ctKeHoachTheoNgay_phuongTienTblModel.addRow(rowData);
+	}
+	
+	private void addRowTblCTKeHoachTheoNgay_NhaHang(NhaHangDTO dto) {
+		Vector<String> rowData = new Vector<String>();
+		
+		rowData.add(dto.getMaNhaHang());
+		rowData.add(dto.getTenNhaHang());
+		rowData.add(dto.getDiaChi());
+		rowData.add(String.valueOf(dto.getChiPhiTrenNguoi()));
+		
+		ctKeHoachTheoNgay_nhaHangTblModel.addRow(rowData);
+	}
+	
+	private void addRowTblCTKeHoachTheoNgay_KhachSan(KhachSanDTO dto) {
+		Vector<String> rowData = new Vector<String>();
+		
+		rowData.add(dto.getMaKhachSan());
+		rowData.add(dto.getTenKhachSan());
+		rowData.add(dto.getDiaChi());
+		rowData.add(String.valueOf(dto.getChiPhiTrenNguoi()));
+		
+		ctKeHoachTheoNgay_khachSanTblModel.addRow(rowData);
 	}
 	
 	public void setRow(TaiKhoanDTO dto, int selectedRow) {
