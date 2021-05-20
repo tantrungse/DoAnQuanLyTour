@@ -4277,6 +4277,12 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnKhachSan_TimKiem = new JButton("Tìm");
 		btnKhachSan_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				KhachSanDTO dto =khachSanBUS.getByMaKhachSan(txtKhachSan_TimKiem.getText());
+				
+				khachSanTblModel.setRowCount(0); // xoa tat ca row
+				
+					khachSanTblModel.addRow(new Object[] {
+							dto.getMaKhachSan(), dto.getTenKhachSan(), dto.getDiaChi(), dto.getChiPhiTrenNguoi()});
 				
 			}
 		});
