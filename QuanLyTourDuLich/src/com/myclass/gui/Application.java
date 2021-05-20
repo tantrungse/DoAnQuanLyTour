@@ -484,6 +484,18 @@ public class Application extends JFrame {
 		JButton btnAddTaiKhoan_Add = new JButton("Thêm mới");
 		btnAddTaiKhoan_Add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				StringBuilder sb=new StringBuilder();
+				if(txtAddTenTaiKhoan.getText().equals("")) {
+		            sb.append("*Tên tài khoản không được để trống\n");
+		    	}
+				if(txtAddMatKhau.getText().equals("")) {
+		            sb.append("*Mật khẩu không được để trống\n");
+		    	}
+				if(sb.length()>0) {
+		    		JOptionPane.showMessageDialog(cardAddTaiKhoan, sb.toString(),"Thông báo",JOptionPane.ERROR_MESSAGE);
+		    		return;
+		    	}
+		    	
 				String tenQuyen = bgAddQuyen.getSelection().getActionCommand();
 				TaiKhoanDTO dto = new TaiKhoanDTO();
 				
@@ -1391,7 +1403,7 @@ public class Application extends JFrame {
 		JButton btnAddHdv_ThemMoi = new JButton("Thêm mới");
 		btnAddHdv_ThemMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-StringBuilder sb=new StringBuilder();
+				StringBuilder sb=new StringBuilder();
 		        
 		    	if(txtAddMaHdv.getText().equals("")){
 		            sb.append("*Mã hướng dẫn viên không được để trống\n");
@@ -4723,7 +4735,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 			tour_doanTblModel.setRowCount(0);
 		}
 		tour_doanTblModel.addRow(new Object[] {
-				doan.getMaDoan(), doan.getSoNguoi(), doan.getMaTour()
+				doan.getMaDoan(), doan.getSoNguoi(), doan.getMaTour(),doan.getMaHDV()
 		});
 	}
 	
