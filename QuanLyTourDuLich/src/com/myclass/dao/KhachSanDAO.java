@@ -1,253 +1,172 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.myclass.dao;
 
+import com.myclass.connector.JDBCConnection;
 import com.myclass.dto.KhachSanDTO;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Vector;
 
-/**
- *
- * @author Thin
- */
 public class KhachSanDAO {
+	private final static String tableName = "KhachSan";
+	Connection conn;
+	PreparedStatement pstmt;
+	ResultSet rs;
+	
+	public ArrayList<KhachSanDTO> getAll() {
+		ArrayList<KhachSanDTO> dtos;
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "SELECT * FROM " + tableName;
+			dtos = new ArrayList<KhachSanDTO>();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				KhachSanDTO dto = new KhachSanDTO();
+				
+				dto.setMaKhachSan(rs.getString("MaKhachSan"));
+				dto.setTenKhachSan(rs.getString("TenKhachSan"));
+				dto.setDiaChi(rs.getString("DiaChi"));
+				dto.setChiPhiTrenNguoi(rs.getDouble("ChiPhiTrenNguoi"));
+				
+				dtos.add(dto);
+			}
+			
+			return dtos;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+	
+    public KhachSanDTO getByMaKhachSan(String maNhaHang) {
+    	String query = "SELECT * FROM " + tableName + " WHERE MaKhachSan = ?"; 
+    	try {
+    		KhachSanDTO dto = null;
+    		conn = JDBCConnection.getJDBCConnection(tableName);
+    		pstmt = conn.prepareStatement(query);
+    		pstmt.setString(1, maNhaHang);
+    		rs = pstmt.executeQuery();
+    		
+    		if(rs.next()) {
+    			dto = new KhachSanDTO();
 
-    public static List<KhachSanDTO> xemDSKS() {
-        List<KhachSanDTO> khachsanList = new ArrayList<>();
-        Connection connection = null;
-        Statement statement = null;
-        try {
-            //lấy tất cả danh sách khách sạn
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "select* from khachsan";
-            statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery(sql);
-            
-            while (resultSet.next()) {
-                KhachSanDTO ksDTO = new KhachSanDTO(resultSet.getString("maKS"), resultSet.getString("tenKS"), resultSet.getString("diachi"), resultSet.getString("website"), resultSet.getString("soDT"), resultSet.getInt("chiphi"));
-                khachsanList.add(ksDTO);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        //ketthuc.
-        return khachsanList;
-    }
-
-    public static void XoaTTKS(String maKS) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            //lấy tất cả danh sách khách sạn
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "delete from khachsan where maKS = ?";
-            statement = connection.prepareCall(sql);
-
-            statement.setString(1, maKS);
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        //ketthuc.
-    }
-
-    public static void LuuTTKS(KhachSanDTO ksDTO) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            //lấy tất cả danh sách khách sạn
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "insert into khachsan( maKS, tenKS, diachi, website, soDT, chiphi) values(?,?,?,?,?,?)";
-            statement = connection.prepareCall(sql);
-
-            statement.setString(1, ksDTO.getMaKS());
-            statement.setString(2, ksDTO.getTenKS());
-            statement.setString(3, ksDTO.getDiachiKS());
-            statement.setString(4, ksDTO.getWebsite());
-            statement.setString(5, ksDTO.getSoDT());
-            statement.setInt(6, ksDTO.getChiphi());
-
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        //ketthuc.
-    }
-
-    public static List<KhachSanDTO> findByMaKS(String maKS) {
-        List<KhachSanDTO> khachsanList = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            //lấy tất cả danh sách khách sạn
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "select* from khachsan where maKS = ?";
-            statement = connection.prepareCall(sql);
-            statement.setString(1, maKS);
-
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                KhachSanDTO ksDTO = new KhachSanDTO(resultSet.getString("maKS"), resultSet.getString("tenKS"), resultSet.getString("diachi"), resultSet.getString("website"), resultSet.getString("soDT"), resultSet.getInt("chiphi"));
-                khachsanList.add(ksDTO);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        //ketthuc.
-        return khachsanList;
+				dto.setMaKhachSan(rs.getString("MaKhachSan"));
+				dto.setTenKhachSan(rs.getString("TenKhachSan"));
+				dto.setDiaChi(rs.getString("DiaChi"));
+				dto.setChiPhiTrenNguoi(rs.getDouble("ChiPhiTrenNguoi"));
+    		}
+    		
+    		return dto;
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return null;
     }
     
-    public static List<KhachSanDTO> findByTenKS(String tenKS) {
-        List<KhachSanDTO> khachsanList = new ArrayList<>();
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            //lấy tất cả danh sách khách sạn
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "select* from khachsan where tenKS like ?";
-            statement = connection.prepareCall(sql);
-            statement.setString(1,"%" + tenKS + "%");
+	public Vector<String> getAllMaKhachSan() {
+		Vector<String> listMaKhachSan;
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "SELECT MaKhachSan FROM " + tableName;
+			listMaKhachSan = new Vector<String>();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				listMaKhachSan.add(rs.getString("MaKhachSan"));
+			}
+			
+			return listMaKhachSan;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                KhachSanDTO ksDTO = new KhachSanDTO(resultSet.getString("maKS"), resultSet.getString("tenKS"), resultSet.getString("diachi"), resultSet.getString("website"), resultSet.getString("soDT"), resultSet.getInt("chiphi"));
-                khachsanList.add(ksDTO);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        //ketthuc.
-        return khachsanList;
-    }
-    
-    public static void CapNhatTTKS(KhachSanDTO ksDTO) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            //lấy tất cả danh sách khách sạn
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/quanlydulich", "root", "");
-            //Query
-            String sql = "update khachsan set tenKS=?, diachi=?, website=?, soDT=?, chiphi=? where maKS=? ";
-            statement = connection.prepareCall(sql);
+	public void deleteById(String maKhachSan) {
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "DELETE FROM " + tableName + " WHERE MaKhachSan = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, maKhachSan);
+			int rowEffects = pstmt.executeUpdate();
+			System.out.println("Row effects: " + rowEffects);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-            statement.setString(1, ksDTO.getTenKS());
-            statement.setString(2, ksDTO.getDiachiKS());
-            statement.setString(3, ksDTO.getWebsite());
-            statement.setString(4, ksDTO.getSoDT());
-            statement.setInt(5, ksDTO.getChiphi());
-            statement.setString(6, ksDTO.getMaKS());
+	public void add(KhachSanDTO dto) {
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "INSERT INTO " + tableName + "(`MaKhachSan`, `TenKhachSan`, `DiaChi`, `ChiPhiTrenNguoi`)"
+					+ "VALUES (?, ?, ?, ?)";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, dto.getMaKhachSan());
+			pstmt.setString(2, dto.getTenKhachSan());
+			pstmt.setString(3, dto.getDiaChi());
+			pstmt.setDouble(4, dto.getChiPhiTrenNguoi());
+			
+			int rowEffects = pstmt.executeUpdate();
+			System.out.println("Row effects: " + rowEffects);
+		} catch(SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
-            statement.execute();
-        } catch (SQLException ex) {
-            Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(KhachSanDAO.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        //ketthuc.
-    }
+	public void update(KhachSanDTO dto) {
+		try {
+			conn = JDBCConnection.getJDBCConnection(tableName);
+			String sql = "UPDATE " + tableName + " SET "
+					+ "TenKhachSan = ?, DiaChi = ?, ChiPhiTrenNguoi = ?"
+					+ "WHERE MaKhachSan = ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, dto.getTenKhachSan());
+			pstmt.setString(2, dto.getDiaChi());
+			pstmt.setDouble(3, dto.getChiPhiTrenNguoi());
+			pstmt.setString(4, dto.getMaKhachSan());
+			
+			int rowEffects = pstmt.executeUpdate();
+			System.out.println("Row effects: " + rowEffects);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
