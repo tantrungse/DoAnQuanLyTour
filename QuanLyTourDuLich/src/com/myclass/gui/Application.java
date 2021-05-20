@@ -3730,7 +3730,10 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnDiaDiemThamQuan_TimKiem = new JButton("Tìm");
 		btnDiaDiemThamQuan_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				DiaDiemThamQuanDTO dto =diaDiemThamQuanBUS.getByMaDiaDiem(txtDiaDiemThamQuan_TimKiem.getText());
+				diaDiemThamQuanTblModel.setRowCount(0); // xoa tat ca row
+				diaDiemThamQuanTblModel.addRow(new Object[] {
+							dto.getMaDiaDiem(), dto.getTenDiaDiem(), dto.getDiaChi()});
 			}
 		});
 		btnDiaDiemThamQuan_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
