@@ -3375,16 +3375,10 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		txtPhuongTien_TimKiem.setColumns(10);
 		cardQuanLyPhuongTien.add(txtPhuongTien_TimKiem);
 		
-		JButton btnPhuongTien_TimKiem = new JButton("Tìm\r\n");
+		JButton btnPhuongTien_TimKiem = new JButton("Tìm");
 		btnPhuongTien_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<KhachHangDTO> listKQ = khachHangBUS.getByTenKH(txtTourSearch.getText());
-				khachHangTblModel.setRowCount(0); // xoa tat ca row
-				for(KhachHangDTO dto : listKQ) {
-					khachHangTblModel.addRow(new Object[] {
-							dto.getMaKH(), dto.getHoTenKH(), dto.getDiaChi(), dto.getSdt(), dto.getMaDoan()
-					});
-				}
+
 			}
 		});
 		btnPhuongTien_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -3392,7 +3386,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		cardQuanLyPhuongTien.add(btnPhuongTien_TimKiem);
 		
 		JScrollPane phuongtienScrollPane = new JScrollPane();
-		phuongtienScrollPane.setBounds(50, 150, 750, 273);
+		phuongtienScrollPane.setBounds(50, 150, 600, 273);
 		cardQuanLyPhuongTien.add(phuongtienScrollPane);
 		
 		tblPhuongTien = new JTable();
@@ -3405,7 +3399,7 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		});
 		tblPhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tblPhuongTien.setRowHeight(50);
-		String[] colNamesTblPhuongTien = {"Mã khách hàng", "Họ tên khách hàng", "Địa chỉ", "Số điện thoại", "Mã đoàn"};
+		String[] colNamesTblPhuongTien = {"Mã phương tiện", "Tên phương tiện", "Chi phi", "Số chỗ ngồi"};
 		phuongTienTblModel = new DefaultTableModel();
 		tblPhuongTien.setModel(phuongTienTblModel);
 		for(String colName : colNamesTblPhuongTien) {
@@ -3424,37 +3418,37 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 			}
 		});
 		btnPhuongTien_TaiLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnPhuongTien_TaiLai.setBounds(820, 150, 200, 30);
+		btnPhuongTien_TaiLai.setBounds(670, 150, 200, 30);
 		cardQuanLyPhuongTien.add(btnPhuongTien_TaiLai);
 		
 		JButton btnPhuongTien_Xoa = new JButton("Xóa phương tiện");
 		btnPhuongTien_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int selectedRow = tblKhachHang.getSelectedRow();
-				String maKH = (String) tblKhachHang.getValueAt(selectedRow, 0);
+				int selectedRow = tblPhuongTien.getSelectedRow();
+				String maPhuongTien = (String) tblPhuongTien.getValueAt(selectedRow, 0);
 				
-				khachHangBUS.deleteById(maKH);
-				khachHangTblModel.removeRow(selectedRow);
+				phuongTienBUS.deleteById(maPhuongTien);
+				phuongTienTblModel.removeRow(selectedRow);
 			}
 		});
 		btnPhuongTien_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnPhuongTien_Xoa.setBounds(820, 200, 200, 30);;
+		btnPhuongTien_Xoa.setBounds(670, 200, 200, 30);;
 		cardQuanLyPhuongTien.add(btnPhuongTien_Xoa);
 		
 		JButton btnPhuongTien_ThemMoi = new JButton("Thêm phương tiện");
 		btnPhuongTien_ThemMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(cardsPane, "cardAddKhachHang");
+				cardLayout.show(cardsPane, "cardAddPhuongTien");
 			}
 		});
 		btnPhuongTien_ThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnPhuongTien_ThemMoi.setBounds(820, 250, 200, 30);
+		btnPhuongTien_ThemMoi.setBounds(670, 250, 200, 30);
 		cardQuanLyPhuongTien.add(btnPhuongTien_ThemMoi);
 		
 		btnPhuongTien_CapNhat = new JButton("Cập nhật phương tiện");
 		addActionListenerBtnPhuongTien_Update();
 		btnPhuongTien_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		btnPhuongTien_CapNhat.setBounds(820, 300, 200, 30);
+		btnPhuongTien_CapNhat.setBounds(670, 300, 200, 30);
 		cardQuanLyPhuongTien.add(btnPhuongTien_CapNhat);
 		
 		JButton btnPhuongTien_QuayLai = new JButton("Quay lại");
@@ -4473,8 +4467,8 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
     			
     			txtUpdateMaPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 0));
     			txtUpdateTenPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 1));
-    			txtUpdateChiPhi.setText((String) tblPhuongTien.getValueAt(selectedRow, 2));
-    			txtUpdateSoChoNgoi.setText((String) tblPhuongTien.getValueAt(selectedRow, 3));
+    			txtUpdateChiPhi.setText(String.valueOf(tblPhuongTien.getValueAt(selectedRow, 2)));
+    			txtUpdateSoChoNgoi.setText(String.valueOf(tblPhuongTien.getValueAt(selectedRow, 3)));
     		}
     	});
     }
