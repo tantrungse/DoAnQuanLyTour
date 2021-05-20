@@ -3439,11 +3439,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		});
 		tblPhuongTien.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tblPhuongTien.setRowHeight(50);
-<<<<<<< HEAD
-		String[] colNamesTblPhuongTien = {"Mã phương tiện", "Tên phương tiện", "Chi phi", "Số chỗ ngồi"};
-=======
-		String[] colNamesTblPhuongTien = {"Mã phương tiện", "Tên phương tiện", "Chi phí", "Số chỗ ngồi"};
->>>>>>> e181866519328be8a3ae8ff7e13440c319a337b0
+		String[] colNamesTblPhuongTien = null;// = {"Mã phương tiện", "Tên phương tiện", "Chi phi", "Số chỗ ngồi"};
 		phuongTienTblModel = new DefaultTableModel();
 		tblPhuongTien.setModel(phuongTienTblModel);
 		for(String colName : colNamesTblPhuongTien) {
@@ -3469,12 +3465,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnPhuongTien_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblPhuongTien.getSelectedRow();
-<<<<<<< HEAD
-				String maPhuongTien = (String) tblPhuongTien.getValueAt(selectedRow, 0);
-				
-				phuongTienBUS.deleteById(maPhuongTien);
-				phuongTienTblModel.removeRow(selectedRow);
-=======
+
 				if(selectedRow>=0) {
 					int result = JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này ?", "Thông báo",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 	                if(result == JOptionPane.YES_OPTION){
@@ -3491,7 +3482,6 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				if(selectedRow<0) {
 					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
 				}
->>>>>>> e181866519328be8a3ae8ff7e13440c319a337b0
 			}
 		});
 		btnPhuongTien_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -4525,15 +4515,6 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
     private void addActionListenerBtnPhuongTien_Update() {
     	btnPhuongTien_CapNhat.addActionListener(new ActionListener() {
     		public  void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
-    			cardLayout.show(cardsPane, "cardUpdatePhuongTien");
-    			selectedRow = tblPhuongTien.getSelectedRow();
-    			
-    			txtUpdateMaPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 0));
-    			txtUpdateTenPhuongTien.setText((String) tblPhuongTien.getValueAt(selectedRow, 1));
-    			txtUpdateChiPhi.setText(String.valueOf(tblPhuongTien.getValueAt(selectedRow, 2)));
-    			txtUpdateSoChoNgoi.setText(String.valueOf(tblPhuongTien.getValueAt(selectedRow, 3)));
-=======
     			int selectedRow = tblPhuongTien.getSelectedRow();
     			if(selectedRow>=0) {
     				cardLayout.show(cardsPane, "cardUpdatePhuongTien");
@@ -4546,7 +4527,6 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
     			else if(selectedRow<0) {
 					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
 				}
->>>>>>> e181866519328be8a3ae8ff7e13440c319a337b0
     		}
     	});
     }

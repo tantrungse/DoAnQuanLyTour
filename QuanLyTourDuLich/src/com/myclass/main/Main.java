@@ -1,10 +1,8 @@
 package com.myclass.main;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 
 import com.myclass.gui.Application;
-import com.myclass.gui.TaiKhoanFrame;
 
 public class Main {
 
