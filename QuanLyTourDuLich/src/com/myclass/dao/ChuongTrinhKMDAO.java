@@ -13,7 +13,7 @@ import com.myclass.connector.JDBCConnection;
 import com.myclass.dto.ChuongTrinhKMDTO;
 
 public class ChuongTrinhKMDAO {
-
+	private final static String tableName = "CTKM";
 public static ArrayList<ChuongTrinhKMDTO> getAll()
 {
 	Connection conn = null;
@@ -23,7 +23,7 @@ public static ArrayList<ChuongTrinhKMDTO> getAll()
 	
 	try {
 		
-		conn = JDBCConnection.getJDBCConnection();
+		conn = JDBCConnection.getJDBCConnection(tableName);
 		String query = "SELECT * FROM khuyenmai";
 		pstm = conn.prepareStatement(query);
 		resultSet = pstm.executeQuery();
@@ -57,7 +57,7 @@ public static void add(ChuongTrinhKMDTO ctkm)
 		   String sql = "INSERT INTO khuyenmai(`Mã KM`,`Mã Tour`,`Tên Tour`,`Nội dung khuyến mãi`,`Ngày bắt đầu` ,`Ngày kết thúc`) "
                    + "VALUES(?,?,?,?,?,?)";
          
-        try (Connection conn = JDBCConnection.getJDBCConnection();
+        try (Connection conn = JDBCConnection.getJDBCConnection(tableName);
              PreparedStatement pstmt = conn.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);) {
         	
             // set parameters for statement
@@ -91,7 +91,7 @@ public static void delete(String makm)
     
     try {
         //lay tat ca danh sach sinh vien
-      connection=JDBCConnection.getJDBCConnection();
+      connection=JDBCConnection.getJDBCConnection(tableName);
         String sql = "delete from khuyenmai where `Mã KM` = ?";
         statement = connection.prepareStatement(sql);
         
@@ -125,7 +125,7 @@ public static void sua(ChuongTrinhKMDTO ctkm)
 	 String sqlUpdate = "UPDATE khuyenmai "
              + "SET `Mã KM` = ? , `Mã Tour`= ? , `Tên Tour` = ? ,`Nội dung khuyến mãi` = ? ,`Ngày bắt đầu` = ?, `Ngày kết thúc` =? "
              + "WHERE `Mã KM` = ?";
-	 try (Connection conn = JDBCConnection.getJDBCConnection();
+	 try (Connection conn = JDBCConnection.getJDBCConnection(tableName);
              PreparedStatement pstmt = conn.prepareStatement(sqlUpdate);) {
 
            pstmt.setString(1, ctkm.getMaKM());
@@ -156,7 +156,7 @@ public static ArrayList<ChuongTrinhKMDTO> timkiemtheoten( String tentk)
 		
 		try {
 			
-			conn = JDBCConnection.getJDBCConnection();
+			conn = JDBCConnection.getJDBCConnection(tableName);
 			String query = "SELECT * FROM khuyenmai WHERE `Tên Tour` = ?";
 			pstm = conn.prepareStatement(query);
 			pstm.setString(1, tentk);

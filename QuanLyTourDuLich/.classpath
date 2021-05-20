@@ -6,9 +6,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/lib/activation-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/lib/com.sun.mail_1.4.2.jar"/>
-	<classpathentry kind="lib" path="C:/lib/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/lib/mysql-connector-java-8.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/com.sun.mail_1.4.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/mysql-connector-java-8.0.23.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
