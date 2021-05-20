@@ -3039,7 +3039,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnCTKeHoachTheoNgay_DiaDiemThamQuanLayout = new JButton("Xem danh sách");
 		btnCTKeHoachTheoNgay_DiaDiemThamQuanLayout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(cardsPane, "cardQuanLyNhaHang");
+				cardLayout.show(cardsPane, "cardQuanLyDiaDiemThamQuan");
 			}
 		});
 		addActionListenerBtnTour_Update();
