@@ -4424,7 +4424,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				KhachSanDTO dto = new KhachSanDTO();
 				
 				dto.setMaKhachSan(txtAddMaKhachSan.getText());
-				dto.setTenKhachSan(txtAddTenDiaDiem.getText());
+				dto.setTenKhachSan(txtAddTenKhachSan.getText());
 				dto.setDiaChi(txtAddKhachSan_DiaChi.getText());
 				dto.setChiPhiTrenNguoi(Double.valueOf(txtAddKhachSan_ChiPhiTrenNguoi.getText()));
 				
