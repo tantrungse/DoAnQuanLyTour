@@ -2695,10 +2695,22 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnKeHoachTour_CTKeHoachTheoNgay_Xoa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int selectedRow = tblKeHoachTour_CTKeHoachTheoNgay.getSelectedRow();
+				if(selectedRow>=0) {
+					int result = JOptionPane.showConfirmDialog(null,"Bạn có chắc muốn xóa thông tin này ?", "Thông báo",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+	                if(result == JOptionPane.YES_OPTION){
 				String maCTKeHoachTheoNgay = (String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 0);
 				
 				ctKeHoachTheoNgayBUS.deleteById(maCTKeHoachTheoNgay);
 				keHoachTour_ctKeHoachTheoNgayTblModel.removeRow(selectedRow);
+	                }
+	                else if(result == JOptionPane.NO_OPTION)
+                    {
+                        JOptionPane.showMessageDialog(null, "Không xóa thông tin");
+                    }
+				}
+				if(selectedRow<0) {
+					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
+				}
 			}
 		});
 		btnKeHoachTour_CTKeHoachTheoNgay_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
