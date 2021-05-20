@@ -637,13 +637,53 @@ public class Application extends JFrame {
 		JButton btnTourSearch = new JButton("Tìm");
 		btnTourSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ArrayList<TaiKhoanDTO> listKQ = taiKhoanBUS.searchByTenTK(txtTourSearch.getText());
-				taiKhoanTblModel.setRowCount(0); // xoa tat ca row
-				for(TaiKhoanDTO dto : listKQ) {
-					taiKhoanTblModel.addRow(new Object[] {
-							dto.getTenTK(), dto.getMatKhau(), dto.getQuyen()
-					});
-				}
+				ArrayList<TourDTO> listKQ;
+				Object[] options = {
+			            "Tìm kiếm theo mã Tour", "Tìm kiếm theo tên Tour", "Đóng"
+			        };
+			        int select = JOptionPane.showOptionDialog(btnTourSearch, "Bạn muốn tìm kiếm theo phương thức nào?", "Tùy chọn", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[2]);
+			        
+			        //System.out.println("select: " + select);
+			        //mÃ£ -> select: 0
+			        //tÃªn -> select: 1
+			        // chi phi -> select: 2
+			        // Ä‘Ã³ng -> select: 3
+			        
+			        if(select == 0){
+			            String input = JOptionPane.showInputDialog(btnTourSearch, "Mời bạn nhập mã Tour !");
+			            
+			            if(input != null && input.length() > 0){
+			                listKQ = tourBUS.getByMaTour(input);
+			                tourTblModel.setRowCount(0);
+			                
+			                for(TourDTO dto : listKQ) {
+								tourTblModel.addRow(new Object[] {
+										dto.getMaTour(), dto.getTenTour(), dto.getGiaVe(), dto.getDiemKhoiHanh(), dto.getDiemDen()
+								});
+			                };
+			            }
+			            else {
+			                JOptionPane.showMessageDialog(null, "Lỗi tìm kiếm !");
+			            }
+			        }
+			        
+			        if(select == 1){
+			            String input = JOptionPane.showInputDialog(btnTourSearch, "Mời bạn nhập tên Tour !");
+			            
+			            if(input != null && input.length() > 0){
+			                listKQ = tourBUS.getByTenTour(input);
+			                tourTblModel.setRowCount(0);
+			                
+			                for(TourDTO dto : listKQ) {
+								tourTblModel.addRow(new Object[] {
+										dto.getMaTour(), dto.getTenTour(), dto.getGiaVe(), dto.getDiemKhoiHanh(), dto.getDiemDen()
+								});
+			                };
+			            }
+			            else {
+			                JOptionPane.showMessageDialog(null, "Lỗi tìm kiếm !");
+			            }
+			        }
 			}
 		});
 		btnTourSearch.setFont(new Font("Tahoma", Font.PLAIN, 16));
