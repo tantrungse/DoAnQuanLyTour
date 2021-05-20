@@ -5176,9 +5176,9 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
     private void addActionListenerBtnKeHoachTour_CTKeHoachTheoNgay_Update() {
     	btnKeHoachTour_CTKeHoachTheoNgay_CapNhat.addActionListener(new ActionListener() {
     		public  void actionPerformed(ActionEvent e) {
+    			int selectedRow = tblKeHoachTour_CTKeHoachTheoNgay.getSelectedRow();
+    			if(selectedRow>=0) {
     			cardLayout.show(cardsPane, "cardUpdateCTKeHoachTheoNgay");
-    			selectedRow = tblKeHoachTour_CTKeHoachTheoNgay.getSelectedRow();
-    			
     			txtUpdateMaCTKeHoachTheoNgay.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 0));
     			txtUpdateNgay.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 1));
     			txtUpdateDiaDiemThamQuan.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 2));
@@ -5186,6 +5186,10 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
     			txtUpdateNhaHang.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 4));
     			txtUpdateKhachSan.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 5));
     			txtUpdateCTKeHoachTheoNgay_MaKHTour.setText((String) tblKeHoachTour_CTKeHoachTheoNgay.getValueAt(selectedRow, 6));
+    			}
+    			else if(selectedRow<0) {
+					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
+				}
     		}
     	});
     }
