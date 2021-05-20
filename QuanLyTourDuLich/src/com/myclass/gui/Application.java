@@ -34,6 +34,7 @@ import com.myclass.bus.NhaHangBUS;
 import com.myclass.bus.PhuongTienBUS;
 import com.myclass.bus.TaiKhoanBUS;
 import com.myclass.bus.TourBUS;
+import com.myclass.dao.CTKeHoachTheoNgayDAO;
 import com.myclass.dao.TaiKhoanDAO;
 import com.myclass.dto.CTKeHoachTheoNgayDTO;
 import com.myclass.dto.DiaDiemThamQuanDTO;
@@ -2960,6 +2961,14 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		cardQuanLyCTKeHoachTheoNgay.add(txtCTKeHoachTheoNgay_TimKiem);
 		
 		JButton btnCTKeHoachTheoNgay_TimKiem = new JButton("Tìm");
+		btnCTKeHoachTheoNgay_TimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CTKeHoachTheoNgayDTO dto =ctKeHoachTheoNgayBUS.getByMaCTKHTheoNgay(txtCTKeHoachTheoNgay_TimKiem.getText());
+				ctKeHoachTheoNgayTblModel.setRowCount(0); // xoa tat ca row
+				ctKeHoachTheoNgayTblModel.addRow(new Object[] {
+							dto.getMaCTKHTheoNgay(), dto.getNgay(), dto.getMaKHTour(), dto.getMaDiaDiemThamQuan(),dto.getMaPhuongTien(),dto.getMaNhaHang(),dto.getClass()});
+			}
+		});
 		btnCTKeHoachTheoNgay_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnCTKeHoachTheoNgay_TimKiem.setBounds(320, 100, 80, 30);
 		cardQuanLyCTKeHoachTheoNgay.add(btnCTKeHoachTheoNgay_TimKiem);
@@ -4346,7 +4355,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				if(selectedRow<0) {
 					JOptionPane.showMessageDialog(cardQuanLyTour, "Bạn chưa chọn trường dữ liệu!");
 				}
-		}
+			}
 		});
 		btnKhachSan_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnKhachSan_Xoa.setBounds(670, 200, 200, 30);;
