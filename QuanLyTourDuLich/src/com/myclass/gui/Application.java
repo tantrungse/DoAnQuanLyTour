@@ -3418,7 +3418,13 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnPhuongTien_TimKiem = new JButton("Tìm");
 		btnPhuongTien_TimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				PhuongTienDTO dto =phuongTienBUS.getByMaPhuongTien(txtPhuongTien_TimKiem.getText());
+					
+				phuongTienTblModel.setRowCount(0); // xoa tat ca row
+				
+					phuongTienTblModel.addRow(new Object[] {
+							dto.getMaPhuongTien(), dto.getTenPhuongTien(), dto.getChiPhi(), dto.getSoChoNgoi()});
+				
 			}
 		});
 		btnPhuongTien_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
