@@ -4234,6 +4234,290 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		btnUpdateNhaHang_QuayLai.setBounds(300, 300, 100, 30);
 		cardUpdateNhaHang.add(btnUpdateNhaHang_QuayLai);
 		// ===== UPDATE NHA HANG LAYOUT END HERE =====
+		
+		// ===== KHACH SAN LAYOUT START HERE =====
+		JPanel cardQuanLyKhachSan = new JPanel();
+		cardsPane.add(cardQuanLyKhachSan, "name_4568411886400");
+		cardQuanLyKhachSan.setLayout(null);
+		cardLayout.addLayoutComponent(cardQuanLyKhachSan, "cardQuanLyKhachSan");
+		
+		JLabel lblKhachSan_TieuDe = new JLabel("Trang quản lý khách sạn");
+		lblKhachSan_TieuDe.setBounds(0, 0, 600, 100);
+		lblKhachSan_TieuDe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		cardQuanLyKhachSan.add(lblKhachSan_TieuDe);
+		
+		JLabel lblKhachSan_TimKiem = new JLabel("Tìm kiếm:");
+		lblKhachSan_TimKiem.setFont(new Font("Tahoma", Font.ITALIC, 16));
+		lblKhachSan_TimKiem.setBounds(20, 100, 80, 30);
+		cardQuanLyKhachSan.add(lblKhachSan_TimKiem);
+		
+		JTextField txtKhachSan_TimKiem = new JTextField();
+		txtKhachSan_TimKiem.setBounds(100, 100, 200, 30);
+		txtKhachSan_TimKiem.setColumns(10);
+		cardQuanLyKhachSan.add(txtKhachSan_TimKiem);
+		
+		JButton btnKhachSan_TimKiem = new JButton("Tìm");
+		btnKhachSan_TimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnKhachSan_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKhachSan_TimKiem.setBounds(310, 100, 80, 30);
+		cardQuanLyKhachSan.add(btnKhachSan_TimKiem);
+		
+		JScrollPane khachSanScrollPane = new JScrollPane();
+		khachSanScrollPane.setBounds(50, 150, 600, 273);
+		cardQuanLyKhachSan.add(khachSanScrollPane);
+		
+		tblKhachSan = new JTable();
+		tblKhachSan.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				tblKhachSan.getSelectedRow();
+				
+			}
+		});
+		tblKhachSan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		tblKhachSan.setRowHeight(50);
+		String[] colNamesTblKhachSan = {"Mã khách sạn", "Tên khách sạn", "Địa chỉ", "Chi phí trên người"};
+		khachSanTblModel = new DefaultTableModel();
+		tblKhachSan.setModel(khachSanTblModel);
+		for(String colName : colNamesTblKhachSan) {
+			khachSanTblModel.addColumn(colName);
+		}
+		loadTblKhachSan();
+		
+		khachSanScrollPane.setViewportView(tblKhachSan);
+		tblKhachSan.setFillsViewportHeight(true);
+		
+		JButton btnKhachSan_TaiLai = new JButton("Tải lại bảng");
+		btnKhachSan_TaiLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				khachSanTblModel.setRowCount(0);
+				loadTblKhachSan();
+			}
+		});
+		btnKhachSan_TaiLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKhachSan_TaiLai.setBounds(670, 150, 200, 30);
+		cardQuanLyKhachSan.add(btnKhachSan_TaiLai);
+		
+		JButton btnKhachSan_Xoa = new JButton("Xóa khách sạn");
+		btnKhachSan_Xoa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tblKhachSan.getSelectedRow();
+				String maDiaDiem = (String) tblKhachSan.getValueAt(selectedRow, 0);
+				
+				khachSanBUS.deleteById(maDiaDiem);
+				khachSanTblModel.removeRow(selectedRow);
+			}
+		});
+		btnKhachSan_Xoa.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKhachSan_Xoa.setBounds(670, 200, 200, 30);;
+		cardQuanLyKhachSan.add(btnKhachSan_Xoa);
+		
+		JButton btnKhachSan_ThemMoi = new JButton("Thêm khách sạn");
+		btnKhachSan_ThemMoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardAddKhachSan");
+			}
+		});
+		btnKhachSan_ThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKhachSan_ThemMoi.setBounds(670, 250, 200, 30);
+		cardQuanLyKhachSan.add(btnKhachSan_ThemMoi);
+		
+		btnKhachSan_CapNhat = new JButton("Cập nhật khách sạn");
+		addActionListenerBtnKhachSan_Update();
+		btnKhachSan_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKhachSan_CapNhat.setBounds(670, 300, 200, 30);
+		cardQuanLyKhachSan.add(btnKhachSan_CapNhat);
+		
+		JButton btnKhachSan_QuayLai = new JButton("Quay lại");
+		btnKhachSan_QuayLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyCTKeHoachTheoNgay");
+			}
+		});
+		btnKhachSan_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKhachSan_QuayLai.setBounds(50, 450, 100, 30);
+		cardQuanLyKhachSan.add(btnKhachSan_QuayLai);
+		// ===== KHACH SAN LAYOUT END HERE ======
+		
+		// ===== ADD KHACH SAN LAYOUT START HERE =====
+		JPanel cardAddKhachSan = new JPanel();
+		cardsPane.add(cardAddKhachSan);
+		cardAddKhachSan.setLayout(null);
+		cardLayout.addLayoutComponent(cardAddKhachSan, "cardAddKhachSan");
+		
+		JLabel lblAddKhachSan_TieuDe = new JLabel("Trang thêm khách sạn");
+		lblAddKhachSan_TieuDe.setBounds(0, 0, 500, 100);
+		lblAddKhachSan_TieuDe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		cardAddKhachSan.add(lblAddKhachSan_TieuDe);
+		
+		JLabel lblAddMaKhachSan = new JLabel("Nhập mã khách sạn:");
+		lblAddMaKhachSan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddMaKhachSan.setBounds(50, 100, 200, 30);
+		cardAddKhachSan.add(lblAddMaKhachSan);
+		
+		JTextField txtAddMaKhachSan = new JTextField();
+		txtAddMaKhachSan.setColumns(10);
+		txtAddMaKhachSan.setBounds(250, 100, 300, 30);
+		cardAddKhachSan.add(txtAddMaKhachSan);
+		
+		JLabel lblAddTenKhachSan = new JLabel("Nhập tên khách sạn:");
+		lblAddTenKhachSan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddTenKhachSan.setBounds(50, 150, 200, 30);
+		cardAddKhachSan.add(lblAddTenKhachSan);
+		
+		JTextField txtAddTenKhachSan = new JTextField();
+		txtAddTenKhachSan.setColumns(10);
+		txtAddTenKhachSan.setBounds(250, 150, 300, 30);
+		cardAddKhachSan.add(txtAddTenKhachSan);
+		
+		JLabel lblAddKhachSan_DiaChi = new JLabel("Nhập địa chỉ:");
+		lblAddKhachSan_DiaChi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddKhachSan_DiaChi.setBounds(50, 200, 200, 30);
+		cardAddKhachSan.add(lblAddKhachSan_DiaChi);
+		
+		JTextField txtAddKhachSan_DiaChi = new JTextField();
+		txtAddKhachSan_DiaChi.setColumns(10);
+		txtAddKhachSan_DiaChi.setBounds(250, 200, 300, 30);
+		cardAddKhachSan.add(txtAddKhachSan_DiaChi);
+		
+		JLabel lblAddKhachSan_ChiPhiTrenNguoi = new JLabel("Nhập chi phí trên người:");
+		lblAddKhachSan_ChiPhiTrenNguoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblAddKhachSan_ChiPhiTrenNguoi.setBounds(50, 250, 200, 30);
+		cardAddKhachSan.add(lblAddKhachSan_ChiPhiTrenNguoi);
+		
+		JTextField txtAddKhachSan_ChiPhiTrenNguoi = new JTextField();
+		txtAddKhachSan_ChiPhiTrenNguoi.setColumns(10);
+		txtAddKhachSan_ChiPhiTrenNguoi.setBounds(250, 250, 300, 30);
+		cardAddKhachSan.add(txtAddKhachSan_ChiPhiTrenNguoi);
+		
+		JButton btnAddKhachSan_ThemMoi = new JButton("Thêm mới");
+		btnAddKhachSan_ThemMoi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KhachSanDTO dto = new KhachSanDTO();
+				
+				dto.setMaKhachSan(txtAddMaKhachSan.getText());
+				dto.setTenKhachSan(txtAddTenDiaDiem.getText());
+				dto.setDiaChi(txtAddKhachSan_DiaChi.getText());
+				dto.setChiPhiTrenNguoi(Double.valueOf(txtAddKhachSan_ChiPhiTrenNguoi.getText()));
+				
+				khachSanBUS.add(dto);
+				KhachSanBUS.listKhachSanDTO.add(dto);
+				addRowTblKhachSan(dto);
+				cardLayout.show(cardsPane, "cardQuanLyKhachSan");
+				// clear all text after add
+				txtAddMaKhachSan.setText("");
+				txtAddTenKhachSan.setText("");
+				txtAddKhachSan_DiaChi.setText("");
+				txtAddKhachSan_ChiPhiTrenNguoi.setText("");
+			}
+		});
+		btnAddKhachSan_ThemMoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAddKhachSan_ThemMoi.setBounds(150, 300, 120, 30);
+		cardAddKhachSan.add(btnAddKhachSan_ThemMoi);
+		
+		JButton btnAddKhachSan_QuayLai = new JButton("Quay lại");
+		btnAddKhachSan_QuayLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyKhachSan");
+			}
+		});
+		btnAddKhachSan_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnAddKhachSan_QuayLai.setBounds(300, 300, 120, 30);
+		cardAddKhachSan.add(btnAddKhachSan_QuayLai);
+		// ===== ADD KHACH SAN LAYOUT END HERE =====
+		
+		// ===== UPDATE KHACH SAN LAYOUT START HERE =====
+		JPanel cardUpdateKhachSan = new JPanel();
+		cardsPane.add(cardUpdateKhachSan);
+		cardUpdateKhachSan.setLayout(null);
+		cardLayout.addLayoutComponent(cardUpdateKhachSan, "cardUpdateKhachSan");
+		
+		JLabel lblUpdateKhachSan_TieuDe = new JLabel("Trang cập nhật nhà hàng");
+		lblUpdateKhachSan_TieuDe.setBounds(0, 0, 600, 100);
+		lblUpdateKhachSan_TieuDe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
+		cardUpdateKhachSan.add(lblUpdateKhachSan_TieuDe);
+		
+		JLabel lblUpdateMaKhachSan = new JLabel("Nhập mã khách sạn:");
+		lblUpdateMaKhachSan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUpdateMaKhachSan.setBounds(50, 100, 150, 30);
+		cardUpdateKhachSan.add(lblUpdateMaKhachSan);
+		
+		txtUpdateMaKhachSan = new JTextField();
+		txtUpdateMaKhachSan.setColumns(10);
+		txtUpdateMaKhachSan.setBounds(200, 100, 300, 30);
+		cardUpdateKhachSan.add(txtUpdateMaKhachSan);
+		
+		JLabel lblUpdateTenKhachSan = new JLabel("Nhập tên khách sạn:");
+		lblUpdateTenKhachSan.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUpdateTenKhachSan.setBounds(50, 150, 150, 30);
+		cardUpdateKhachSan.add(lblUpdateTenKhachSan);
+		
+		txtUpdateTenKhachSan = new JTextField();
+		txtUpdateTenKhachSan.setColumns(10);
+		txtUpdateTenKhachSan.setBounds(200, 150, 300, 30);
+		cardUpdateKhachSan.add(txtUpdateTenKhachSan);
+		
+		JLabel lblUpdateKhachSan_DiaChi = new JLabel("Nhập địa chỉ:");
+		lblUpdateKhachSan_DiaChi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUpdateKhachSan_DiaChi.setBounds(50, 200, 150, 30);
+		cardUpdateKhachSan.add(lblUpdateKhachSan_DiaChi);
+		
+		txtUpdateKhachSan_DiaChi = new JTextField();
+		txtUpdateKhachSan_DiaChi.setColumns(10);
+		txtUpdateKhachSan_DiaChi.setBounds(200, 200, 300, 30);
+		cardUpdateKhachSan.add(txtUpdateKhachSan_DiaChi);
+		
+		JLabel lblUpdateKhachSan_ChiPhiTrenNguoi = new JLabel("Nhập chi phí trên người:");
+		lblUpdateKhachSan_ChiPhiTrenNguoi.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblUpdateKhachSan_ChiPhiTrenNguoi.setBounds(50, 250, 150, 30);
+		cardUpdateKhachSan.add(lblUpdateKhachSan_ChiPhiTrenNguoi);
+		
+		txtUpdateKhachSan_ChiPhiTrenNguoi = new JTextField();
+		txtUpdateKhachSan_ChiPhiTrenNguoi.setColumns(10);
+		txtUpdateKhachSan_ChiPhiTrenNguoi.setBounds(200, 250, 300, 30);
+		cardUpdateKhachSan.add(txtUpdateKhachSan_ChiPhiTrenNguoi);
+		
+		JButton btnUpdateKhachSan_CapNhat = new JButton("Cập nhật");
+		btnUpdateKhachSan_CapNhat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KhachSanDTO dto = new KhachSanDTO();
+				
+				dto.setMaKhachSan(txtUpdateMaKhachSan.getText());
+				dto.setTenKhachSan(txtUpdateTenKhachSan.getText());
+				dto.setDiaChi(txtUpdateKhachSan_DiaChi.getText());
+				dto.setChiPhiTrenNguoi(Double.valueOf(txtUpdateKhachSan_ChiPhiTrenNguoi.getText()));
+				
+				khachSanBUS.update(dto);
+				KhachSanBUS.listKhachSanDTO.set(selectedRow, dto);
+				setRow(dto, selectedRow);
+				cardLayout.show(cardsPane, "cardQuanLyKhachSan");
+				khachSanTblModel.setRowCount(0);
+				loadTblKhachSan();
+				// clear all text after update
+				txtUpdateMaKhachSan.setText("");
+				txtUpdateTenKhachSan.setText("");
+				txtUpdateKhachSan_DiaChi.setText("");
+				txtUpdateKhachSan_ChiPhiTrenNguoi.setText("");
+			}
+		});
+		btnUpdateKhachSan_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnUpdateKhachSan_CapNhat.setBounds(150, 300, 120, 30);
+		cardUpdateKhachSan.add(btnUpdateKhachSan_CapNhat);
+		
+		JButton btnUpdateKhachSan_QuayLai = new JButton("Quay lại");
+		btnUpdateKhachSan_QuayLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyKhachSan");
+			}
+		});
+		btnUpdateKhachSan_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnUpdateKhachSan_QuayLai.setBounds(300, 300, 100, 30);
+		cardUpdateKhachSan.add(btnUpdateKhachSan_QuayLai);
+		// ===== UPDATE KHACH SAN LAYOUT END HERE =====
 	}
 
 	public void loadTblTaiKhoan() {
@@ -4493,6 +4777,17 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		rowData.add(String.valueOf(dto.getChiPhiTrenNguoi()));
 		
 		nhaHangTblModel.addRow(rowData);
+	}
+	
+	private void addRowTblKhachSan(KhachSanDTO dto) {
+		Vector<String> rowData = new Vector<String>();
+		
+		rowData.add(dto.getMaKhachSan());
+		rowData.add(dto.getTenKhachSan());
+		rowData.add(dto.getDiaChi());
+		rowData.add(String.valueOf(dto.getChiPhiTrenNguoi()));
+		
+		khachSanTblModel.addRow(rowData);
 	}
 	
 	private void addRowTblTour_HopDong(HopDongDTO dto) {
@@ -4871,7 +5166,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
         			txtUpdateMaKhachSan.setText((String) tblKhachSan.getValueAt(selectedRow, 0));
         			txtUpdateTenKhachSan.setText((String) tblKhachSan.getValueAt(selectedRow, 1));
         			txtUpdateKhachSan_DiaChi.setText((String) tblKhachSan.getValueAt(selectedRow, 2));
-        			txtUpdateKhachSan_ChiPhiTrenNguoi.setText((String) tblKhachSan.getValueAt(selectedRow, 3));
+        			txtUpdateKhachSan_ChiPhiTrenNguoi.setText(String.valueOf(tblKhachSan.getValueAt(selectedRow, 3)));
     			}
     			else if(selectedRow<0) {
 					JOptionPane.showMessageDialog(null,"Bạn chưa chọn trường dữ liệu!");
