@@ -3448,6 +3448,16 @@ JButton btnHopDong_TimKiem = new JButton("TÃ¬m\r\n");
 		btnPhuongTien_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		btnPhuongTien_CapNhat.setBounds(820, 300, 200, 30);
 		cardQuanLyPhuongTien.add(btnPhuongTien_CapNhat);
+		
+		JButton btnPhuongTien_QuayLai = new JButton("Quay lại");
+		btnPhuongTien_QuayLai.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				cardLayout.show(cardsPane, "cardQuanLyCTKeHoachTheoNgay");
+			}
+		});
+		btnPhuongTien_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnPhuongTien_QuayLai.setBounds(50, 450, 100, 30);
+		cardQuanLyPhuongTien.add(btnPhuongTien_QuayLai);
 		// ===== PHUONG TIEN LAYOUT END HERE =====
 		
 		// ===== ADD PHUONG TIEN LAYOUT START HERE =====
