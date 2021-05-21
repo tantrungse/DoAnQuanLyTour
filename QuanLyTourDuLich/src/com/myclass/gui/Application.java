@@ -1,6 +1,5 @@
 package com.myclass.gui;
 
-import java.awt.EventQueue;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
@@ -15,7 +14,6 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.awt.Font;
-import javax.swing.SwingConstants;
 import java.awt.CardLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -58,8 +56,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.ButtonGroup;
-import javax.swing.ButtonModel;
-import javax.swing.ImageIcon;
 
 public class Application extends JFrame {
 
@@ -149,7 +145,6 @@ public class Application extends JFrame {
 	private JTextField txtUpdateSoNguoi;
 	private JTextField txtUpdateDoan_MaTour;
 	private JTextField txtUpdateDoan_MaHDV;
-	private JTextField txtUpdateDoan_MaPhuongTien;
 	
 	private JTextField txtUpdateMaKhachHang;
 	private JTextField txtUpdateHoTenKhachHang;
@@ -1229,18 +1224,6 @@ public class Application extends JFrame {
 		cardQuanLyHdv.add(hdvScrollPane);
 		
 		tblHdv = new JTable();
-		tblHdv.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int indexRowSelected = tblHdv.getSelectedRow();
-				
-//				txtMaTour.setText((String) tourTblModel.getValueAt(indexRowSelected, 0));
-//				txtTenTour.setText((String) tourTblModel.getValueAt(indexRowSelected, 1));
-//				txtGiaVe.setText(String.valueOf( tourTblModel.getValueAt(indexRowSelected, 2) ));
-//				txtMaKHTour.setText((String) tourTblModel.getValueAt(indexRowSelected, 3));
-//				txtMaHD.setText((String) tourTblModel.getValueAt(indexRowSelected, 4));
-			}
-		});
 		tblHdv.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tblHdv.setRowHeight(50);
 		hdvTblModel = new DefaultTableModel(
@@ -1711,13 +1694,6 @@ public class Application extends JFrame {
 		cardQuanLyKhachHang.add(khachHangScrollPane);
 		
 		tblKhachHang = new JTable();
-		tblKhachHang.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				tblKhachHang.getSelectedRow();
-				
-			}
-		});
 		tblKhachHang.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tblKhachHang.setRowHeight(50);
 		String[] colNamesTblKhachHang = {"Mã khách hàng", "Họ tên khách hàng", "Địa chỉ", "Số điện thoại", "Mã đoàn"};
@@ -2590,13 +2566,13 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnUpdateDoan_CapNhat = new JButton("Cập nhật");
 		btnUpdateDoan_CapNhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tblDoan.getSelectedRow();
 				DoanDTO dto = new DoanDTO();
 				
 				dto.setMaDoan(txtUpdateMaDoan.getText());
 				dto.setSoNguoi(Integer.valueOf(txtUpdateSoNguoi.getText()));
 				dto.setMaTour(txtUpdateDoan_MaTour.getText());
 				dto.setMaHDV(txtUpdateDoan_MaHDV.getText());
-				dto.setMaPhuongTien(txtUpdateDoan_MaPhuongTien.getText());
 				
 				doanBUS.update(dto);
 				DoanBUS.listDoanDTO.set(selectedRow, dto);
@@ -2608,7 +2584,6 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				txtUpdateSoNguoi.setText("");
 				txtUpdateDoan_MaTour.setText("");
 				txtUpdateDoan_MaHDV.setText("");
-				txtUpdateDoan_MaPhuongTien.setText("");
 			}
 		});
 		btnUpdateDoan_CapNhat.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -2978,6 +2953,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnUpdateKeHoachTour_CapNhat = new JButton("Cập nhật");
 		btnUpdateKeHoachTour_CapNhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tblKeHoachTour.getSelectedRow();
 				KeHoachTourDTO dto = new KeHoachTourDTO();
 				
 				dto.setMaKeHoach(txtUpdateMaKeHoach.getText());
