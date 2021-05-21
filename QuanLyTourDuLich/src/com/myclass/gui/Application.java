@@ -2646,10 +2646,21 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		txtKeHoachTour_TimKiem.setColumns(10);
 		cardQuanLyKeHoachTour.add(txtKeHoachTour_TimKiem);
 		
-//		JButton btnDoan_TimKiem = new JButton("Tìm\r\n");
-//		btnDoan_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		btnDoan_TimKiem.setBounds(310, 400, 80, 30);
-//		cardQuanLyKeHoachTour.add(btnDoan_TimKiem);
+		JButton btnKeHoachTour_TimKiem = new JButton("Tìm");
+		btnKeHoachTour_TimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				KeHoachTourDTO dto =keHoachTourBUS.getByMaKeHoach(txtKeHoachTour_TimKiem.getText());
+				
+				keHoachTourTblModel.setRowCount(0); // xoa tat ca row
+	
+				keHoachTourTblModel.addRow(new Object[] {
+							dto.getMaKeHoach(), dto.getNgayBatDau(), dto.getNgayKetThuc(), dto.getMaTour()});
+				
+			}
+		});
+		btnKeHoachTour_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnKeHoachTour_TimKiem.setBounds(310, 100, 80, 30);
+		cardQuanLyKeHoachTour.add(btnKeHoachTour_TimKiem);
 		
 		JScrollPane keHoachTourScrollPane = new JScrollPane();
 		keHoachTourScrollPane.setBounds(50, 150, 750, 223);
