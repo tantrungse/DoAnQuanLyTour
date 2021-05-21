@@ -2384,7 +2384,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		tblDoan = new JTable();
 		tblDoan.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		tblDoan.setRowHeight(50);
-		String[] colNamesTblDoan = {"Mã hợp đồng", "Số người", "Mã tour", "Mã hướng dẫn viên"};
+		String[] colNamesTblDoan = {"Mã đoàn", "Số người", "Mã tour", "Mã hướng dẫn viên"};
 		doanTblModel = new DefaultTableModel();
 		tblDoan.setModel(doanTblModel);
 		for(String colName : colNamesTblDoan) {
