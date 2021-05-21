@@ -139,33 +139,39 @@ CREATE TABLE IF NOT EXISTS CTThuChi (
     PRIMARY KEY (MaCTThuChi)
 );
 
-CREATE TABLE IF NOT EXISTS HoaDon (
-	MaHoaDon varchar(10) NOT NULL,
-    NgayLap date NOT NULL,
-	TongTien DOUBLE,
-	MaKhachHang varchar(10) NOT NULL,
-	MaKhuyenMai varchar(10) NOT NULL,
-    PRIMARY KEY (MaHoaDon)
-);
+CREATE TABLE `hoadondb` (
+  `maHoaDon` varchar(20) NOT NULL,
+  `maKH` varchar(20) NOT NULL,
+  `Mã KM` varchar(20) DEFAULT NULL,
+  `noidungKM` varchar(255) DEFAULT NULL,
+  `TongTien` float NOT NULL,
+  `NgayLap` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ALTER TABLE `hoadondb`
+  ADD PRIMARY KEY (`maHoaDon`),
+  ADD UNIQUE KEY `Mã KM` (`Mã KM`);
+COMMIT;
 
-CREATE TABLE IF NOT EXISTS ChiTietHoaDon (
-	TenKhachHang varchar(255) NOT NULL,
-	TenTour varchar(255) NOT NULL,
-	SoLuong int NOT NULL,
-	GiaVe DOUBLE,
-	ThanhTien DOUBLE,
-	MaHoaDon varchar(10) NOT NULL
-);
+CREATE TABLE `khuyenmai` (
+  `Mã KM` varchar(20) NOT NULL,
+  `Mã Tour` varchar(20) NOT NULL,
+  `Tên Tour` varchar(30) NOT NULL,
+  `Nội dung khuyến mãi` varchar(50) NOT NULL,
+  `Ngày bắt đầu` date NOT NULL,
+  `Ngày kết thúc` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ALTER TABLE `khuyenmai`
+  ADD PRIMARY KEY (`Mã KM`);
+COMMIT;
 
-CREATE TABLE IF NOT EXISTS KhuyenMai (
-	MaKhuyenMai varchar(10) NOT NULL,
-	TenKhuyenMai varchar(30) NOT NULL,
-	NoiDung varchar(50) NOT NULL,
-	NgayBatDau date NOT NULL,
-	NgayKetThuc date NOT NULL,
-    MaTour varchar(10) NOT NULL,
-    PRIMARY KEY (MaKhuyenMai)
-);
+CREATE TABLE `chitiethddb` (
+  `maHoaDon` varchar(10) NOT NULL,
+  `tenKH` varchar(255) NOT NULL,
+  `tentour` varchar(255) NOT NULL,
+  `soluong` int(10) NOT NULL,
+  `giaVe` float NOT NULL,
+  `ThanhTien` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- TAO KHOA NGOAI
 ALTER TABLE Doan ADD CONSTRAINT fk_Doan_Tour
@@ -195,11 +201,9 @@ ALTER TABLE CTKeHoachTheoNgay ADD CONSTRAINT fk_CTKeHoachTheoNgay_KhachSan
     
 ALTER TABLE KhuyenMai ADD CONSTRAINT fk_KhuyenMai_Tour
 	FOREIGN KEY (MaTour) REFERENCES Tour(MaTour);
+alter table khuyenmai drop foreign key fk_KhuyenMai_Tour;
     
 ALTER TABLE HoaDon ADD CONSTRAINT fk_HoaDon_KhachHang
 	FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKH);
 ALTER TABLE HoaDon ADD CONSTRAINT fk_HoaDon_KhuyenMai
 	FOREIGN KEY (MaKhuyenMai) REFERENCES KhuyenMai(MaKhuyenMai);
-    
-ALTER TABLE ChiTietHoaDon ADD CONSTRAINT fk_ChiTietHoaDon_HoaDon
-	FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon);

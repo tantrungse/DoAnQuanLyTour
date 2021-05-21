@@ -115,190 +115,6 @@ insert  into ctkehoachtheongay(MaCTKHTheoNgay, Ngay, MaKHTour, MaDiaDiemThamQuan
 		values('CTKH005N4', '2021-04-17', 'KH005', 'DD005', 'PT005', 'NH005', 'KS005');
 insert  into ctkehoachtheongay(MaCTKHTheoNgay, Ngay, MaKHTour, MaDiaDiemThamQuan, MaPhuongTien, MaNhaHang, MaKhachSan)
 		values('CTKH005NS5', '2021-04-18', 'KH005', 'DD005', 'PT005', 'NH005', 'KS005');
-        
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH001','2021-04-13', 100, 'T001KH001');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH002','2021-04-13', 100, 'T001KH002');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH003','2021-04-13', 100, 'T001KH003');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH004','2021-04-13', 100, 'T001KH004');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH005','2021-04-13', 100, 'T001KH005');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH006','2021-04-13', 100, 'T001KH006');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH007','2021-04-13', 100, 'T001KH007');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE001KH008','2021-04-13', 100, 'T001KH008');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH001','2021-04-13', 100, 'T002KH001');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH002','2021-04-13', 100, 'T002KH002');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH003','2021-04-13', 100, 'T002KH003');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH004','2021-04-13', 100, 'T002KH004');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH005','2021-04-13', 100, 'T002KH005');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH006','2021-04-13', 100, 'T002KH006');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH007','2021-04-13', 100, 'T002KH007');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH008','2021-04-13', 100, 'T002KH008');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH009','2021-04-13', 100, 'T002KH009');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH010','2021-04-13', 100, 'T002KH010');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH011','2021-04-13', 100, 'T002KH011');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE002KH012','2021-04-13', 100, 'T002KH012');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH001','2021-04-13', 100, 'T003KH001');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH002','2021-04-13', 100, 'T003KH002');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH003','2021-04-13', 100, 'T003KH003');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH004','2021-04-13', 100, 'T003KH004');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH005','2021-04-13', 100, 'T003KH005');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH006','2021-04-13', 100, 'T003KH006');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH007','2021-04-13', 100, 'T003KH007');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH008','2021-04-13', 100, 'T003KH008');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH009','2021-04-13', 100, 'T003KH009');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH010','2021-04-13', 100, 'T003KH010');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH011','2021-04-13', 100, 'T003KH011');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH012','2021-04-13', 100, 'T003KH012');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH013','2021-04-13', 100, 'T003KH013');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH014','2021-04-13', 100, 'T003KH014');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH015','2021-04-13', 100, 'T003KH015');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang)
-	   values ('VE003KH016','2021-04-13', 100, 'T003KH016');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH001','2021-04-13', 100, 'T004KH001');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH002','2021-04-13', 100, 'T004KH002');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH003','2021-04-13', 100, 'T004KH003');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH004','2021-04-13', 100, 'T004KH004');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH005','2021-04-13', 100, 'T004KH005');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH006','2021-04-13', 100, 'T004KH006');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH007','2021-04-13', 100, 'T004KH007');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH008','2021-04-13', 100, 'T004KH008');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH009','2021-04-13', 100, 'T004KH009');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH010','2021-04-13', 100, 'T004KH010');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH011','2021-04-13', 100, 'T004KH011');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH012','2021-04-13', 100, 'T004KH012');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH013','2021-04-13', 100, 'T004KH013');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH014','2021-04-13', 100, 'T004KH014');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH015','2021-04-13', 100, 'T004KH015');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH016','2021-04-13', 100, 'T004KH016');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH017','2021-04-13', 100, 'T004KH017');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH018','2021-04-13', 100, 'T004KH018');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH019','2021-04-13', 100, 'T004KH019');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH020','2021-04-13', 100, 'T004KH020');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH021','2021-04-13', 100, 'T004KH021');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH022','2021-04-13', 100, 'T004KH022');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH023','2021-04-13', 100, 'T004KH023');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE004KH024','2021-04-13', 100, 'T004KH024');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH001','2021-04-13', 100, 'T005KH001');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH002','2021-04-13', 100, 'T005KH002');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) values ('VE005KH003','2021-04-13', 100, 'T005KH003');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH004','2021-04-13', 100, 'T005KH004');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH005','2021-04-13', 100, 'T005KH005');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH006','2021-04-13', 100, 'T005KH006');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH007','2021-04-13', 100, 'T005KH007');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH008','2021-04-13', 100, 'T005KH008');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH009','2021-04-13', 100, 'T005KH009');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH010','2021-04-13', 100, 'T005KH010');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH011','2021-04-13', 100, 'T005KH011');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH012','2021-04-13', 100, 'T005KH012');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH013','2021-04-13', 100, 'T005KH013');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH014','2021-04-13', 100, 'T005KH014');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH015','2021-04-13', 100, 'T005KH015');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH016','2021-04-13', 100, 'T005KH016');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH017','2021-04-13', 100, 'T005KH017');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH018','2021-04-13', 100, 'T005KH018');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH019','2021-04-13', 100, 'T005KH019');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH020','2021-04-13', 100, 'T005KH020');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH021','2021-04-13', 100, 'T005KH021');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH022','2021-04-13', 100, 'T005KH022');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH023','2021-04-13', 100, 'T005KH023');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH024','2021-04-13', 100, 'T005KH024');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH025','2021-04-13', 100, 'T005KH025');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH026','2021-04-13', 100, 'T005KH026');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH027','2021-04-13', 100, 'T005KH027');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH028','2021-04-13', 100, 'T005KH028');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH029','2021-04-13', 100, 'T005KH029');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH030','2021-04-13', 100, 'T005KH030');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH031','2021-04-13', 100, 'T005KH031');
-insert into vetour(MaVe	, NgayMuaVe, GiaVe, MaKhachHang) 
-		values ('VE005KH032','2021-04-13', 100, 'T005KH032');
 
 insert  into khachsan(MaKhachSan, TenKhachSan, DiaChi, ChiPhiTrenNguoi)
 		values('KS001', 'Khach San 1', 'Unknow', '500');
@@ -354,23 +170,30 @@ insert  into diadiemthamquan(MaDiaDiem, TenDiaDiem, DiaChi)
 		values('DD004', 'Dia Diem 4', 'Unknow');
 insert  into diadiemthamquan(MaDiaDiem, TenDiaDiem, DiaChi)
 		values('DD005', 'Dia Diem 5', 'Unknow');
-        
-INSERT INTO KhuyenMai(MaKhuyenMai, TenKhuyenMai, NoiDung, NgayBatDau, NgayKetThuc, MaTour) VALUES
-('KM001', 'Du Lich Hồ Gươm', 'Giảm giá 70%', '2021-04-20', '2021-06-10', 'TOUR001'),
-('KM002', 'Du Lich Hồ Hoàn Kiếm', 'Giảm giá 30%', '2021-05-10', '2021-06-10', 'TOUR002'),
-('KM003', 'Du Lich Sông SG', 'Miễn phí 1 vé ăn', '2021-05-20', '2021-06-10', 'TOUR003'),
-('KM004', 'Du lịch Cần Thơ', 'Giảm 10% vé khách sạn', '2021-05-05', '2021-06-05', 'TOUR004'),
-('KM005', 'Du lịch Sóc Trăng', 'Một tuần ăn free', '2020-08-12', '2020-09-13', 'TOUR005');
 
-INSERT INTO	HoaDon(MaHoaDon, NgayLap, TongTien, MaKhachHang, MaKhuyenMai) VALUES
-('HD001', '2001-06-25', 999999, 'T001KH001', 'KM001'),
-('HD002', '2001-06-25', 999999, 'T002KH002', 'KM002'),
-('HD003', '2001-06-25', 999999, 'T003KH003', 'KM003'),
-('HD004', '2001-06-25', 999999, 'T004KH004', 'KM004'),
-('HD005', '2001-06-25', 999999, 'T005KH005', 'KM005');
+INSERT INTO `hoadondb` (`maHoaDon`, `maKH`, `Mã KM`, `noidungKM`, `TongTien`, `NgayLap`) VALUES
+('HD001', 'T001KH001', '9aefe', '10', 594000, '2001-06-25'),
+('HD002', 'T002KH002', 'adh88', '5', 285000, '2020-12-01'),
+('HD003', 'T003KH003', '1a425', '5', 4275000, '2021-04-20'),
+('HD004', 'T004KH004', '486452', '7', 1116000, '2020-11-20'),
+('HD005', 'T005KH005', '1a4w5', '7', 4650000, '2020-10-21'),
+('HD006', 'T006KH006', '4648612', '20', 1960000, '2020-10-21');
 
-INSERT INTO ChiTietHoaDon(TenKhachHang, TenTour, SoLuong, GiaVe, ThanhTien, MaHoaDon) VALUES
-('Lý Thế Minh', 'Du lịch Cần Thơ', 2, 250000, 500000, 'HD001'),
-('Lý Thế Minh', 'Du Lịch Sóc Trăng', 2, 180000, 180000, 'HD002'),
-('Lý Thế Minh', 'Du Lịch Đà Lạt(3 ngày)', 1, 300000, 300000, 'HD003'),
-('Võ Tấn Trung', 'Thăm quan Bến Nhà Rồng', 2, 150000, 300000, 'HD004');
+
+INSERT INTO `khuyenmai` (`Mã KM`, `Mã Tour`, `Tên Tour`, `Nội dung khuyến mãi`, `Ngày bắt đầu`, `Ngày kết thúc`) VALUES
+('1a425', '6461d', 'Du Lich Hồ Gươm', '5', '2021-04-20', '2021-06-10'),
+('1a4w5', '6462d', 'Du Lich Hồ Hoàn Kiếm', '7', '2021-05-10', '2021-06-10'),
+('1c425', '6461d', 'Du Lich Sông SG', '10', '2021-05-20', '2021-06-10'),
+('3311f', 'da4d464', 'Du lịch Cần Thơ', '6', '2021-05-05', '2021-06-05'),
+('4648612', '248998', 'Du lịch Sóc Trăng', '20', '2020-08-12', '2020-09-13'),
+('486452', '23333', 'Du lịch Đà Lạt', '15', '2001-06-01', '2020-01-03'),
+('48646', '23333', 'Du lịch Đà Lạt', '12', '2021-06-02', '2021-06-09');
+
+INSERT INTO `chitiethddb` (`maHoaDon`, `tenKH`, `tentour`, `soluong`, `giaVe`, `ThanhTien`) VALUES
+('32424', 'Lý Thế Minh', 'Du Lịch Sóc Trăng', 2, 180000, 180000),
+('32424', 'Lý Thế Minh', 'Du Lịch Đà Lạt(3 ngày)', 1, 300000, 300000),
+('46qdd', 'Võ Tấn Trung', 'Thăm quan Bến Nhà Rồng', 2, 150000, 300000),
+('d56d5', 'Võ Huyền Trân', 'Du Lịch Vũng Tàu', 3, 400000, 0),
+('f4r32', 'Mai Văn Thinh', 'Chuyến đi Tây Nguyên 2 ngày', 7, 350000, 0),
+('f4r31', 'Ánh Trâm', 'Củ Chi 3 đêm', 5, 1000000, 0),
+('adnb2', 'Lữ Bố', 'Du Lịch Tam Quốc', 3, 1500000, 0);
