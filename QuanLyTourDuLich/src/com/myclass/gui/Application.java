@@ -3916,6 +3916,30 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnAddDiaDiemThamQuan_ThemMoi = new JButton("Thêm mới");
 		btnAddDiaDiemThamQuan_ThemMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				StringBuilder sb=new StringBuilder();
+				if(txtAddMaDiaDiem.getText().equals("")){
+		            sb.append("*Mã địa điểm không được để trống\n");
+		        }
+		    	else 
+		        {
+		        	for(DiaDiemThamQuanDTO dto: diaDiemThamQuanBUS.listDiaDiemThamQuanDTO){
+			            if(txtAddMaDiaDiem.getText().equals(String.valueOf(dto.getMaDiaDiem()))){
+			                JOptionPane.showMessageDialog(cardAddDiaDiemThamQuan, "Mã địa điểm đã tồn tại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			                return;
+			            } 
+		        	}
+		        }
+				if(txtAddTenDiaDiem.getText().equals("")) {
+		            sb.append("*Tên địa điểm tham quan không được để trống\n");
+		    	}
+				if(txtAddDiaDiemThamQuan_DiaChi.getText().equals("")) {
+		            sb.append("*Địa chỉ không được để trống\n");
+		    	}
+				if(sb.length()>0) {
+		    		JOptionPane.showMessageDialog(cardAddTaiKhoan, sb.toString(),"Thông báo",JOptionPane.ERROR_MESSAGE);
+		    		return;
+		    	}
+		    	
 				DiaDiemThamQuanDTO dto = new DiaDiemThamQuanDTO();
 				
 				dto.setMaDiaDiem(txtAddMaDiaDiem.getText());
