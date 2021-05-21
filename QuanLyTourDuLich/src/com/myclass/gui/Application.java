@@ -2299,6 +2299,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnUpdateHopDong_CapNhat = new JButton("Cập nhật");
 		btnUpdateHopDong_CapNhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tblHopDong.getSelectedRow();
 				HopDongDTO dto = new HopDongDTO();
 				
 				dto.setMaHD(txtUpdateMaHD.getText());
