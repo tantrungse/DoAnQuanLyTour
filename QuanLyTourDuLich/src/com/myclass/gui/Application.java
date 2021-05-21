@@ -4224,6 +4224,33 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnAddNhaHang_ThemMoi = new JButton("Thêm mới");
 		btnAddNhaHang_ThemMoi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				StringBuilder sb=new StringBuilder();
+				if(txtAddMaCTKeHoachTheoNgay.getText().equals("")){
+		            sb.append("*Mã nhà hàng không được để trống\n");
+		        }
+		    	else 
+		        {
+		        	for(NhaHangDTO dto: nhaHangBUS.listNhaHangDTO){
+			            if(txtAddMaNhaHang.getText().equals(String.valueOf(dto.getMaNhaHang()))){
+			                JOptionPane.showMessageDialog(cardAddNhaHang, "Mã nhà hàng đã tồn tại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+			                return;
+			            } 
+		        	}
+		        }
+				if(txtAddTenNhaHang.getText().equals("")) {
+		            sb.append("*Tên nhà hàng không được để trống\n");
+		    	}
+				if(txtAddNhaHang_DiaChi.getText().equals("")) {
+		            sb.append("*Địa chỉ không được để trống\n");
+		    	}
+				if(txtAddNhaHang_ChiPhiTrenNguoi.getText().equals("")) {
+		            sb.append("*Chi phí không được để trống\n");
+		    	}
+				if(sb.length()>0) {
+		    		JOptionPane.showMessageDialog(cardAddTaiKhoan, sb.toString(),"Thông báo",JOptionPane.ERROR_MESSAGE);
+		    		return;
+		    	}
+		
 				NhaHangDTO dto = new NhaHangDTO();
 				
 				dto.setMaNhaHang(txtAddMaNhaHang.getText());
