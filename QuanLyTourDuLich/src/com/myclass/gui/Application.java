@@ -2354,10 +2354,28 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		txtDoan_TimKiem.setColumns(10);
 		cardQuanLyDoan.add(txtDoan_TimKiem);
 		
-//		JButton btnDoan_TimKiem = new JButton("Tìm\r\n");
-//		btnDoan_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
-//		btnDoan_TimKiem.setBounds(310, 400, 80, 30);
-//		cardQuanLyDoan.add(btnDoan_TimKiem);
+		JButton btnDoan_TimKiem = new JButton("Tìm");
+		
+		btnDoan_TimKiem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DoanDTO dto = new DoanDTO();
+				
+			            String input = JOptionPane.showInputDialog(btnTourSearch, "Mời bạn nhập mã đoàn !");
+			            
+			            if(input != null && input.length() > 0){
+			                dto = doanBUS.getByMaDoan(input);
+			                doanTblModel.setRowCount(0);
+			                
+			                doanTblModel.addRow(new Object[] {
+										dto.getMaDoan(), dto.getSoNguoi(), dto.getMaTour(), dto.getMaHDV()
+								});
+			                };
+			            }			              
+		});
+		
+		btnDoan_TimKiem.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		btnDoan_TimKiem.setBounds(310, 400, 80, 30);
+		cardQuanLyDoan.add(btnDoan_TimKiem);
 		
 		JScrollPane doanScrollPane = new JScrollPane();
 		doanScrollPane.setBounds(50, 450, 600, 273);
