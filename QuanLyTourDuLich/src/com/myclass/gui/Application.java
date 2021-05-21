@@ -1979,6 +1979,7 @@ public class Application extends JFrame {
 		JButton btnUpdateKhachHang_CapNhat = new JButton("Cập nhật");
 		btnUpdateKhachHang_CapNhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int selectedRow = tblKhachHang.getSelectedRow();
 				KhachHangDTO dto = new KhachHangDTO();
 				
 				dto.setMaKH(txtUpdateMaKhachHang.getText());
@@ -3444,7 +3445,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 		JButton btnUpdateCTKeHoachTheoNgay_QuayLai = new JButton("Quay lại");
 		btnUpdateCTKeHoachTheoNgay_QuayLai.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cardLayout.show(cardsPane, "cardQuanLyDoan");
+				cardLayout.show(cardsPane, "cardQuanLyKeHoachTour");
 			}
 		});
 		btnUpdateCTKeHoachTheoNgay_QuayLai.setFont(new Font("Tahoma", Font.PLAIN, 16));
