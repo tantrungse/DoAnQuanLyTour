@@ -2592,7 +2592,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				DoanDTO dto = new DoanDTO();
 				
 				dto.setMaDoan(txtUpdateMaDoan.getText());
-				dto.setSoNguoi(Integer.valueOf(txtUpdateNgayLapHD.getText()));
+				dto.setSoNguoi(Integer.valueOf(txtUpdateSoNguoi.getText()));
 				dto.setMaTour(txtUpdateDoan_MaTour.getText());
 				dto.setMaHDV(txtUpdateDoan_MaHDV.getText());
 				dto.setMaPhuongTien(txtUpdateDoan_MaPhuongTien.getText());
@@ -5236,7 +5236,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 				if(selectedRow>=0) {
 					cardLayout.show(cardsPane, "cardUpdateDoan");
 					txtUpdateMaDoan.setText((String) tblDoan.getValueAt(selectedRow, 0));
-					txtUpdateSoNguoi.setText((String) tblDoan.getValueAt(selectedRow, 1));
+					txtUpdateSoNguoi.setText(String.valueOf(tblDoan.getValueAt(selectedRow, 1)));
 					txtUpdateDoan_MaTour.setText((String) tblDoan.getValueAt(selectedRow, 2));
 					txtUpdateDoan_MaHDV.setText((String) tblDoan.getValueAt(selectedRow, 3));
 					
