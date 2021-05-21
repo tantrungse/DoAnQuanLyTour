@@ -131,7 +131,7 @@ public static boolean check(String ma)
     return false;
 }
 
-public  ArrayList<ChuongTrinhKMDTO> getList() {
+public ArrayList<ChuongTrinhKMDTO> getList() {
     return ctKMlist;
 }
 //public static ArrayList<ChuongTrinhKMDTO> getListtk() {

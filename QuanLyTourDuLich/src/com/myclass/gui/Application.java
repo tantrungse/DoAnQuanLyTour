@@ -229,7 +229,7 @@ public class Application extends JFrame {
 		sidePane.setLayout(null);
 		
 		lblDashboard = new JLabel();
-//		lblDashboard.setText(taiKhoanDangNhap.getTenTK());
+		lblDashboard.setText(taiKhoanDangNhap.getTenTK());
 		lblDashboard.setForeground(Color.WHITE);
 		lblDashboard.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 30));
 		lblDashboard.setBounds(0, 50, 250, 100);
@@ -274,10 +274,18 @@ public class Application extends JFrame {
 		lblQuanLyHdv.setFont(new Font("Consolas", Font.BOLD, 16));
 		menuSidePane.add(lblQuanLyHdv);
 		
-		JLabel lblQuanLyTaiChinh = new JLabel("Quản lý tài chính");
-		lblQuanLyTaiChinh.setForeground(Color.WHITE);
-		lblQuanLyTaiChinh.setFont(new Font("Consolas", Font.BOLD, 16));
-		menuSidePane.add(lblQuanLyTaiChinh);
+		JLabel lblQuanLyHoaDon = new JLabel("Quản lý hóa đơn");
+		lblQuanLyHoaDon.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				HoaDonGUI1 hoaDonGUI1 = new HoaDonGUI1();
+				hoaDonGUI1.setVisible(true);
+				hoaDonGUI1.setLocationRelativeTo(null);
+			}
+		});
+		lblQuanLyHoaDon.setForeground(Color.WHITE);
+		lblQuanLyHoaDon.setFont(new Font("Consolas", Font.BOLD, 16));
+		menuSidePane.add(lblQuanLyHoaDon);
 		
 		JLabel lblQuanLyKhachHang = new JLabel("Quản lý khách hàng");
 		lblQuanLyKhachHang.addMouseListener(new MouseAdapter() {

@@ -260,6 +260,7 @@ public class TaiKhoanFrame extends JFrame {
 						Application frame = new Application(tk);
 						frame.setLocationRelativeTo(null);
 						frame.setVisible(true);
+						dispose();
 					}
 					else
 					{
