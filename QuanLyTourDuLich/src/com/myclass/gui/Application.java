@@ -2065,7 +2065,7 @@ JButton btnHopDong_TimKiem = new JButton("Tìm");
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<HopDongDTO> listKQ;
 				
-			            String input = JOptionPane.showInputDialog(btnTourSearch, "Mời bạn nhập mã Tour !");
+			            String input = JOptionPane.showInputDialog(btnTourSearch, "Mời bạn nhập mã hợp đồng !");
 			            
 			            if(input != null && input.length() > 0){
 			                listKQ = hopDongBUS.getByMaHD(input);

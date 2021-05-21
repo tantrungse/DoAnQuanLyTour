@@ -6,14 +6,15 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/activation-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/com.sun.mail_1.4.2.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/javax.mail.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/mysql-connector-java-8.0.23.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/lib/commons-codec-1.12.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/lib/commons-collections4-4.3.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/lib/itextpdf-5.5.12.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/lib/LGoodDatePicker-10.4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Git/DoAnQuanLyTour/lib/lib/poi-4.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/com.sun.mail_1.4.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/commons-codec-1.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/commons-collections4-4.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/itextpdf-5.5.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/javax.mail.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/LGoodDatePicker-10.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/mysql-connector-java-5.1.49.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/mysql-connector-java-8.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Mai Van Thinh/Desktop/DoAnQuanLyTour/lib/lib/poi-4.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
